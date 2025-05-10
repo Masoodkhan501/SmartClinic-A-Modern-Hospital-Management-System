@@ -1,5 +1,11 @@
 package com.masood.model;
 
-public class Specialized {
+import java.util.List;
 
-}
+public class Specialized 
+{
+	private List<Specilist> specilist_in;
+	private String specilist_from;
+	private String specilist_id;
+	
+}	
