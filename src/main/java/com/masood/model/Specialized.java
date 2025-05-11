@@ -2,8 +2,6 @@ package com.masood.model;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,7 +10,6 @@ import jakarta.persistence.Table;
 
 @Entity(name = "specialization")
 @Table(name = "specialization")
-@Component
 public class Specialized {
 	@Id
 	@Column(name = "specialization_id")

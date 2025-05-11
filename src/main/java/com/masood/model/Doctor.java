@@ -2,7 +2,6 @@ package com.masood.model;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,8 +15,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity(name = "Doctor")
-@Table(name = "Doctor_table")
-@Component
+@Table(name = "Doctor_detials")
 public class Doctor {
 	@Id
 	@Column(name = "doc_id")

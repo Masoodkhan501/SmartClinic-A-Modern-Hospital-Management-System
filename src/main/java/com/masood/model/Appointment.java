@@ -6,10 +6,16 @@ import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity(name = "appointment")
 @Table(name = "appointment_details")
@@ -19,17 +25,21 @@ public class Appointment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "a_id")
 	private Long app_id;
-
-	@Column(name = "doc_id")
+	
+	@ManyToOne
+	@JoinColumn(name = "doc_id")
 	private Doctor d_id;
 
-	@Column(name = "p_id")
+	@ManyToOne
+	@JoinColumn(name = "p_id")
 	private Patient p_id;
-
+	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
 	private LocalDate date_of_appointment;
-
-	@Column(name = "status")
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ap_status")
 	private Appointmentstatus status;
 
 	@Column(name = "notes")
@@ -100,5 +110,5 @@ public class Appointment {
 		return "Appointment [app_id=" + app_id + ", d_id=" + d_id + ", p_id=" + p_id + ", date_of_appointment="
 				+ date_of_appointment + ", status=" + status + ", notes=" + notes + "]";
 	}
-
+	
 }

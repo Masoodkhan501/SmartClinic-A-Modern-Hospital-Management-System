@@ -1,18 +1,17 @@
 package com.masood.model;
 
 import java.time.LocalDate;
-
-import org.springframework.stereotype.Component;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 @Entity(name="patient")
 @Table(name="patient_details")
-@Component
 public class Patient {
 	@Id
 	@Column(name="p_id")
@@ -30,6 +29,9 @@ public class Patient {
 	
 	@Column(name="p_b_group")
 	private String blood_group;
+	
+	@OneToMany(mappedBy = "patient_id")
+	private List<PatientBills> bills;
 
 	public Patient() {
 	}

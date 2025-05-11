@@ -2,8 +2,6 @@ package com.masood.model;
 
 import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,20 +12,24 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 @Entity(name="user")
 @Table(name="user_details")
-@Component
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="users_id")
 	private Long id;
+	
 	@Column(name="users_name")
 	private String name;
+	
 	@Column(name="users_email",unique = true)
 	private String email;
+	
 	@Column(name="users_password")
 	private String password;
+	
 	@Column(name="users_role")
 	private Role role;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="acc_created_date")
 	private Date createdAt;
