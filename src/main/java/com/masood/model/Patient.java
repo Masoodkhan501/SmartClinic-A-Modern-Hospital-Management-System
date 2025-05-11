@@ -10,38 +10,49 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-@Entity(name="patient")
-@Table(name="patient_details")
+
+@Entity(name = "patient")
+@Table(name = "patient_details")
 public class Patient {
 	@Id
-	@Column(name="p_id")
+	@Column(name = "p_id")
 	private String patient_Id;
-	
+
 	@OneToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user_id;
-	
-	@Column(name="date_of_birth")
+
+	@Column(name = "date_of_birth")
 	private LocalDate date_of_birth;
-	
-	@Column(name="p_gender")
+
+	@Column(name = "p_gender")
 	private String gender;
-	
-	@Column(name="p_b_group")
+
+	@Column(name = "p_b_group")
 	private String blood_group;
-	
+
 	@OneToMany(mappedBy = "patient_id")
 	private List<PatientBills> bills;
 
 	public Patient() {
 	}
 
-	public Patient(User user_id, LocalDate date_of_birth, String gender, String blood_group) 
-	{
+	public Patient(String patient_Id, User user_id, LocalDate date_of_birth, String gender, String blood_group,
+			List<PatientBills> bills) {
+		this.patient_Id = patient_Id;
 		this.user_id = user_id;
 		this.date_of_birth = date_of_birth;
 		this.gender = gender;
 		this.blood_group = blood_group;
+		this.bills = bills;
+	}
+
+	public List<PatientBills> getBills() {
+		return bills;
+	}
+
+	public void setBills(List<PatientBills> bills) {
+		this.bills = bills;
 	}
 
 	public String getPatient_Id() {
@@ -84,7 +95,6 @@ public class Patient {
 		this.blood_group = blood_group;
 	}
 
-	@Override
 	public String toString() {
 		return "Patient [patient_Id=" + patient_Id + ", user_id=" + user_id + ", date_of_birth=" + date_of_birth
 				+ ", gender=" + gender + ", blood_group=" + blood_group + "]";
