@@ -2,11 +2,33 @@ package com.masood.model;
 
 import java.time.LocalDate;
 
+import org.springframework.stereotype.Component;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+@Entity(name="patient")
+@Table(name="patient_details")
+@Component
 public class Patient {
+	@Id
+	@Column(name="p_id")
 	private String patient_Id;
+	
+	@OneToOne
+	@JoinColumn(name="user_id")
 	private User user_id;
+	
+	@Column(name="date_of_birth")
 	private LocalDate date_of_birth;
+	
+	@Column(name="p_gender")
 	private String gender;
+	
+	@Column(name="p_b_group")
 	private String blood_group;
 
 	public Patient() {
