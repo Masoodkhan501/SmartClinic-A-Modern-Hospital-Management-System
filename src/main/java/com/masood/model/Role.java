@@ -2,19 +2,7 @@ package com.masood.model;
 
 public enum Role 
 {
-	 ENGINEER,
-	 WORKER,
-	 POLITICIAN,
+	 ADMIN,
 	 DOCTOR,
-	 TEACHER,
-	 MILITARY,
-	 GOVT_SECURITY_GUARD,
-	 FARMER,
-	 BUSINESSMAN,
-	 ACTOR,
-	 DANCER,
-	 MUSICIAN,
-	 ARTIST,
-	 UNEMPLOYED,
-	 OTHER
+	 PATIENT
 }
