@@ -51,13 +51,13 @@ public class Doctor {
 		this.status = status;
 		this.payment = payment;
 	}
-
-	public List<Specialized> getSpecializations() {
+	
+	public List<Specialized> getSpecialized_at() {
 		return specializations;
 	}
 
-	public void setSpecializations(List<Specialized> specializations) {
-		this.specializations = specializations;
+	public void setSpecialized_at(List<Specialized> specialized_at) {
+		this.specializations = specialized_at;
 	}
 
 	public DoctorBills getPayment() {
@@ -84,13 +84,7 @@ public class Doctor {
 		this.user_id = user_id;
 	}
 
-	public List<Specialized> getSpecialized_at() {
-		return specializations;
-	}
-
-	public void setSpecialized_at(List<Specialized> specialized_at) {
-		this.specializations = specialized_at;
-	}
+	
 
 	public byte getExpreince() {
 		return expreince;

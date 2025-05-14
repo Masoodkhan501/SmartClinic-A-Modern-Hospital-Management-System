@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.masood.model.User;
 import com.masood.repository.UserRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service("userImplService")
+@Transactional
 public class UserImpl implements UserSeviceInterface {
 
 	@Autowired
@@ -21,41 +24,16 @@ public class UserImpl implements UserSeviceInterface {
 		return save;
 	}
 
-	public User findUserById(User user) {
-		Optional<User> gotUser = ur.findById(user.getId());
-		User foundUser = null;
-		try
-		{
-			foundUser = gotUser.orElseThrow(()->new RuntimeException("User Not found"));
-		}
-		catch(RuntimeException re)
-		{
-			System.out.println(re.getMessage());
-		}
-		return foundUser;
+	public Optional<User> findUserById(User user) {
+		return ur.findById(user.getId());
 	}
 
 	public List<User> getAllUser() {
-		List<User> all = ur.findAll();
-		if(all.isEmpty())
-		{
-			return null;
-		}
-		return all;
+		return ur.findAll();
 	}
 
-	public int deleteUserById(User user) {
-		User userById = findUserById(user);
-		if(userById!=null)
-		{
-			ur.deleteById(user.getId());
-			return 0;
-		}
-		else
-		{
-			return 1;
-		}
-		
+	public void deleteUserById(User user) {
+		ur.deleteById(user.getId());
 	}
 
 }
