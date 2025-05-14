@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masood.model.Doctor;
 import com.masood.model.Patient;
 import com.masood.repository.patientRepo;
 @Service("psi")
@@ -27,40 +26,34 @@ public class PatientServiceimpl implements PatientServiceInterface
 		} else {
 			id = "PAT001";
 		}
-		d.setDoc_id(id);
+		p.setPatient_Id(id);
 		Patient save = pr.save(p);
 		return save;
-		return null;
 	}
 
-	@Override
-	public Optional<Patient> getPatientById(String id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public Optional<Patient> getPatientById(String id) 
+	{
+		return pr.findById(id);
 	}
 
-	@Override
-	public List<Patient> getAllPatient() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Patient> getAllPatient() 
+	{
+		return pr.findAll();
 	}
 
-	@Override
-	public void deletePatientById(String id) {
-		// TODO Auto-generated method stub
-
+	public void deletePatientById(String id)
+	{
+		pr.deleteById(id);
 	}
 
-	@Override
-	public Patient getByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public Patient getByEmail(String email) 
+	{
+		return pr.findByEmail(email);
 	}
 
-	@Override
-	public Patient getByNameLike(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Patient getByNameLike(String name)
+	{
+		return pr.findByNameLike(name);
 	}
 
 }
