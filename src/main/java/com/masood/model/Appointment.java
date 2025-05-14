@@ -25,7 +25,7 @@ public class Appointment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "a_id")
 	private Long app_id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "doc_id")
 	private Doctor d_id;
@@ -33,11 +33,15 @@ public class Appointment {
 	@ManyToOne
 	@JoinColumn(name = "p_id")
 	private Patient p_id;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "disease_id")
+	private Disease disease;
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
 	private LocalDate date_of_appointment;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ap_status")
 	private Appointmentstatus status;
@@ -48,10 +52,11 @@ public class Appointment {
 	public Appointment() {
 	}
 
-	public Appointment(Doctor d_id, Patient p_id, LocalDate date_of_appointment, Appointmentstatus status,
-			String notes) {
+	public Appointment(Doctor d_id, Patient p_id, Disease disease, LocalDate date_of_appointment,
+			Appointmentstatus status, String notes) {
 		this.d_id = d_id;
 		this.p_id = p_id;
+		this.disease = disease;
 		this.date_of_appointment = date_of_appointment;
 		this.status = status;
 		this.notes = notes;
@@ -105,10 +110,17 @@ public class Appointment {
 		this.notes = notes;
 	}
 
-	@Override
-	public String toString() {
-		return "Appointment [app_id=" + app_id + ", d_id=" + d_id + ", p_id=" + p_id + ", date_of_appointment="
-				+ date_of_appointment + ", status=" + status + ", notes=" + notes + "]";
+	public Disease getDisease() {
+		return disease;
 	}
-	
+
+	public void setDisease(Disease disease) {
+		this.disease = disease;
+	}
+
+	public String toString() {
+		return "Appointment [app_id=" + app_id + ", d_id=" + d_id + ", p_id=" + p_id + ", disease=" + disease
+				+ ", date_of_appointment=" + date_of_appointment + ", status=" + status + ", notes=" + notes + "]";
+	}
+
 }

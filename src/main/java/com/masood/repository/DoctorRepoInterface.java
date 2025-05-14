@@ -14,7 +14,7 @@ public interface DoctorRepoInterface extends JpaRepository<Doctor, String>
 	public List<Doctor> findBySpecialization(String specialization);
 	public List<Doctor> findTop5ByOrderByYearsOfExperienceDesc();
 	@Query("select d from Doctor d where LOWER(d.user_id.name) LIKE LOWER(CONCAT( '%' ,:name,'%'))")
-	public List<Doctor>	findByNameLike(String name);
+	public List<Doctor>	findByNameLike(@Param("name") String name);
 	@Query("SELECT MAX(d.doc_id) FROM Doctor d")
 	public String findLastEntry();
 }

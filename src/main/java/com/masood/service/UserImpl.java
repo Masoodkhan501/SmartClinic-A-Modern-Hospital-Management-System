@@ -24,16 +24,16 @@ public class UserImpl implements UserSeviceInterface {
 		return save;
 	}
 
-	public Optional<User> findUserById(User user) {
-		return ur.findById(user.getId());
+	public Optional<User> findUserById(Long id) {
+		return ur.findById(id);
 	}
 
 	public List<User> getAllUser() {
 		return ur.findAll();
 	}
 
-	public void deleteUserById(User user) {
-		ur.deleteById(user.getId());
+	public void deleteUserById(Long id) {
+		ur.deleteById(id);
 	}
 
 }

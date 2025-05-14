@@ -8,9 +8,9 @@ import com.masood.model.Doctor;
 public interface DoctorServiceInterface 
 {
 	public Doctor saveDoctor(Doctor d);
-	public Optional<Doctor> getDoctorById(Doctor d);
+	public Optional<Doctor> getDoctorById(String id);
 	public List<Doctor> getAllDoctor();
-	public void DeleteDoctorById(Doctor d);
+	public void DeleteDoctorById(String id);
 	public Doctor getByEmail(String email);
 	public List<Doctor> getBySpecialization(String specialization);
 	public List<Doctor> getTop5Doctors();

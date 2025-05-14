@@ -38,8 +38,8 @@ public class DoctorSerivce implements DoctorServiceInterface {
 		return save;
 	}
 
-	public Optional<Doctor> getDoctorById(Doctor d) {
-		return dr.findById(d.getDoc_id());
+	public Optional<Doctor> getDoctorById(String id) {
+		return dr.findById(id);
 	}
 
 	public List<Doctor> getAllDoctor() {
@@ -47,8 +47,8 @@ public class DoctorSerivce implements DoctorServiceInterface {
 		return all;
 	}
 
-	public void DeleteDoctorById(Doctor d) {
-		dr.deleteById(d.getDoc_id());
+	public void DeleteDoctorById(String id) {
+		dr.deleteById(id);
 	}
 
 	public Doctor getByEmail(String email)
