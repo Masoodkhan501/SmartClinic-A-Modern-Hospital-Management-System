@@ -36,10 +36,9 @@ public class AppointmentService implements AppointmentInterface
 		ar.deleteById(id);
 	}
 
-	@Override
-	public List<Appointment> getAppointmentByStatus(String Status) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Appointment> getAppointmentByStatus(String Status)
+	{
+		return ;
 	}
 
 	@Override
@@ -62,6 +61,18 @@ public class AppointmentService implements AppointmentInterface
 
 	@Override
 	public List<Appointment> getByDoctor(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Appointment> getByDoctorName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Appointment> getByPatientName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

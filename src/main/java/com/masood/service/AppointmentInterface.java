@@ -17,4 +17,6 @@ public interface AppointmentInterface
 	public List<Appointment> getByDate(LocalDate date);
 	public List<Appointment> getByPatient(String id);
 	public List<Appointment> getByDoctor(String id);
+	public List<Appointment> getByDoctorName(String name);
+	public List<Appointment> getByPatientName(String name);
 }
