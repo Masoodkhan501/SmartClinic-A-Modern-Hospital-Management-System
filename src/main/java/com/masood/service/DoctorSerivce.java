@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.Doctor;
+import com.masood.model.User;
 import com.masood.repository.DoctorRepoInterface;
 
 import jakarta.transaction.Transactional;
@@ -19,10 +20,11 @@ public class DoctorSerivce implements DoctorServiceInterface {
 
 	@Autowired
 	private DoctorRepoInterface dr;
-
+	@Autowired
+	private UserImpl ur;
    
 
-	public Doctor saveDoctor(Doctor d) {
+	public Doctor saveDoctor(Doctor d,User u) {
 		String lastEntry = dr.findLastEntry();
 		String id = "";
 		if (lastEntry != null) {
@@ -33,7 +35,9 @@ public class DoctorSerivce implements DoctorServiceInterface {
 		} else {
 			id = "DOC001";
 		}
+		User saveUser = ur.saveUser(u);
 		d.setDoc_id(id);
+		d.setUser_id(saveUser);
 		Doctor save = dr.save(d);
 		return save;
 	}

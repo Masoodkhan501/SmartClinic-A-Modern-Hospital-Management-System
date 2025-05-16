@@ -7,14 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.Patient;
+import com.masood.model.User;
 import com.masood.repository.patientRepo;
+
+import jakarta.transaction.Transactional;
 @Service("psi")
+@Transactional
 public class PatientServiceimpl implements PatientServiceInterface
 {
 	@Autowired
 	private patientRepo pr;
+	@Autowired
+	private UserImpl ur;
 	
-	public Patient savePatient(Patient p) 
+	public Patient savePatient(Patient p,User u) 
 	{
 		String lastEntry = pr.findLastEntry();
 		String id = "";
@@ -26,7 +32,9 @@ public class PatientServiceimpl implements PatientServiceInterface
 		} else {
 			id = "PAT001";
 		}
+		User save2 = ur.saveUser(u);
 		p.setPatient_Id(id);
+		p.setUser_id(save2);
 		Patient save = pr.save(p);
 		return save;
 	}
