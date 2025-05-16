@@ -2,8 +2,6 @@ package com.masood.model;
 
 import java.time.LocalDate;
 
-import org.springframework.stereotype.Component;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,12 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity(name = "appointment")
 @Table(name = "appointment_details")
-@Component
 public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +33,6 @@ public class Appointment {
 	@JoinColumn(name = "disease_id")
 	private Disease disease;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
 	private LocalDate date_of_appointment;
 
