@@ -8,9 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.masood.model.Appointment;
+import com.masood.model.Appointmentstatus;
 public interface AppointmentRepo extends JpaRepository<Appointment, Long> 
 {
-	public List<Appointment> findAppointmentByStatus(String status);
+	public List<Appointment> findAppointmentByStatus(Appointmentstatus status);
 	@Query("select a from appointment a where LOWER (a.disease.name) LIKE LOWER (CONCAT('%',':disease','%'))")
 	public List<Appointment> findAppointmentByDisease(@Param("disease") String disease);
 	public List<Appointment> findByDate(LocalDate date);

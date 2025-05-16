@@ -1,6 +1,7 @@
 package com.masood.service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.Appointment;
+import com.masood.model.Appointmentstatus;
 import com.masood.repository.AppointmentRepo;
 @Service("Appointmentservice")
 public class AppointmentService implements AppointmentInterface
@@ -36,45 +38,41 @@ public class AppointmentService implements AppointmentInterface
 		ar.deleteById(id);
 	}
 
-	public List<Appointment> getAppointmentByStatus(String Status)
+	public List<Appointment> getAppointmentByStatus(Appointmentstatus Status)
 	{
-		return ;
+		return ar.findAppointmentByStatus(Status);
 	}
 
-	@Override
-	public List<Appointment> getAppointmentByDisease(String disease) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Appointment> getAppointmentByDisease(String disease) 
+	{
+		return ar.findAppointmentByDisease(disease);
 	}
 
-	@Override
-	public List<Appointment> getByDate(LocalDate date) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Appointment> getByDate(LocalDate date)
+	{
+		return ar.findByDate(date);
 	}
 
-	@Override
-	public List<Appointment> getByPatient(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Appointment> getByPatient(String id)
+	{
+		return ar.findByPatient(id);
 	}
 
-	@Override
-	public List<Appointment> getByDoctor(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Appointment> getByDoctor(String id)
+	{
+		return ar.findByDoctor(id);
 	}
 
-	@Override
 	public List<Appointment> getByDoctorName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return ar.findByDoctorName(name);
 	}
 
-	@Override
 	public List<Appointment> getByPatientName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return ar.findByPatientName(name);
+	}
+
+	public List<Appointmentstatus> getAppointmentStatus() {
+		 return Arrays.asList(Appointmentstatus.values());
 	}
 
 }
