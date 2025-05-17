@@ -9,18 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.Appointment;
+import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
+import com.masood.repository.AppointmentHistoryRepo;
 import com.masood.repository.AppointmentRepo;
+
+import jakarta.transaction.Transactional;
 @Service("Appointmentservice")
+@Transactional
 public class AppointmentService implements AppointmentInterface
 {
 	@Autowired
 	private AppointmentRepo ar;
+	@Autowired
+	private AppointmentHistoryRepo ahr;
 
-	public Appointment saveAppointment(Appointment a)
+	public Appointment saveAppointment(Appointment a,AppointmentHIstory ah)
 	{
-		return ar.save(a);
-		
+		Appointment save = ar.save(a);
+		ah.setAppoint_id(a);
+		ahr.save(ah);
+		return save;
 	}
 
 	public Optional<Appointment> getAppointmentbyId(Long id) 

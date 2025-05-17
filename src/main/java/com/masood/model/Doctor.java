@@ -37,13 +37,13 @@ public class Doctor {
 	private Status status;
 
 	@OneToMany(mappedBy = "doctor")
-	private DoctorBills payment;
+	private List<DoctorBills> payment;
 
 	public Doctor() {
 	}
 
 	public Doctor(String doc_id, User user_id, List<Specialized> specializations, byte expreince, Status status,
-			DoctorBills payment) {
+			List<DoctorBills> payment) {
 		this.doc_id = doc_id;
 		this.user_id = user_id;
 		this.specializations = specializations;
@@ -60,11 +60,11 @@ public class Doctor {
 		this.specializations = specialized_at;
 	}
 
-	public DoctorBills getPayment() {
+	public List<DoctorBills> getPayment() {
 		return payment;
 	}
 
-	public void setPayment(DoctorBills payment) {
+	public void setPayment(List<DoctorBills> payment) {
 		this.payment = payment;
 	}
 

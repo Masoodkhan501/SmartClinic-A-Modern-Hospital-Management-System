@@ -1,11 +1,18 @@
 package com.masood.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.masood.model.PatientBills;
-@Repository("patientBillsRepo")
 public interface PatientBillsRepo extends JpaRepository<PatientBills, Long>
 {
-
+	@Query("select p from Patientbills p where p.doctor.doc_id = :id")
+	public List<PatientBills> findByPatientId(@Param("id") String id);
+	@Query("delete p from Patientbills p where p.doctor.doc_id = :id")
+	public void DeleteBillsByPatientId(@Param("id") String id);
+	@Query("select db from DoctorBills db where LOWER(db.doctor.user_id.name) LIKE (CONCAT('%',:name,'%'))")
+	public List<PatientBills> findBillsByPatientNameLike(@Param("name") String name);
 }

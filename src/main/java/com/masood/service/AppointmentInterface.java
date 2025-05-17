@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.masood.model.Appointment;
+import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
 
 public interface AppointmentInterface 
 {
-	public Appointment saveAppointment(Appointment a);
+	public Appointment saveAppointment(Appointment a,AppointmentHIstory ah);
 	public Optional<Appointment> getAppointmentbyId(Long id);
 	public List<Appointment> getAllAppointment();
 	public void deleteAppointmentById(Long id);
