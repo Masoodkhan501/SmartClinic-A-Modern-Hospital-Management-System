@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.PatientBills;
+import com.masood.model.PaymentStatus;
 import com.masood.repository.PatientBillsRepo;
 @Service("patientBillservice")
 public class PatientBillsImpl implements PatientBillsInterface 
@@ -40,6 +41,10 @@ public class PatientBillsImpl implements PatientBillsInterface
 
 	public List<PatientBills> getAllBillsByPatientName(String name) {
 		return pbr.findBillsByPatientNameLike(name);
+	}
+
+	public List<PatientBills> getByPaymentStatus(PaymentStatus status) {
+		return pbr.findByPaymentDetails(status);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.masood.model.PatientBills;
+import com.masood.model.PaymentStatus;
 
 public interface PatientBillsInterface 
 {
@@ -14,4 +15,5 @@ public interface PatientBillsInterface
 	public void DeleteAllbillsByPatientId(String id);
 	public List<PatientBills> getAllBillsByPatientId(String id);
 	public List<PatientBills> getAllBillsByPatientName(String name);
+	public List<PatientBills> getByPaymentStatus(PaymentStatus status);
 }
