@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.masood.model.Doctor;
+import com.masood.model.Status;
 import com.masood.model.User;
 
 public interface DoctorServiceInterface 
@@ -16,4 +17,5 @@ public interface DoctorServiceInterface
 	public List<Doctor> getBySpecialization(String specialization);
 	public List<Doctor> getTop5Doctors();
 	public List<Doctor> getByNameAndSpecialization(String name, String specialization);
+	public List<Doctor> getByStatus(Status status);
 }

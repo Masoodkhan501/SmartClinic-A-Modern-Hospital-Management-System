@@ -81,4 +81,8 @@ public class DoctorSerivce implements DoctorServiceInterface {
 	{
 		return Arrays.asList(Status.values());
 	}
+
+	public List<Doctor> getByStatus(Status status) {
+		return dr.findDoctorsByStatus(status);
+	}
 }
