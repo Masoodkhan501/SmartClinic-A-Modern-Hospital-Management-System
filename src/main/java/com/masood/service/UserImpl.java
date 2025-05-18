@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masood.model.Role;
 import com.masood.model.User;
 import com.masood.repository.UserRepo;
 
@@ -34,6 +35,10 @@ public class UserImpl implements UserSeviceInterface {
 
 	public void deleteUserById(Long id) {
 		ur.deleteById(id);
+	}
+
+	public Optional<User> getByRole(Role role) {
+		return ur.findByRole(role);
 	}
 
 }
