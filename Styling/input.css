@@ -2,5 +2,5 @@
 
 @theme
 {
-    font-cursive : "Yellowtail", cursive;
+    --font-cursive : "Yellowtail", cursive;
 }
