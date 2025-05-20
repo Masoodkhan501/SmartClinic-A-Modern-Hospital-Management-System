@@ -28,9 +28,9 @@ public class HomeController
 		String firstpage="";
 		Optional<User> byRole = us.getByRole(Role.ADMIN);
 		if(byRole.isEmpty())
-			firstpage="redirect:admin_login";
+			firstpage="redirect:/admin/login";
 		else
-			firstpage="redirect:home";
+			firstpage="redirect:/home";
 		return firstpage;
 	}
 	
@@ -39,7 +39,7 @@ public class HomeController
 	{
 		User u = new User();
 		model.addAttribute("user", u);
-		return "save_admin";
+		return "admin_login";
 	}
 	
 	@PostMapping("/save/admin")
@@ -56,7 +56,7 @@ public class HomeController
 		else
 		{
 			model.addAttribute("user", u);
-			return "redirect:admin_login";
+			return "admin_login";
 		}
 		return "redirect:admin_homePage";
 	}

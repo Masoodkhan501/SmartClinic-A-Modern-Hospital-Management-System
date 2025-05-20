@@ -47,8 +47,8 @@ public class PriscriptionServiceImpl implements PrescriptionInterface
 		return pr.findByPatientName(name);
 	}
 
-	public Optional<priscription> getByAppointmentId(Long id) {
-		return pr.findByAppointmentId(id);
+	public Optional<priscription> getByAppointmentId(Long id ) {
+		return pr.findByAppointid(id);
 	}
 
 }

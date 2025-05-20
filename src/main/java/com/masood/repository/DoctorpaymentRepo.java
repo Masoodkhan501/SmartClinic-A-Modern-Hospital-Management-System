@@ -11,7 +11,7 @@ public interface DoctorpaymentRepo extends JpaRepository<DoctorBills, Long>
 {
 	@Query("select d from DoctorBills d where d.doctor.doc_id = :id")
 	public List<DoctorBills> findByDoctorId(String id);
-	@Query("delete d from DoctorBills d where d.doctor.doc_id = :id")
+	@Query("delete from DoctorBills d where d.doctor.doc_id = :id")
 	public void DeleteBillsByDoctorId(String id);
 	@Query("select db from DoctorBills db where LOWER(db.doctor.user_id.name) LIKE (CONCAT('%',:name,'%'))")
 	public List<DoctorBills> findBillsByDoctorNameLike(@Param("name") String name);

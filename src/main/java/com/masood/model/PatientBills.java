@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -58,16 +57,13 @@ public class PatientBills
 	@Column(name="payment_status")
 	private PaymentStatus pay_status;
 	
-	@OneToMany
-	@JoinColumn(name="patient_id",nullable = true)
-	private Patient patient;
 
 	public PatientBills() {
 	}
 
 	public PatientBills(Patient patient_id, Date billdate, Double consultancyFees, Double treatmentFees,
 			Double medicationFees, Double roomcharges, Double labcharges, Double discount, Double total_charges,
-			PaymentStatus pay_status, Patient patient) {
+			PaymentStatus pay_status) {
 		this.patient_id = patient_id;
 		this.billdate = billdate;
 		this.consultancyFees = consultancyFees;
@@ -78,7 +74,6 @@ public class PatientBills
 		this.discount = discount;
 		this.total_charges = total_charges;
 		this.pay_status = pay_status;
-		this.patient = patient;
 	}
 
 	public Long getPatientBill_id() {
@@ -169,13 +164,6 @@ public class PatientBills
 		this.pay_status = pay_status;
 	}
 
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
 
 	public String toString() {
 	    StringBuilder sb = new StringBuilder("PatientBills [");
@@ -191,7 +179,6 @@ public class PatientBills
 	    if (discount != null) sb.append("discount=").append(discount).append(", ");
 	    if (total_charges != null) sb.append("total_charges=").append(total_charges).append(", ");
 	    if (pay_status != null) sb.append("pay_status=").append(pay_status).append(", ");
-	    if (patient != null) sb.append("patient=").append(patient);
 
 	    // Remove trailing comma and space if present
 	    int length = sb.length();

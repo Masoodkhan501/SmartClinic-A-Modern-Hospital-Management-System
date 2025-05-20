@@ -1,7 +1,7 @@
 package com.masood.service;
 
-import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,9 +57,9 @@ public class AppointmentService implements AppointmentInterface
 		return ar.findAppointmentByDisease(disease);
 	}
 
-	public List<Appointment> getByDate(LocalDate date)
+	public List<Appointment> getByDate(Date date)
 	{
-		return ar.findByDate(date);
+		return ar.findByDateofAppointment(date);
 	}
 
 	public List<Appointment> getByPatient(String id)
@@ -83,5 +83,7 @@ public class AppointmentService implements AppointmentInterface
 	public List<Appointmentstatus> getAppointmentStatus() {
 		 return Arrays.asList(Appointmentstatus.values());
 	}
+
+	
 
 }

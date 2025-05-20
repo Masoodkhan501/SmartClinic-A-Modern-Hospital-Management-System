@@ -22,6 +22,7 @@ public interface MessageRepo extends JpaRepository<Message, Long>
     public List<Message> findByReceiverName(String name);
 
     // Find all messages between two users
+    @Query("SELECT m FROM Message m WHERE m.sender.id = :senderId AND m.receiver.id = :receiverId")
     public List<Message> findBySenderAndReceiver(Long sender, Long receiver);
 
     // Find messages by status (e.g., SENT, READ)
@@ -36,14 +37,14 @@ public interface MessageRepo extends JpaRepository<Message, Long>
     @Query("SELECT m FROM Message m WHERE m.receiver.role = 'PATIENT' AND m.receiver.id = :patientUserId")
     public List<Message> findByPatientReceiverId(Long patientUserId);
     
-    public List<Message> findByDate(LocalDate date);
+    public List<Message> findBySentAt(LocalDate date);
     
     void deleteBySender_Id(Long senderId);
     void deleteByReceiver_Id(Long receiverId);	
     
-    @Query("DELETE FROM Message m WHERE m.receiver.username = :receiverUsername")
+    @Query("DELETE FROM Message m WHERE m.receiver.name = :receiverUsername")
     void deleteByReceiverUsername(@Param("receiverUsername") String receiverUsername);
     
-    @Query("DELETE FROM Message m WHERE m.receiver.username = :senderUsername")
+    @Query("DELETE FROM Message m WHERE m.receiver.name = :senderUsername")
     void deleteBySenderUsername(@Param("senderUsername") String senderUsername);
 }

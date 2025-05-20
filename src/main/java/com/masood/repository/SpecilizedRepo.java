@@ -15,5 +15,6 @@ public interface SpecilizedRepo extends JpaRepository<Specialized, String>
 	public List<Specialized> findByDoctorId(@Param("id") String id);
 	@Query("select s from specialization s JOIN s.specilist d WHERE LOWER(d.user_id.name) LIKE LOWER(CONCAT('%',:name,'%'))")
 	public List<Specialized> findByDoctorName(String name);
+	@Query("delete from specialization s where LOWER(s.specialization) LIKE LOWER(CONCAT('%',:name,'%'))")
 	public void deleteSpecializationByName(String name);
 }

@@ -47,7 +47,7 @@ public class MessageService implements MessageInterface
 	}
 
 	public List<Message> getMessagesByDate(LocalDate date) {
-		return mr.findByDate(date);
+		return mr.findBySentAt(date);
 	}
 
 	public void deleteMessage(Long id) {

@@ -12,6 +12,6 @@ public interface DiseaseRepo extends JpaRepository<Disease, Long>
 {
 	public Disease findDiseaseByName(String name);
 	public void deleteByName(String name);
-	@Query("select d from Disease d where LOWER(a.description) LIKE (CONCAT('%',:description,'%'))")
+	@Query("select d from Disease d where LOWER(d.description) LIKE (CONCAT('%',:description,'%'))")
 	public List<Disease> findBydescription(@Param("description") String description);
 }

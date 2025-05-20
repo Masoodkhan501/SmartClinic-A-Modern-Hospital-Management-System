@@ -67,7 +67,7 @@ public class DoctorSerivce implements DoctorServiceInterface {
 	}
 
 	public List<Doctor> getTop5Doctors() {
-		return dr.findTop5ByOrderByYearsOfExperienceDesc();
+		return dr.findTop5ByOrderByExpreinceDesc();
 	}
 
 	public List<Doctor> getByNameAndSpecialization(String name, String specialization) {

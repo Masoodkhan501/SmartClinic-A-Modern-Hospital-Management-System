@@ -1,6 +1,6 @@
 package com.masood.service;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +16,7 @@ public interface AppointmentInterface
 	public void deleteAppointmentById(Long id);
 	public List<Appointment> getAppointmentByStatus(Appointmentstatus Status);
 	public List<Appointment> getAppointmentByDisease(String disease);
-	public List<Appointment> getByDate(LocalDate date);
+	public List<Appointment> getByDate(Date date);
 	public List<Appointment> getByPatient(String id);
 	public List<Appointment> getByDoctor(String id);
 	public List<Appointment> getByDoctorName(String name);

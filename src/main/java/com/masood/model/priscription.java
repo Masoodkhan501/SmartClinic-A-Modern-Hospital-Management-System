@@ -19,7 +19,7 @@ public class priscription {
 	
 	@OneToOne
 	@JoinColumn(name="appoint_id")
-	private Appointment appoint_id;
+	private Appointment appointid;
 	
 	@Column(name="diagnosis")
 	private String diagnosis;
@@ -34,7 +34,7 @@ public class priscription {
 	}
 
 	public priscription(Appointment appoint_id, String diagnosis, String medicines, String advice) {
-		this.appoint_id = appoint_id;
+		this.appointid = appoint_id;
 		this.diagnosis = diagnosis;
 		this.medicines = medicines;
 		this.advice = advice;
@@ -48,12 +48,12 @@ public class priscription {
 		this.id = id;
 	}
 
-	public Appointment getAppoint_id() {
-		return appoint_id;
+	public Appointment getAppointid() {
+		return appointid;
 	}
 
-	public void setAppoint_id(Appointment appoint_id) {
-		this.appoint_id = appoint_id;
+	public void setAppointid(Appointment appoint_id) {
+		this.appointid = appoint_id;
 	}
 
 	public String getDiagnosis() {
@@ -81,7 +81,7 @@ public class priscription {
 	}
 
 	public String toString() {
-		return "priscription [id=" + id + ", appoint_id=" + appoint_id + ", diagnosis=" + diagnosis + ", medicines="
+		return "priscription [id=" + id + ", appoint_id=" + appointid + ", diagnosis=" + diagnosis + ", medicines="
 				+ medicines + ", advice=" + advice + "]";
 	}
 

@@ -1,6 +1,6 @@
 package com.masood.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity(name = "appointment")
 @Table(name = "appointment_details")
@@ -33,8 +35,9 @@ public class Appointment {
 	@JoinColumn(name = "disease_id")
 	private Disease disease;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
-	private LocalDate date_of_appointment;
+	private Date dateofAppointment;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ap_status")
@@ -46,12 +49,12 @@ public class Appointment {
 	public Appointment() {
 	}
 
-	public Appointment(Doctor d_id, Patient p_id, Disease disease, LocalDate date_of_appointment,
+	public Appointment(Doctor d_id, Patient p_id, Disease disease, Date date_of_appointment,
 			Appointmentstatus status, String notes) {
 		this.d_id = d_id;
 		this.p_id = p_id;
 		this.disease = disease;
-		this.date_of_appointment = date_of_appointment;
+		this.dateofAppointment = date_of_appointment;
 		this.status = status;
 		this.notes = notes;
 	}
@@ -64,15 +67,15 @@ public class Appointment {
 		this.app_id = app_id;
 	}
 
-	public Doctor getD_id() {
+	public Doctor getDoctor() {
 		return d_id;
 	}
 
 	public void setD_id(Doctor d_id) {
-		this.d_id = d_id;
+		this.d_id= d_id;
 	}
 
-	public Patient getP_id() {
+	public Patient getPatient() {
 		return p_id;
 	}
 
@@ -80,12 +83,12 @@ public class Appointment {
 		this.p_id = p_id;
 	}
 
-	public LocalDate getDate_of_appointment() {
-		return date_of_appointment;
+	public Date getdateofAppointment() {
+		return dateofAppointment;
 	}
 
-	public void setDate_of_appointment(LocalDate date_of_appointment) {
-		this.date_of_appointment = date_of_appointment;
+	public void setdateofAppointment(Date date_of_appointment) {
+		this.dateofAppointment = date_of_appointment;
 	}
 
 	public Appointmentstatus getStatus() {
@@ -114,7 +117,7 @@ public class Appointment {
 
 	public String toString() {
 		return "Appointment [app_id=" + app_id + ", d_id=" + d_id + ", p_id=" + p_id + ", disease=" + disease
-				+ ", date_of_appointment=" + date_of_appointment + ", status=" + status + ", notes=" + notes + "]";
+				+ ", date_of_appointment=" + dateofAppointment + ", status=" + status + ", notes=" + notes + "]";
 	}
 
 }
