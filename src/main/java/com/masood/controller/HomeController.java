@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.masood.model.Role;
 import com.masood.model.User;
 import com.masood.service.UserImpl;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller("homeContorller")
@@ -39,10 +42,13 @@ public class HomeController
 		return "save_admin";
 	}
 	
-	public String saveAdmin(@ModelAttribute("user") User u ,Model model)
+	@PostMapping("/save/admin")
+	public String postMethodName(@ModelAttribute("user") User u, Model model)
 	{
-		User saved = us.saveUser(u);
-		model.addAttribute("user", saved);
+		u.setCreatedAt();
+		us.saveUser(u);
 		return "redirect:admin_homePage";
 	}
+	
+	
 }

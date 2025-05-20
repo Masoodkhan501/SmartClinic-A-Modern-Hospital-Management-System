@@ -5,24 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/output.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Yellowtail&display=swap');
-    </style>
-
+    <link rel="stylesheet" th:href="@{css/output.css}">
 </head>
 
-<body style="background-image: url('../static/images/7575295c-9919-4705-aaf5-c5b098323722.png');">
-    <div class="container" >
-        <div class="logo">
-
-        </div>
-        <div class="main">
-            <div class="adminlogo">
-
+<body>
+    <div class="container w-screen h-screen bg-contain"
+        style="background-image: url('../static/images/Screenshot\ 2025-05-19\ 222748.png');">
+        <div class="head flex justify-center gap-x-24 pt-10">
+            <div class="logo">
+                <img th:src="@{images/ChatGPT Image May 19, 2025, 03_00_19 PM.png}" alt="Hospital logo"
+                    class="h-32 w-auto pl-28">
             </div>
-            <div class="form">
-
+            <div class="heading flex-col">
+                <p class=" text-2xl md:text-8xl">HOSPITAL</p>
+                <p class="text-end md:text-3xl md:font-bold text-gray-400">Admin Login</p>
+            </div>
+        </div>
+        <div class="main flex w-2/3 mx-auto mt-10">
+            <div class="left w-1/2 bg-sky-100 p-10" >
+                <form action="/save/admin" method="post" th:object="${user}">
+                    <input type="text" th:field="*{name}" placeholder="name" required class="w-full border-2 m-2 p-2 rounded-xl">
+                    <input type="email" th:field="*{email}" placeholder="example@gmail.com" required
+                        class="w-full border-2 m-2 p-2 rounded-xl">
+                    <input type="password" th:field="*{password}" placeholder="password" required class="w-full border-2 m-2 p-2 rounded-xl">
+                    <input type="password"  placeholder="confirm password" name="confirm password" required
+                        class="w-full border-2 m-2 p-2 rounded-xl">
+                    <input type="text" th:field="role" hidden value="ADMIN" name="role">
+                    <div class="submitbutton flex justify-center">
+                        <input type="submit" value="sign in" class="w-2/3 bg-sky-800 text-white border-2 m-2 p-2 rounded-xl 
+                        hover:bg-sky-700">
+                    </div>
+                </form>
+            </div>
+            <div class="right w-1/2 bg-sky-800 flex items-center justify-center">
+                <img th:src="@{images/Secure login-pana.png}" alt="a image of login" class="w-auto h-72 ">
             </div>
         </div>
     </div>

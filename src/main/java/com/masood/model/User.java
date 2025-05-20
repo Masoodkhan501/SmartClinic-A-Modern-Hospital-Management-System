@@ -89,8 +89,8 @@ public class User {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setCreatedAt() {
+		this.createdAt = new Date();
 	}
 
 	@Override
