@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.masood.model.Role;
 import com.masood.model.User;
 import com.masood.service.UserImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -43,10 +43,21 @@ public class HomeController
 	}
 	
 	@PostMapping("/save/admin")
-	public String postMethodName(@ModelAttribute("user") User u, Model model)
+	public String postMethodName(@ModelAttribute("user") User u,
+			@RequestParam("confirmPassword") String confirmPass,
+			Model model)
 	{
-		u.setCreatedAt();
-		us.saveUser(u);
+		if(u.getPassword().equals(confirmPass))
+		{
+			u.setCreatedAt();
+			u.setRole(Role.ADMIN);
+			us.saveUser(u);
+		}
+		else
+		{
+			model.addAttribute("user", u);
+			return "redirect:admin_login";
+		}
 		return "redirect:admin_homePage";
 	}
 	
