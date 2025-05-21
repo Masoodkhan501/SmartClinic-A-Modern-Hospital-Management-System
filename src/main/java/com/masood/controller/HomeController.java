@@ -61,5 +61,9 @@ public class HomeController
 		return "redirect:admin_homePage";
 	}
 	
-	
+	@GetMapping("/home")
+	public String Home()
+	{
+		return "Home";
+	}
 }
