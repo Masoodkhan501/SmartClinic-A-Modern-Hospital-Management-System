@@ -30,14 +30,14 @@
                     <li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
                             href="#Reviews">Patient Reviews</a></li>
                     <li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
-                            th:href="/career/doctor">Career</a></li>
+                            th:href="@{/career/doctor}">Career</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="main">
             <div class="front h-2/3 bg-cover bg-left p-10"
-                style="background-image: url('@{/images/Blog\ 2\ image\ and\ text\ 04.jpg}');">
+                th:style="'background-image: url(\'' + @{/images/backgroundimageforlandingpage.jpg} + '\');'">
                 <div class="w-2/3 p-10 text-white">
                     <p class="text-7xl pb-5 font-roboto font-bold">Your Health is</p>
                     <p class="text-7xl pb-5 font-roboto font-bold">Our Priority</p>
@@ -187,7 +187,7 @@
     <footer class="bg-sky-800 text-white py-10 mt-16">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 sm:px-0">
                 <div class="col-span-1 lg:col-span-1 text-center md:text-left">
-                    <img src="@{/images/2c972fe1-53ca-42e8-94b4-36a7ac99440d.png}" alt="CareWell Hospital Logo" class="h-20 mx-auto md:mx-0 mb-4 filter brightness-0 invert">
+                    <img th:src="@{/images/2c972fe1-53ca-42e8-94b4-36a7ac99440d.png}" alt="CareWell Hospital Logo" class="h-20 mx-auto md:mx-0 mb-4 filter brightness-0 invert">
                     <p class="text-sm text-sky-200">
                         CareWell Hospital is committed to providing cutting-edge medical care with a compassionate touch. Your health is our priority.
                     </p>
@@ -200,8 +200,8 @@
                         <li><a href="#AboutUs" class="hover:underline">About Us</a></li>
                         <li><a href="#Provided" class="hover:underline">Why Choose Us</a></li>
                         <li><a href="#Reviews" class="hover:underline">Patient Reviews</a></li>
-                        <li><a href="/career/doctor" class="hover:underline">Career</a></li>
-                        <li><a href="/login/user" class="hover:underline">Login / Sign Up</a></li>
+                        <li><a th:href="@{/career/doctor}" class="hover:underline">Career</a></li>
+                        <li><a th:href="@{/login/user}" class="hover:underline">Login / Sign Up</a></li>
                     </ul>
                 </div>
 
