@@ -66,4 +66,12 @@ public class HomeController
 	{
 		return "Home";
 	}
+
+	@GetMapping("/book/appointment")
+	public String PatientLogin(Model model)
+	{
+		User u = new User();
+		model.addAttribute("User", u);
+		return "UserLogin";
+	}
 }
