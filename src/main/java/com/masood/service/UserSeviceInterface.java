@@ -13,4 +13,7 @@ public interface UserSeviceInterface
 	public List<User> getAllUser();
 	public void deleteUserById(Long id);
 	public Optional<User> getByRole(Role role);
+	public Optional<User> getByName(String name);
+	public Optional<User> getByEmail(String email);
+	public int isValidPatient(String email, String password);
 }

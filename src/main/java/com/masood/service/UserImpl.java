@@ -41,4 +41,30 @@ public class UserImpl implements UserSeviceInterface {
 		return ur.findByRole(role);
 	}
 
+	public Optional<User> getByName(String name) {
+		return ur.findByName(name);
+	}
+
+	public Optional<User> getByEmail(String email) {
+		return ur.findByEmail(email);
+	}
+
+	public int isValidPatient(String email, String password) 
+	{
+		Optional<User> user = ur.findByEmail(email);
+		if(user.isPresent())
+		{
+			User u1 = user.get();
+			if(u1.getPassword().equals(password))
+			{
+				if(u1.getRole().equals(Role.PATIENT))
+					return 2;
+				return 0;
+			}
+			else
+				return 1;
+		}
+		return 3;
+	}
+
 }

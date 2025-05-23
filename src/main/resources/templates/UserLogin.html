@@ -2,67 +2,86 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:inline="text">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login</title>
-    <link rel="stylesheet" th:href="@{/css/output.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>User Login</title>
+	<link rel="stylesheet" th:href="@{/css/output.css}">
 </head>
 
 <body>
-    <div class="bg-sky-100 min-h-screen py-10">
-        <div class="page bg-white flex-col w-2/3 mx-auto">
-            <div class="head flex justify-center gap-x-5 pt-10">
-                <div class="heading flex-col">
-                    <p class="md:text-6xl sm:text-2xl font-extrabold text-sky-800">CareWell Hospital</p>
-                    <p class="text-end md:text-4xl md:font-semibold text-gray-400 pt-3">User Login</p>
-                </div>
-            </div>
-            <main class=" flex justify-center px-4 md:px-14">
-                <div class="flex w-full">
-                    <div class="formdetails w-full md:w-2/3">
-                    <form action="/login/patient" method="post" th:object="${User}">
-                        <div class="py-3">
-                            <label for="username" class="block text-lg font-medium text-gray-700 mb-2">Email /
-                                Username</label>
-                            <input type="text" id="username" name="username" placeholder="Enter your email or username" th:field="*{name}" 
-                                class="border-2 border-gray-300 w-full py-3 px-4 rounded-lg text-lg focus:border-sky-500 focus:ring-sky-500"
-                                required>
-                        </div>
+	<div class="bg-sky-100 min-h-screen py-10">
+		<div class="page bg-white flex-col w-2/3 mx-auto">
+			<div class="head flex justify-center gap-x-5 pt-10">
+				<div class="heading flex-col">
+					<p class="md:text-6xl sm:text-2xl font-extrabold text-sky-800">CareWell Hospital</p>
+					<p class="text-end md:text-4xl md:font-semibold text-gray-400 pt-3">User Login</p>
+				</div>
+			</div>
+			<main class=" flex justify-center px-4 md:px-14">
+				<div class="flex w-full">
+					<div class="formdetails w-full md:w-2/3">
+						<form th:action="@{/login/patient}" method="post" th:object="${User}">
+							<div class="py-3">
+								<label for="username" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
+								<input type="text" id="username"
+									placeholder="Enter your email " th:field="*{email}"
+									class="border-2 border-gray-300 w-full py-3 px-4 rounded-lg text-lg focus:border-sky-500 focus:ring-sky-500"
+									required>
+							</div>
 
-                        <div class="py-3">
-                            <label for="password" class="block text-lg font-medium text-gray-700 mb-2">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter your password"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:border-sky-500 focus:ring-sky-500 text-lg" th:field="*{password}"
-                                required>
-                        </div>
-                        <div class="flex justify-center py-3">
-                            <input type="submit" value="login"
-                                class="w-2/3 px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-sky-800 text-white hover:bg-sky-900 text-lg">
-                        </div>
-                    </form>
-                    <div>
-                        <hr class="border-x-0 border-t-0 border-b-2 border-gray-300 pt-2">
-                        <a href="#forgot" class=" block text-blue-900 hover:underline hover:underline-offset-4 text-center py-3 ">Forget
-                            Password</a>
-                    </div>
-                    <div>
-                        <p class="text-lg text-center py-3">don't have an account?</p>
-                        <div class="flex justify-center">
-                            <a th:href="@{/new/user}"
-                                class="w-2/3 text-center block px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-sky-800 text-white hover:bg-sky-900 text-lg">Create
-                                Account</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="illustration w-1/3 hidden md:block">
-                    <img th:src="@{/images/Mobile login-cuate.png}" alt="user illustration" class="h-full">
-                </div>
-                </div>
-                
-            </main>
+							<div class="py-3">
+								<label for="password"
+									class="block text-lg font-medium text-gray-700 mb-2">Password</label>
+								<input type="password" id="password" placeholder="Enter your password"
+									class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:border-sky-500 focus:ring-sky-500 text-lg"
+									th:field="*{password}" required>
+							</div>
+							<div class="py-3" th:if="${ispassword!=true and isuser==true}">
+								<p class="text-red-600 text-center py-2">Either email or password is wrong</p>
 
-        </div>
-    </div>
+							</div>
+							<div class="flex justify-center py-3" th:if="${isuser==true}">
+								<input type="submit" value="login"
+									class="w-2/3 px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-sky-800 text-white hover:bg-sky-900 text-lg">
+							</div>
+							<div th:unless="${isuser==true}">
+								<p class="text-red-600 text-center py-2">There is no user with the email [[*{email}]]! please create a new user account</p>
+								<div class="flex justify-center py-3">
+									<a th:href="@{/new/user}"
+									class="w-2/3 text-center block px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-sky-800 text-white hover:bg-sky-900 text-lg">Create
+									Account</a>
+								</div>
+								
+							</div>
+						</form>
+						<div th:if="${isuser==true}">
+							<div>
+								<hr class="border-x-0 border-t-0 border-b-2 border-gray-300 pt-2">
+								<a href="#forgot"
+									class=" block text-blue-900 hover:underline hover:underline-offset-4 text-center py-3 ">Forget
+									Password</a>
+							</div>
+							<div>
+								<p class="text-lg text-center py-3">don't have an account?</p>
+								<div class="flex justify-center">
+									<a th:href="@{/new/user}"
+										class="w-2/3 text-center block px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-sky-800 text-white hover:bg-sky-900 text-lg">Create
+										Account</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="illustration w-1/3 hidden md:block">
+						<img th:src="@{/images/Mobile login-cuate.png}" alt="user illustration"
+							class="max-h-full object-cover">
+					</div>
+				</div>
+
+			</main>
+
+		</div>
+	</div>
 </body>
 
 </html>

@@ -9,4 +9,6 @@ import com.masood.model.User;
 public interface UserRepo extends JpaRepository<User, Long> 
 {
 	public Optional<User> findByRole(Role role);
+	public Optional<User> findByName(String name);
+	public Optional<User> findByEmail(String email);
 }
