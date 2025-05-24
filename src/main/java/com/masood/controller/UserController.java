@@ -28,9 +28,11 @@ public class UserController {
 		PatientDTO pdto = new PatientDTO();
 		User u = new User();
 		Patient p = new Patient();
-		u.setRole(Role.PATIENT);
+		
 		pdto.setUser(u);
 		pdto.setPatient(p);
+		boolean isrepasswcorrect=true;
+		m.addAttribute("isrepassword", isrepasswcorrect);
 		m.addAttribute("PatientDTO", pdto);
 		return "createnewUser";
 	}
@@ -43,6 +45,7 @@ public class UserController {
 		if(repassword.equals(pdto.getUser().getPassword()))
 		{
 			User u = pdto.getUser();
+			u.setRole(Role.PATIENT);
 			Patient p = pdto.getPatient();
 			ps.savePatient(p, u);
 			page="patientLandingPage";

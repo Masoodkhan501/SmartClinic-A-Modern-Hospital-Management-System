@@ -19,15 +19,15 @@
             </div>
             <main class="flex flex-col md:flex-row w-full px-4 md:px-14 py-10 items-stretch">
                 <div class="formdetails w-full md:w-2/3">
-                    <form th:action="@{/create/patient}" method="post" class="space-y-6" th:object="${Patient}">
+                    <form th:action="@{/create/patient}" method="post" class="space-y-6" th:object="${PatientDTO}">
                         <div>
-                            <input type="text" id="name" th:field="${User.name}" placeholder="Enter your full name"
+                            <input type="text" id="name" th:field="*{user.name}" placeholder="Enter your full name"
                                 class="border-2 border-gray-300 w-full py-3 px-4 rounded-lg text-lg focus:border-sky-500 focus:ring-sky-500"
                                 required>
                         </div>
 
                         <div>
-                            <input type="tel" id="phone" placeholder="e.g., +91 9876543210"
+                            <input type="date" id="dob" th:field="*{patient.date_of_birth}"
                                 class="border-2 border-gray-300 w-full py-3 px-4 rounded-lg text-lg focus:border-sky-500 focus:ring-sky-500"
                                 required>
                         </div>
@@ -36,17 +36,17 @@
                             <label class="block text-lg font-medium text-gray-700 mb-2">Gender</label>
                             <div class="mt-2 flex space-x-6">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.gender}" value="male"
+                                    <input type="radio" th:field="*{patient.gender}" value="male"
                                         class="form-radio text-sky-600 h-5 w-5" required>
                                     <span class="ml-2 text-gray-700 text-lg">Male</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.gender}" value="female"
+                                    <input type="radio" th:field="*{patient.gender}" value="female"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700 text-lg">Female</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.gender}" value="other"
+                                    <input type="radio" th:field="*{patient.gender}" value="other"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700 text-lg">Other</span>
                                 </label>
@@ -57,42 +57,42 @@
                             <legend class="block text-lg font-medium text-gray-700 mb-2">Blood Group</legend>
                             <div class="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-4 text-lg">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="A+"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="A+"
                                         class="form-radio text-sky-600 h-5 w-5" required>
                                     <span class="ml-2 text-gray-700">A+</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="A-"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="A-"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700">A-</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="B+"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="B+"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700">B+</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="B-"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="B-"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700">B-</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="AB+"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="AB+"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700">AB+</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="AB-"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="AB-"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700">AB-</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="O+"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="O+"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700">O+</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" th:field="${Patient.blood_group}" value="O-"
+                                    <input type="radio" th:field="*{patient.blood_group}" value="O-"
                                         class="form-radio text-sky-600 h-5 w-5">
                                     <span class="ml-2 text-gray-700">O-</span>
                                 </label>
@@ -100,19 +100,21 @@
                         </fieldset>
 
                         <div class="pt-2">
-                            <input type="email" id="email" th:field="${User.email}" placeholder="you@example.com"
+                            <input type="email" id="email" th:field="*{user.email}" placeholder="you@example.com"
                                 class="border-2 border-gray-300 w-full py-3 px-4 rounded-lg text-lg focus:border-sky-500 focus:ring-sky-500"
                                 required>
                         </div>
 
                         <div>
-                            <input type="password" id="password" th:field="${User.password}" placeholder="Create your password"
+                            <input type="password" id="password" th:field="*{user.password}"
+                                placeholder="Create your password"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:border-sky-500 focus:ring-sky-500 text-lg"
                                 required>
                         </div>
 
                         <div>
-                            <p class="text-red-600 text-center py-3" th:unless="${isrepassword}">wrong password! please re enter the password to confirm</p>
+                            <p class="text-red-600 text-center py-3" th:unless="${isrepassword}">wrong password! please
+                                re enter the password to confirm</p>
                             <input type="password" id="re_password" name="re_password"
                                 placeholder="Confirm your password"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:border-sky-500 focus:ring-sky-500 text-lg"

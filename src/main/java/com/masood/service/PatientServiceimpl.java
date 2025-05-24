@@ -32,6 +32,7 @@ public class PatientServiceimpl implements PatientServiceInterface
 		} else {
 			id = "PAT001";
 		}
+		u.setCreatedAt();
 		User save2 = ur.saveUser(u);
 		p.setPatient_Id(id);
 		p.setUser_id(save2);
