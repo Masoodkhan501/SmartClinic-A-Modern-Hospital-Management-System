@@ -108,4 +108,10 @@ public class HomeController
 		m.addAttribute("ispassword",ispassword);
 		return page;
 	}
+	
+	@GetMapping("/career/doctor")
+	public String careerpage()
+	{
+		return "carewellcareerpage";
+	}
 }

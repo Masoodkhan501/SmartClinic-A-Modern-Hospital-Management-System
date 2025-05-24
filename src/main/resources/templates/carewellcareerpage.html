@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:inline="text">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers at CareWell Hospital</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+    <style>
+        /* Custom animation for subtle fade-in */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .animate-fade-in-delay {
+            animation: fadeIn 0.8s ease-out 0.3s forwards;
+            opacity: 0; /* Start invisible for delay */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="home" class="bg-gray-50 min-h-screen flex flex-col font-sans">
+            <header class="bg-white shadow-md py-4 px-4 md:px-8 lg:px-16 flex justify-between items-center sticky top-0 z-50">
+            <div class="flex items-center space-x-4">
+                <p class="text-3xl md:text-4xl font-extrabold text-sky-800">CareWell Hospital</p>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="text-lg font-medium text-gray-700 hover:text-sky-800 transition duration-150 ease-in-out">Home</a>
+                <a href="#about-us" class="text-lg font-medium text-gray-700 hover:text-sky-800 transition duration-150 ease-in-out">About Us</a>
+                <a href="#benefits" class="text-lg font-medium text-gray-700 hover:text-sky-800 transition duration-150 ease-in-out">Benefits</a>
+                <a href="#departments" class="text-lg font-medium text-gray-700 hover:text-sky-800 transition duration-150 ease-in-out">Departments</a>
+                <a href="#current-openings" class="text-lg  text-sky-700 hover:text-sky-900 transition duration-150 ease-in-out font-semibold">Careers</a>
+                <a th:href="@{/login/patient}" class="text-lg font-medium text-gray-700 hover:text-sky-800 transition duration-150 ease-in-out">Login</a>
+            </nav>
+            <button class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </header>
+
+        <section class=" bg-sky-700 text-white py-24 md:py-32 flex flex-col justify-center items-center text-center overflow-hidden">
+            <div class="px-4 md:px-8 max-w-4xl">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-5 leading-tight animate-fade-in">
+                    Shape the Future of Healthcare with CareWell
+                </h1>
+                <p class="text-xl md:text-2xl opacity-90 mb-10 animate-fade-in-delay">
+                    Join a team where compassion meets innovation, and every role makes a difference.
+                </p>
+                <a href="#current-openings"
+                   class="inline-block bg-white text-sky-700 font-bold py-3 px-10 rounded-full text-xl shadow-lg
+                          hover:bg-sky-100 hover:text-sky-900 transition duration-300 ease-in-out transform hover:scale-105">
+                    Explore Opportunities
+                </a>
+            </div>
+        </section>
+
+        <section id="about-us" class="py-20 px-4 md:px-8 lg:px-16 bg-white text-center">
+            <h2 class="text-4xl font-bold text-sky-800 mb-6">Our Mission, Our People</h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed mb-10">
+                At CareWell Hospital, we are driven by a singular mission: to deliver exceptional, patient-centered care. This mission is brought to life by the dedication and expertise of our diverse team. We foster an environment of continuous learning, mutual respect, and collaborative success.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="flex flex-col items-center p-8 bg-sky-50 rounded-xl shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.007 12.007 0 002.944 12c.045 4.314 3.328 8.01 7.618 10.036L12 21.493l1.438-.667a12.007 12.007 0 007.618-10.036 11.955 11.955 0 01-3.04-8.618z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Commitment to Care</h3>
+                    <p class="text-gray-600">Our priority is the well-being of our patients and our community.</p>
+                </div>
+                <div class="flex flex-col items-center p-8 bg-sky-50 rounded-xl shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Supportive Culture</h3>
+                    <p class="text-gray-600">We foster a diverse and inclusive environment where everyone thrives.</p>
+                </div>
+                <div class="flex flex-col items-center p-8 bg-sky-50 rounded-xl shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 1m3-1V4m0 10a6 6 0 00-6 6v1h12v-1a6 6 0 00-6-6zm3-10V4m0 10a6 6 0 00-6 6v1h12v-1a6 6 0 00-6-6z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Innovation & Growth</h3>
+                    <p class="text-gray-600">Embracing new technologies and continuous professional development.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-sky-600 text-white py-20 px-4 md:px-8 lg:px-16 text-center">
+            <h2 class="text-4xl font-bold mb-8">Hear From Our Team</h2>
+            <div class="max-w-3xl mx-auto bg-white text-gray-800 p-8 rounded-xl shadow-xl flex flex-col md:flex-row items-center">
+                <img th:src="@{/images/doctorphotoincareerpage.jpg}" alt="Dr. Anya Sharma" class="rounded-full w-24 h-24 object-cover mb-6 md:mb-0 md:mr-8 border-4 border-sky-200">
+                <div class="text-left">
+                    <p class="italic text-lg mb-4">
+                        "Working at CareWell Hospital has been incredibly rewarding. The collaborative spirit, the focus on patient well-being, and the opportunities for professional growth are truly unparalleled. I feel empowered to make a real difference every day."
+                    </p>
+                    <p class="font-semibold text-xl text-sky-700">- Dr. Anya Sharma, Lead Surgeon</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="py-20 px-4 md:px-8 lg:px-16 bg-gray-50">
+            <h2 class="text-4xl font-bold text-center text-sky-800 mb-12">Benefits That Support You</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-3">
+                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.59 1M12 8V3m0 9v3m0 0V9m0 3c-1.11 0-2.08-.402-2.59-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Competitive Compensation</h3>
+                    <p class="text-gray-600">Attractive salaries reflecting your valuable skills and experience.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-3">
+                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M16 16h.01"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Comprehensive Health Benefits</h3>
+                    <p class="text-gray-600">Medical, dental, and vision coverage for you and your family.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-3">
+                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Professional Development</h3>
+                    <p class="text-gray-600">Access to training programs, conferences, and tuition reimbursement.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-3">
+                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8l-4 4H1m15-4l4 4h4v-4l-4-4zm-4 5a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Work-Life Balance</h3>
+                    <p class="text-gray-600">Generous paid time off, flexible scheduling options where applicable.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-3">
+                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Retirement Plans</h3>
+                    <p class="text-gray-600">Secure your future with robust retirement savings options.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md transition duration-300 hover:shadow-lg">
+                    <div class="text-sky-600 mb-3">
+                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Employee Wellness Programs</h3>
+                    <p class="text-gray-600">Support for physical and mental well-being for all staff.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="departments" class="py-20 px-4 md:px-8 lg:px-16 bg-sky-100 text-center">
+            <h2 class="text-4xl font-bold text-sky-800 mb-12">Explore Opportunities by Department</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <a href="#" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Nursing & Patient Care</h3>
+                    <p class="text-gray-600 text-sm">RNs, LPNs, CNAs, Patient Service Reps</p>
+                </a>
+                <a href="#" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Physicians & Providers</h3>
+                    <p class="text-gray-600 text-sm">Specialists, Residents, Advanced Practice Clinicians</p>
+                </a>
+                <a href="#" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Allied Health</h3>
+                    <p class="text-gray-600 text-sm">Therapists, Technologists, Pharmacists, Dietitians</p>
+                </a>
+                <a href="#" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-semibold text-sky-800 mb-2">Administrative & Support</h3>
+                    <p class="text-gray-600 text-sm">HR, IT, Finance, Marketing, Facilities</p>
+                </a>
+            </div>
+        </section>
+
+        <section id="current-openings" class="py-20 px-4 md:px-8 lg:px-16 bg-white">
+            <h2 class="text-4xl font-bold text-center text-sky-800 mb-12">Latest Job Openings</h2>
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-start md:items-center hover:shadow-xl transition duration-300">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl font-semibold text-sky-800 mb-1">Emergency Room Nurse (RN)</h3>
+                        <p class="text-gray-600 text-base">Full-time | Night Shift | Requires 2+ years ED experience</p>
+                        <span class="inline-block bg-sky-200 text-sky-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mt-2">Nursing</span>
+                    </div>
+                    <a href="#" class="bg-sky-600 text-white font-semibold py-2 px-8 rounded-md hover:bg-sky-700 transition duration-200 text-lg">View Details</a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-start md:items-center hover:shadow-xl transition duration-300">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl font-semibold text-sky-800 mb-1">Senior Software Engineer (IT Dept.)</h3>
+                        <p class="text-gray-600 text-base">Full-time | Day Shift | Specializing in EHR systems</p>
+                        <span class="inline-block bg-green-200 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mt-2">IT & Tech</span>
+                    </div>
+                    <a href="#" class="bg-sky-600 text-white font-semibold py-2 px-8 rounded-md hover:bg-sky-700 transition duration-200 text-lg">View Details</a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-start md:items-center hover:shadow-xl transition duration-300">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl font-semibold text-sky-800 mb-1">Physical Therapist</h3>
+                        <p class="text-gray-600 text-base">Part-time | Flexible Hours | Outpatient Clinic</p>
+                        <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mt-2">Allied Health</span>
+                    </div>
+                    <a href="#" class="bg-sky-600 text-white font-semibold py-2 px-8 rounded-md hover:bg-sky-700 transition duration-200 text-lg">View Details</a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-start md:items-center hover:shadow-xl transition duration-300">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl font-semibold text-sky-800 mb-1">Administrative Assistant</h3>
+                        <p class="text-gray-600 text-base">Full-time | Day Shift | Front Desk Operations</p>
+                        <span class="inline-block bg-orange-200 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mt-2">Admin Support</span>
+                    </div>
+                    <a href="#" class="bg-sky-600 text-white font-semibold py-2 px-8 rounded-md hover:bg-sky-700 transition duration-200 text-lg">View Details</a>
+                </div>
+
+                <div class="text-center mt-16">
+                    <p class="text-gray-700 text-xl mb-6">Didn't find your ideal role? We're always growing!</p>
+                    <a th:href="@{/new/doctor}"
+                       class="inline-block border-2 border-sky-600 text-sky-700 font-bold py-3 px-10 rounded-full text-lg
+                              hover:bg-sky-600 hover:text-white transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
+                        Submit Your General Application
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-sky-800 text-white py-16 px-4 md:px-8 lg:px-16 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Your Impact Starts Here.</h2>
+            <p class="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
+                Discover a fulfilling career where your passion for healthcare transforms lives every day.
+            </p>
+            <a href="#current-openings"
+               class="inline-block bg-white text-sky-800 font-bold py-4 px-12 rounded-full text-xl shadow-lg
+                      hover:bg-sky-100 hover:text-sky-900 transition duration-300 ease-in-out transform hover:scale-105">
+                View All Open Positions
+            </a>
+        </section>
+
+        <footer class="bg-gray-900 text-gray-300 py-12 px-4 md:px-8 lg:px-16 text-center">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">CareWell Hospital</h3>
+                    <p class="text-sm">123 Hospital Road, Health City, State 12345</p>
+                    <p class="text-sm">Phone: (123) 456-7890</p>
+                    <p class="text-sm">Email: careers@carewellhospital.com</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-white transition duration-150 ease-in-out">Home</a></li>
+                        <li><a href="#about-us" class="hover:text-white transition duration-150 ease-in-out">About Us</a></li>
+                        <li><a href="#benefits" class="hover:text-white transition duration-150 ease-in-out">Benefits</a></li>
+                        <li><a href="#departments" class="hover:text-white transition duration-150 ease-in-out">Departments</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Follow Us</h3>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.558V12h2.77l-.443 2.89h-2.327v6.987C18.343 21.128 22 16.991 22 12z" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.007-.532A8.318 8.318 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.09 4.09 0 01.8 10.07a4.134 4.134 0 003.3 4.037 4.102 4.102 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.188 11.644 11.644 0 008.29 20.251z" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.865 8.163 6.839 9.485.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.704-2.782.605-3.369-1.343-3.369-1.343-.454-1.15-.111-1.076-.111-1.076.37-.25.028-.245.028-.245.407-.291.552-.163.552-.163.361.726.523.995.523.995.321.463.771.325.959.249.032-.191.136-.325.27-.4-.258-.228-.56-.513-.56-1.15 0-.323.11-.587.25-.794-.02-.228-.084-.653.24-.997.262-.34.8-.1.976-.067.14-.04.291-.055.426-.055.135 0 .287.015.426.055.176-.033.714-.273.976.067.324.344.26.77.24.997.14.207.25.471.25.794 0 .637-.302.922-.56 1.15.14.09.28.2.42.308.27.2.453.38.56.53.111.15.22.3.42.483.2.19.49.278.78.291 3.97-.662 6.839-4.708 6.839-9.485C22 6.477 17.523 2 12 2z" clip-rule="evenodd" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.000001,2.0000001 C6.4771526,2.0000001 2,6.4771526 2,12.000001 C2,17.522849 6.4771526,22 12.000001,22 C17.522849,22 22,17.522849 22,12.000001 C22,6.4771526 17.522849,2.0000001 12.000001,2.0000001 Z M8.0000001,17.000001 L8.0000001,7.0000001 L16,7.0000001 L16,17.000001 L8.0000001,17.000001 Z" fill-rule="evenodd"></path></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700">
+                <p class="text-sm">&copy; 2025 CareWell Hospital. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+</body>
+
+</html>
