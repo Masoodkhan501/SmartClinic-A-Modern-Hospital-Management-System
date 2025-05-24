@@ -2,248 +2,300 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:inline="text">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareWell Hospital</title>
-    <link rel="stylesheet" th:href="@{/css/output.css}">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-    </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CareWell Hospital</title>
+	<link rel="stylesheet" th:href="@{/css/output.css}">
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+	</style>
 </head>
 
 <body class="bg-sky-100">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="heading flex justify-between p-6 " id="Home">
-            <div class="logo">
-                <img th:src="@{/images/2c972fe1-53ca-42e8-94b4-36a7ac99440d.png}" alt="Hospital logo"
-                    class="w-auto h-16">
-            </div>
-            <div class="menu">
-                <ul class="flex ">
-                    <li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
-                            href="#Home">Home</a></li>
-                    <li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
-                            href="#AboutUs">AboutUs</a></li>
-                    <li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
-                            href="#Provided">Why we?</a></li>
-                    <li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
-                            href="#Reviews">Patient Reviews</a></li>
-                    <li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
-                            th:href="@{/career/doctor}">Career</a></li>
-                </ul>
-            </div>
-        </div>
+		<div class="heading flex justify-between p-6 " id="Home">
+			<div class="logo">
+				<img th:src="@{/images/2c972fe1-53ca-42e8-94b4-36a7ac99440d.png}" alt="Hospital logo"
+					class="w-auto h-16">
+			</div>
+			<div class="menu">
+				<ul class="flex ">
+					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+							href="#Home">Home</a></li>
+					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+							href="#AboutUs">AboutUs</a></li>
+					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+							href="#Provided">Why we?</a></li>
+					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+							href="#Reviews">Patient Reviews</a></li>
+					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+							th:href="@{/career/doctor}">Career</a></li>
+					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+							th:href="@{/login/user}">Login</a></li>
+				</ul>
+			</div>
+		</div>
 
-        <div class="main">
-            <div class="front h-2/3 bg-cover bg-left p-10"
-                th:style="'background-image: url(\'' + @{/images/backgroundimageforlandingpage.jpg} + '\');'">
-                <div class="w-2/3 p-10 text-white">
-                    <p class="text-7xl pb-5 font-roboto font-bold">Your Health is</p>
-                    <p class="text-7xl pb-5 font-roboto font-bold">Our Priority</p>
-                    <div class="flex gap-4 px-5">
-                        <p class="text-2xl">-</p>
-                        <p class="text-2xl ">At CareWell, your well-being is our purpose, and compassionate care is our
-                            promise.</p>
-                    </div>
-                    <p class="text-lg p-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eaque aliquam
-                        natus adipisci consequuntur error cupiditate odit doloribus fugit quos neque tenetur quam a, nam
-                        consectetur illo! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, ipsa.</p>
-                    <div class="butnav p-5 flex space-x-3">
-                        <div class="appointment py-1 px-10 border-2 rounded-lg hover:bg-white hover:text-black">
-                            <a th:href="@{/book/appointment}">Book Appointment</a>
-                        </div>
-                        <div class="login py-1 px-10 border-2 rounded-lg hover:bg-white hover:text-black">
-                            <a th:href="@{/new/user}">Create Account</a>
-                        </div>
-                    </div>
+		<div class="main">
+			<div class="front h-2/3 bg-cover bg-left p-10"
+				th:style="'background-image: url(\'' + @{/images/backgroundimageforlandingpage.jpg} + '\');'">
+				<div class="w-2/3 p-10 text-white">
+					<p class="text-7xl pb-5 font-roboto font-bold">Your Health is</p>
+					<p class="text-7xl pb-5 font-roboto font-bold">Our Priority</p>
+					<div class="flex gap-4 px-5">
+						<p class="text-2xl">-</p>
+						<p class="text-2xl ">At CareWell, your well-being is our purpose, and compassionate care is our
+							promise.</p>
+					</div>
+					<p class="text-lg p-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eaque aliquam
+						natus adipisci consequuntur error cupiditate odit doloribus fugit quos neque tenetur quam a, nam
+						consectetur illo! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, ipsa.</p>
+					<div class="butnav p-5 flex space-x-3">
+						<div class="appointment py-1 px-10 border-2 rounded-lg hover:bg-white hover:text-black">
+							<a th:href="@{/book/appointment}">Book Appointment</a>
+						</div>
+						<div class="login py-1 px-10 border-2 rounded-lg hover:bg-white hover:text-black">
+							<a th:href="@{/new/user}">Create Account</a>
+						</div>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="about py-16" id="AboutUs">
-                <p class="text-5xl mb-10 text-center font-bold">You Really Like To Know</p>
-                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
-                    <div class="doctorstaff w-full md:w-1/2 lg:w-1/3">
-                        <img th:src="@{/images/—Pngtree—doctors team_15943672.png}" alt="Medical Team"
-                            class="h-80 max-w-full object-contain object-center rounded-lg shadow-lg">
-                    </div>
-                    <div class="detail text-lg w-full md:w-1/2 lg:w-2/3">
-                        <p class="mb-4">At Care Well Hospital, we believe in combining compassion with cutting-edge
-                            technology to provide world-class healthcare to every individual. We are dedicated to
-                            offering personalized, ethical, and patient-focused medical services that prioritize
-                            well-being and long-term health.</p>
-                        <p class="mb-4">Founded with the vision to revolutionize healthcare, Care Well Hospital is home
-                            to highly experienced doctors, dedicated nurses, and skilled technicians who work tirelessly
-                            to ensure optimal patient outcomes. From routine check-ups to complex surgeries, we offer a
-                            full spectrum of medical services backed by advanced technology and a human touch.</p>
-                        <p>Our specialties include cardiology, oncology, neurology, orthopedics, and emergency medicine,
-                            among others. With state-of-the-art infrastructure and compassionate care, we strive to make
-                            a lasting impact on every life we touch.</p>
-                    </div>
-                </div>
-            </div>
-             <div class="whywe py-16" id="Provided">
-                <h2 class="text-5xl mb-12 text-center font-bold text-gray-800">Why Choose Us - The Care Well Advantage</h2>
+			<div class="about py-16" id="AboutUs">
+				<p class="text-5xl mb-10 text-center font-bold">You Really Like To Know</p>
+				<div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+					<div class="doctorstaff w-full md:w-1/2 lg:w-1/3">
+						<img th:src="@{/images/—Pngtree—doctors team_15943672.png}" alt="Medical Team"
+							class="h-80 max-w-full object-contain object-center rounded-lg shadow-lg">
+					</div>
+					<div class="detail text-lg w-full md:w-1/2 lg:w-2/3">
+						<p class="mb-4">At Care Well Hospital, we believe in combining compassion with cutting-edge
+							technology to provide world-class healthcare to every individual. We are dedicated to
+							offering personalized, ethical, and patient-focused medical services that prioritize
+							well-being and long-term health.</p>
+						<p class="mb-4">Founded with the vision to revolutionize healthcare, Care Well Hospital is home
+							to highly experienced doctors, dedicated nurses, and skilled technicians who work tirelessly
+							to ensure optimal patient outcomes. From routine check-ups to complex surgeries, we offer a
+							full spectrum of medical services backed by advanced technology and a human touch.</p>
+						<p>Our specialties include cardiology, oncology, neurology, orthopedics, and emergency medicine,
+							among others. With state-of-the-art infrastructure and compassionate care, we strive to make
+							a lasting impact on every life we touch.</p>
+					</div>
+				</div>
+			</div>
+			<div class="whywe py-16" id="Provided">
+				<h2 class="text-5xl mb-12 text-center font-bold text-gray-800">Why Choose Us - The Care Well Advantage
+				</h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">🔬 AI-Integrated Hospital</h3>
-                        <p class="text-gray-700">We are proud pioneers in adopting Artificial Intelligence to support diagnosis, treatment planning, and real-time patient monitoring.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">🔬 AI-Integrated Hospital</h3>
+						<p class="text-gray-700">We are proud pioneers in adopting Artificial Intelligence to support
+							diagnosis, treatment planning, and real-time patient monitoring.</p>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">👨‍⚕️ Top 10 Doctors in Every Specialty</h3>
-                        <p class="text-gray-700">Our medical team includes nationally recognized specialists ranked among the top 10 in their respective fields.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">👨‍⚕️ Top 10 Doctors in Every Specialty
+						</h3>
+						<p class="text-gray-700">Our medical team includes nationally recognized specialists ranked
+							among the top 10 in their respective fields.</p>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">🤖 Advanced Robotic-Assisted Surgeries</h3>
-                        <p class="text-gray-700">We utilize robotic systems to enhance surgical precision, reduce recovery time, and improve patient outcomes.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">🤖 Advanced Robotic-Assisted Surgeries</h3>
+						<p class="text-gray-700">We utilize robotic systems to enhance surgical precision, reduce
+							recovery time, and improve patient outcomes.</p>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">⌚ Smart Health Monitoring</h3>
-                        <p class="text-gray-700">Our patients benefit from AI-driven wearables and remote monitoring tools that ensure 24/7 health tracking.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">⌚ Smart Health Monitoring</h3>
+						<p class="text-gray-700">Our patients benefit from AI-driven wearables and remote monitoring
+							tools that ensure 24/7 health tracking.</p>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">🧬 Personalized Medicine Approach</h3>
-                        <p class="text-gray-700">We use genetic profiling and data analytics to design customized treatment plans tailored to individual patient needs.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">🧬 Personalized Medicine Approach</h3>
+						<p class="text-gray-700">We use genetic profiling and data analytics to design customized
+							treatment plans tailored to individual patient needs.</p>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">🏆 Award-Winning Infrastructure</h3>
-                        <p class="text-gray-700">Our hospital has been recognized for its modern design, cleanliness, and patient-centric amenities.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">🏆 Award-Winning Infrastructure</h3>
+						<p class="text-gray-700">Our hospital has been recognized for its modern design, cleanliness,
+							and patient-centric amenities.</p>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">📱 Digital Health Records & App Access</h3>
-                        <p class="text-gray-700">Patients can seamlessly access their records, appointments, and reports through our secure mobile application.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">📱 Digital Health Records & App Access</h3>
+						<p class="text-gray-700">Patients can seamlessly access their records, appointments, and reports
+							through our secure mobile application.</p>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-2xl font-semibold mb-3 text-sky-700">🚨 24/7 Emergency & Critical Care</h3>
-                        <p class="text-gray-700">Our dedicated emergency department operates round-the-clock with a specialized critical care team ready for any medical emergency.</p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+						<h3 class="text-2xl font-semibold mb-3 text-sky-700">🚨 24/7 Emergency & Critical Care</h3>
+						<p class="text-gray-700">Our dedicated emergency department operates round-the-clock with a
+							specialized critical care team ready for any medical emergency.</p>
+					</div>
 
-                </div>
+				</div>
 
-                <p class="text-xl mt-12 text-center text-gray-800 font-medium">
-                    Experience the future of healthcare today at Care Well Hospital – where innovation meets integrity.
-                </p>
-            </div>
-            <div class="patientreview py-16" id="Reviews">
-                <h2 class="text-5xl mb-12 text-center font-bold text-gray-800">Patient Reviews - Real Stories of Hope and Healing</h2>
+				<p class="text-xl mt-12 text-center text-gray-800 font-medium">
+					Experience the future of healthcare today at Care Well Hospital – where innovation meets integrity.
+				</p>
+			</div>
+			<div class="patientreview py-16" id="Reviews">
+				<h2 class="text-5xl mb-12 text-center font-bold text-gray-800">Patient Reviews - Real Stories of Hope
+					and Healing</h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                    <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
-                        <img th:src="@{/images/front-view-old-man-sitting-bench.jpg}" alt="Mr. Arvind Mehta"
-                            class="w-24 h-24 rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
-                        <p class="text-xl font-semibold text-gray-900 mb-2">Mr. Arvind Mehta</p>
-                        <p class="text-sm text-gray-600 mb-4">Battled a Rare Cardiac Tumor</p>
-                        <blockquote class="text-lg text-gray-700 italic">
-                            "I had been misdiagnosed several times before arriving at Care Well Hospital. Their AI-assisted imaging technology detected a rare cardiac tumor that was previously overlooked. The surgical team not only removed the tumor successfully but also provided post-op care that brought me back to life."
-                        </blockquote>
-                    </div>
+					<div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
+						<img th:src="@{/images/front-view-old-man-sitting-bench.jpg}" alt="Mr. Arvind Mehta"
+							class="w-24 h-24 rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
+						<p class="text-xl font-semibold text-gray-900 mb-2">Mr. Arvind Mehta</p>
+						<p class="text-sm text-gray-600 mb-4">Battled a Rare Cardiac Tumor</p>
+						<blockquote class="text-lg text-gray-700 italic">
+							"I had been misdiagnosed several times before arriving at Care Well Hospital. Their
+							AI-assisted imaging technology detected a rare cardiac tumor that was previously overlooked.
+							The surgical team not only removed the tumor successfully but also provided post-op care
+							that brought me back to life."
+						</blockquote>
+					</div>
 
-                    <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
-                        <img th:src="@{/images/istockphoto-1141394561-1024x1024.jpg}" alt="Ms. Rukhsar Khan"
-                            class="w-24 h-24 rounded-full object-cover object-right mb-4 ring-4 ring-sky-300 shadow-md">
-                        <p class="text-xl font-semibold text-gray-900 mb-2">Ms. Rukhsar Khan</p>
-                        <p class="text-sm text-gray-600 mb-4">Recovered from Autoimmune Encephalitis</p>
-                        <blockquote class="text-lg text-gray-700 italic">
-                            "For months, I was losing cognitive abilities and no one could explain why. At Care Well, the neurologists used advanced AI diagnostics and discovered I had autoimmune encephalitis. Their early intervention saved my brain and my life. I’m forever grateful."
-                        </blockquote>
-                    </div>
+					<div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
+						<img th:src="@{/images/istockphoto-1141394561-1024x1024.jpg}" alt="Ms. Rukhsar Khan"
+							class="w-24 h-24 rounded-full object-cover object-right mb-4 ring-4 ring-sky-300 shadow-md">
+						<p class="text-xl font-semibold text-gray-900 mb-2">Ms. Rukhsar Khan</p>
+						<p class="text-sm text-gray-600 mb-4">Recovered from Autoimmune Encephalitis</p>
+						<blockquote class="text-lg text-gray-700 italic">
+							"For months, I was losing cognitive abilities and no one could explain why. At Care Well,
+							the neurologists used advanced AI diagnostics and discovered I had autoimmune encephalitis.
+							Their early intervention saved my brain and my life. I’m forever grateful."
+						</blockquote>
+					</div>
 
-                    <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
-                        <img th:src="@{images/pleased-mature-man-crossing-hands.jpg}" alt="Master Aditya Sharma"
-                            class="w-24 h-24 rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
-                        <p class="text-xl font-semibold text-gray-900 mb-2">Master Aditya Sharma</p>
-                        <p class="text-sm text-gray-600 mb-4">Beating Ehlers-Danlos Syndrome (EDS)</p>
-                        <blockquote class="text-lg text-gray-700 italic">
-                            "My son was diagnosed with EDS, a rare genetic disorder, and we were told to manage symptoms for life. Care Well Hospital offered a unique genetic-based treatment plan and ongoing AI-assisted monitoring. Today, he’s attending school like any other child. It’s a miracle made possible by Care Well."
-                        </blockquote>
-                    </div>
+					<div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
+						<img th:src="@{images/pleased-mature-man-crossing-hands.jpg}" alt="Master Aditya Sharma"
+							class="w-24 h-24 rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
+						<p class="text-xl font-semibold text-gray-900 mb-2">Master Aditya Sharma</p>
+						<p class="text-sm text-gray-600 mb-4">Beating Ehlers-Danlos Syndrome (EDS)</p>
+						<blockquote class="text-lg text-gray-700 italic">
+							"My son was diagnosed with EDS, a rare genetic disorder, and we were told to manage symptoms
+							for life. Care Well Hospital offered a unique genetic-based treatment plan and ongoing
+							AI-assisted monitoring. Today, he’s attending school like any other child. It’s a miracle
+							made possible by Care Well."
+						</blockquote>
+					</div>
 
-                </div>
+				</div>
 
-                <div class="text-center mt-16">
-                    <p 
-                        class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
-                        Read More Patient Stories
-                        <svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                            <path fill-rule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                        </svg>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="bg-sky-800 text-white py-10 mt-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 sm:px-0">
-                <div class="col-span-1 lg:col-span-1 text-center md:text-left">
-                    <img th:src="@{/images/2c972fe1-53ca-42e8-94b4-36a7ac99440d.png}" alt="CareWell Hospital Logo" class="h-20 mx-auto md:mx-0 mb-4 filter brightness-0 invert">
-                    <p class="text-sm text-sky-200">
-                        CareWell Hospital is committed to providing cutting-edge medical care with a compassionate touch. Your health is our priority.
-                    </p>
-                </div>
+				<div class="text-center mt-16">
+					<p
+						class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
+						Read More Patient Stories
+						<svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+							fill="currentColor" aria-hidden="true">
+							<path fill-rule="evenodd"
+								d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+								clip-rule="evenodd" />
+							<path fill-rule="evenodd"
+								d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+								clip-rule="evenodd" />
+						</svg>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="bg-sky-800 text-white py-10 mt-16">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 sm:px-0">
+			<div class="col-span-1 lg:col-span-1 text-center md:text-left">
+				<img th:src="@{/images/2c972fe1-53ca-42e8-94b4-36a7ac99440d.png}" alt="CareWell Hospital Logo"
+					class="h-20 mx-auto md:mx-0 mb-4 filter brightness-0 invert">
+				<p class="text-sm text-sky-200">
+					CareWell Hospital is committed to providing cutting-edge medical care with a compassionate touch.
+					Your health is our priority.
+				</p>
+			</div>
 
-                <div class="col-span-1 text-center md:text-left">
-                    <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2 text-sky-200 text-sm">
-                        <li><a href="#Ho" class="hover:underline">Home</a></li>
-                        <li><a href="#AboutUs" class="hover:underline">About Us</a></li>
-                        <li><a href="#Provided" class="hover:underline">Why Choose Us</a></li>
-                        <li><a href="#Reviews" class="hover:underline">Patient Reviews</a></li>
-                        <li><a th:href="@{/career/doctor}" class="hover:underline">Career</a></li>
-                        <li><a th:href="@{/login/user}" class="hover:underline">Login / Sign Up</a></li>
-                    </ul>
-                </div>
+			<div class="col-span-1 text-center md:text-left">
+				<h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+				<ul class="space-y-2 text-sky-200 text-sm">
+					<li><a href="#Ho" class="hover:underline">Home</a></li>
+					<li><a href="#AboutUs" class="hover:underline">About Us</a></li>
+					<li><a href="#Provided" class="hover:underline">Why Choose Us</a></li>
+					<li><a href="#Reviews" class="hover:underline">Patient Reviews</a></li>
+					<li><a th:href="@{/career/doctor}" class="hover:underline">Career</a></li>
+					<li><a th:href="@{/login/user}" class="hover:underline">Login / Sign Up</a></li>
+				</ul>
+			</div>
 
-                <div class="col-span-1 text-center md:text-left">
-                    <h3 class="text-xl font-semibold mb-4">Our Services</h3>
-                    <ul class="space-y-2 text-sky-200 text-sm">
-                        <li><p class="hover:underline">Cardiology</p></li>
-                        <li><p class="hover:underline">Neurology</p></li>
-                        <li><p class="hover:underline">Oncology</p></li>
-                        <li><p class="hover:underline">Orthopedics</p></li>
-                        <li><p class="hover:underline">Emergency Care</p></li>
-                        <li><p class="hover:underline">Diagnostics</p></li>
-                    </ul>
-                </div>
+			<div class="col-span-1 text-center md:text-left">
+				<h3 class="text-xl font-semibold mb-4">Our Services</h3>
+				<ul class="space-y-2 text-sky-200 text-sm">
+					<li>
+						<p class="hover:underline">Cardiology</p>
+					</li>
+					<li>
+						<p class="hover:underline">Neurology</p>
+					</li>
+					<li>
+						<p class="hover:underline">Oncology</p>
+					</li>
+					<li>
+						<p class="hover:underline">Orthopedics</p>
+					</li>
+					<li>
+						<p class="hover:underline">Emergency Care</p>
+					</li>
+					<li>
+						<p class="hover:underline">Diagnostics</p>
+					</li>
+				</ul>
+			</div>
 
-                <div class="col-span-1 text-center md:text-left">
-                    <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
-                    <p class="text-sm text-sky-200 mb-2">
-                        123 Hospital Road, Carewell City,<br>
-                        State, Zip Code 500001
-                    </p>
-                    <p class="text-sm text-sky-200 mb-2">Phone: <span class="hover:underline">+91 12345 67890</span></p>
-                    <p class="text-sm text-sky-200 mb-4">Email: <span class="hover:underline">info@carewellhospital.com</span></p>
+			<div class="col-span-1 text-center md:text-left">
+				<h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+				<p class="text-sm text-sky-200 mb-2">
+					123 Hospital Road, Carewell City,<br>
+					State, Zip Code 500001
+				</p>
+				<p class="text-sm text-sky-200 mb-2">Phone: <span class="hover:underline">+91 12345 67890</span></p>
+				<p class="text-sm text-sky-200 mb-4">Email: <span
+						class="hover:underline">info@carewellhospital.com</span></p>
 
-                    <div class="flex justify-center md:justify-start space-x-4">
-                        <p class="text-sky-200 hover:text-white transition-colors duration-200" aria-label="Facebook">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C17.34 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
-                        </p>
-                        <p class="text-sky-200 hover:text-white transition-colors duration-200" aria-label="Twitter">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646A4.12 4.12 0 0021.6 4a8.287 8.287 0 01-2.606.983A4.13 4.13 0 0017.5 2.251c-4.14 0-7.5 3.36-7.5 7.5 0 .403.04.803.12 1.185A13.374 13.374 0 013 5.305v.092a4.104 4.104 0 001.27 3.667A4.093 4.093 0 013.46 9.24v.058c0 3.682 2.624 6.73 6.118 7.425a4.136 4.136 0 01-1.815.07c1.026 3.016 3.96 5.23 7.465 5.23a9.135 9.135 0 005.071-1.486c.353.045.707.07 1.06.07A8.342 8.342 0 0022 18.106c-1.927.525-3.958.834-6.072.834h-.01z" /></svg>
-                        </p>
-                        <p class="text-sky-200 hover:text-white transition-colors duration-200" aria-label="LinkedIn">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764c.966 0 1.75.79 1.75 1.764s-.783 1.764-1.75 1.764zM22 19h-3v-5.604c0-3.368-4-3.582-4 0V19h-3V8h3v1.82c1.474-2.81 8-3.083 8 2.345V19z" clip-rule="evenodd" /></svg>
-                        </p>
-                    </div>
-                </div>
-            </div>
+				<div class="flex justify-center md:justify-start space-x-4">
+					<p class="text-sky-200 hover:text-white transition-colors duration-200" aria-label="Facebook">
+						<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path fill-rule="evenodd"
+								d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C17.34 21.128 22 16.991 22 12z"
+								clip-rule="evenodd" />
+						</svg>
+					</p>
+					<p class="text-sky-200 hover:text-white transition-colors duration-200" aria-label="Twitter">
+						<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646A4.12 4.12 0 0021.6 4a8.287 8.287 0 01-2.606.983A4.13 4.13 0 0017.5 2.251c-4.14 0-7.5 3.36-7.5 7.5 0 .403.04.803.12 1.185A13.374 13.374 0 013 5.305v.092a4.104 4.104 0 001.27 3.667A4.093 4.093 0 013.46 9.24v.058c0 3.682 2.624 6.73 6.118 7.425a4.136 4.136 0 01-1.815.07c1.026 3.016 3.96 5.23 7.465 5.23a9.135 9.135 0 005.071-1.486c.353.045.707.07 1.06.07A8.342 8.342 0 0022 18.106c-1.927.525-3.958.834-6.072.834h-.01z" />
+						</svg>
+					</p>
+					<p class="text-sky-200 hover:text-white transition-colors duration-200" aria-label="LinkedIn">
+						<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path fill-rule="evenodd"
+								d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764c.966 0 1.75.79 1.75 1.764s-.783 1.764-1.75 1.764zM22 19h-3v-5.604c0-3.368-4-3.582-4 0V19h-3V8h3v1.82c1.474-2.81 8-3.083 8 2.345V19z"
+								clip-rule="evenodd" />
+						</svg>
+					</p>
+				</div>
+			</div>
+		</div>
 
-            <div class="mt-8 pt-8 border-t border-sky-700 text-center text-sm text-sky-200">
-                &copy; 2024 CareWell Hospital. All rights reserved.
-            </div>
-        </footer>
+		<div class="mt-8 pt-8 border-t border-sky-700 text-center text-sm text-sky-200">
+			&copy; 2024 CareWell Hospital. All rights reserved.
+		</div>
+	</footer>
 </body>
 
 </html>

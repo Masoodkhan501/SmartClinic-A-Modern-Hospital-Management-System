@@ -96,7 +96,7 @@ public class HomeController
 		{
 			isUser=true;
 			ispassword=true;
-			page="UserLandingPage";
+			page="patientLandingPage";
 		}
 		else
 		{
