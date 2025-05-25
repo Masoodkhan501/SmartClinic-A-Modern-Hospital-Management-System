@@ -66,5 +66,22 @@ public class UserImpl implements UserSeviceInterface {
 		}
 		return 3;
 	}
-
+	 
+	public int isValidDoctor(String email, String password)
+	{
+		Optional<User> user = ur.findByEmail(email);
+		if(user.isPresent())
+		{
+			User u1 = user.get();
+			if(u1.getPassword().equals(password))
+			{
+				if(u1.getRole().equals(Role.DOCTOR))
+					return 2;
+				return 0;
+			}
+			else
+				return 1;
+		}
+		return 3;
+	}
 }

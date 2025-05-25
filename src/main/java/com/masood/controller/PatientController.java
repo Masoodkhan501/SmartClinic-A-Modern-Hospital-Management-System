@@ -13,11 +13,13 @@ import com.masood.model.Patient;
 import com.masood.model.Role;
 import com.masood.model.User;
 import com.masood.service.PatientServiceimpl;
+import com.masood.service.UserImpl;
 
-@Controller("userController")
-public class UserController {
-
-
+@Controller("PatientController")
+public class PatientController 
+{
+	@Autowired
+	private UserImpl us;
 	@Autowired
 	private PatientServiceimpl ps;
 
@@ -53,4 +55,35 @@ public class UserController {
 		}
 		return page;
 	}
+	
+	@PostMapping("/check/patient")
+	public String loginPatient(@ModelAttribute("User") User u,Model m)
+	{
+		boolean isUser=true;
+		boolean ispassword=true;
+		String page = "";
+		int validPatient = us.isValidPatient(u.getEmail(), u.getPassword());
+		if(validPatient == 3 || validPatient == 0)
+		{
+			isUser=false;
+			ispassword=false;
+			page="UserLogin";	
+		}
+		else if(validPatient == 2)
+		{
+			isUser=true;
+			ispassword=true;
+			page="patientLandingPage";
+		}
+		else
+		{
+			isUser=true;
+			ispassword=false;
+			page="UserLogin";
+		}
+		m.addAttribute("isuser", isUser);
+		m.addAttribute("ispassword",ispassword);
+		return page;
+	}
+	
 }

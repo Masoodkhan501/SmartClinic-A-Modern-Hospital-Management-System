@@ -16,4 +16,5 @@ public interface UserSeviceInterface
 	public Optional<User> getByName(String name);
 	public Optional<User> getByEmail(String email);
 	public int isValidPatient(String email, String password);
+	public int isValidDoctor(String email, String password);
 }

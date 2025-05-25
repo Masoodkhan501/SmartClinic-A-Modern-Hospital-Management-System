@@ -19,14 +19,13 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class DoctorSerivce implements DoctorServiceInterface {
 
-
 	@Autowired
 	private DoctorRepoInterface dr;
 	@Autowired
 	private UserImpl ur;
-   
 
-	public Doctor saveDoctor(Doctor d,User u) {
+	public Doctor saveDoctor(Doctor d, User u) 
+	{
 		String lastEntry = dr.findLastEntry();
 		String id = "";
 		if (lastEntry != null) {
@@ -44,7 +43,8 @@ public class DoctorSerivce implements DoctorServiceInterface {
 		return save;
 	}
 
-	public Optional<Doctor> getDoctorById(String id) {
+	public Optional<Doctor> getDoctorById(String id) 
+	{
 		return dr.findById(id);
 	}
 
@@ -53,36 +53,41 @@ public class DoctorSerivce implements DoctorServiceInterface {
 		return all;
 	}
 
-	public void DeleteDoctorById(String id) {
+	public void DeleteDoctorById(String id) 
+	{
 		dr.deleteById(id);
 	}
 
-	public Doctor getByEmail(String email)
+	public Doctor getByEmail(String email) 
 	{
 		return dr.findByEmail(email);
 	}
 
-	public List<Doctor> getBySpecialization(String specialization) {
+	public List<Doctor> getBySpecialization(String specialization) 
+	{
 		return dr.findBySpecialization(specialization);
 	}
 
-	public List<Doctor> getTop5Doctors() {
+	public List<Doctor> getTop5Doctors()
+	{
 		return dr.findTop5ByOrderByExpreinceDesc();
 	}
 
 	public List<Doctor> getByNameAndSpecialization(String name, String specialization) {
 		List<Doctor> doctors = dr.findByNameLike(name);
-		return doctors.stream().filter(doc -> doc.getSpecialized_at().stream()
-				.anyMatch(special -> special.getId().equalsIgnoreCase(specialization)))
+		return doctors.stream()
+				.filter(doc -> doc.getSpecialized_at().stream()
+						.anyMatch(special -> special.getId().equalsIgnoreCase(specialization)))
 				.collect(Collectors.toList());
 	}
-	
-	public List<Status> getAllDoctorStatus()
+
+	public List<Status> getAllDoctorStatus() 
 	{
 		return Arrays.asList(Status.values());
 	}
 
-	public List<Doctor> getByStatus(Status status) {
+	public List<Doctor> getByStatus(Status status) 
+	{
 		return dr.findDoctorsByStatus(status);
 	}
 }

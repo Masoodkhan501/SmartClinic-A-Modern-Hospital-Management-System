@@ -64,5 +64,7 @@ public class PatientServiceimpl implements PatientServiceInterface
 	{
 		return pr.findByNameLike(name);
 	}
+	
+	
 
 }

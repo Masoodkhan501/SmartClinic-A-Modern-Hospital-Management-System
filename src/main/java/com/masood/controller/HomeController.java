@@ -67,46 +67,27 @@ public class HomeController
 		return "Home";
 	}
 
-	@GetMapping("/book/appointment")
+	@GetMapping({"/book/appointment","/login/patient"})
 	public String PatientLogin(Model model)
 	{
 		User u = new User();
 		boolean isUser=true;
 		boolean ispassword=true;
+		String role = "patient";
 		model.addAttribute("isuser", isUser);
 		model.addAttribute("ispassword",ispassword);
+		model.addAttribute("role", role);
 		model.addAttribute("User", u);
 		return "UserLogin";
 	}
 	
-	@PostMapping("/login/patient")
-	public String loginPatient(@ModelAttribute("User") User u,Model m)
+	@GetMapping("/check/user")
+	public String userLogin(@ModelAttribute String role)
 	{
-		boolean isUser=true;
-		boolean ispassword=true;
-		String page = "";
-		int validPatient = us.isValidPatient(u.getEmail(), u.getPassword());
-		if(validPatient == 3 || validPatient == 0)
-		{
-			isUser=false;
-			ispassword=false;
-			page="UserLogin";	
-		}
-		else if(validPatient == 2)
-		{
-			isUser=true;
-			ispassword=true;
-			page="patientLandingPage";
-		}
+		if(role.equals("patient"))
+			return "redirect:/check/patient";
 		else
-		{
-			isUser=true;
-			ispassword=false;
-			page="UserLogin";
-		}
-		m.addAttribute("isuser", isUser);
-		m.addAttribute("ispassword",ispassword);
-		return page;
+			return "redirect:/check/doctor";
 	}
 	
 	@GetMapping("/career/doctor")
