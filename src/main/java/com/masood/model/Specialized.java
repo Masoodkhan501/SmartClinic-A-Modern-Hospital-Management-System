@@ -1,6 +1,7 @@
 package com.masood.model;
 
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,7 @@ import jakarta.persistence.Table;
 @Entity(name = "specialization")
 @Table(name = "specialization")
 public class Specialized {
+
 	@Id
 	@Column(name = "specialization_id")
 	private String id;
@@ -55,5 +57,21 @@ public class Specialized {
 	public String toString() {
 		return "Specialized [id=" + id + ", specialization=" + specialization + ", specilist=" + specilist + "]";
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, specialization, specilist);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Specialized other = (Specialized) obj;
+		return Objects.equals(id, other.id) && Objects.equals(specialization, other.specialization)
+				&& Objects.equals(specilist, other.specilist);
+	}
 }

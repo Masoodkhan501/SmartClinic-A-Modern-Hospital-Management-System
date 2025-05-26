@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.Doctor;
+import com.masood.model.Role;
 import com.masood.model.Status;
 import com.masood.model.User;
 import com.masood.repository.DoctorRepoInterface;
@@ -36,8 +37,11 @@ public class DoctorSerivce implements DoctorServiceInterface {
 		} else {
 			id = "DOC001";
 		}
+		u.setCreatedAt();
+		u.setRole(Role.DOCTOR);
 		User saveUser = ur.saveUser(u);
 		d.setDoc_id(id);
+		d.setStatus(Status.ACTIVE);
 		d.setUser_id(saveUser);
 		Doctor save = dr.save(d);
 		return save;
@@ -76,7 +80,7 @@ public class DoctorSerivce implements DoctorServiceInterface {
 	public List<Doctor> getByNameAndSpecialization(String name, String specialization) {
 		List<Doctor> doctors = dr.findByNameLike(name);
 		return doctors.stream()
-				.filter(doc -> doc.getSpecialized_at().stream()
+				.filter(doc -> doc.getspecializations().stream()
 						.anyMatch(special -> special.getId().equalsIgnoreCase(specialization)))
 				.collect(Collectors.toList());
 	}

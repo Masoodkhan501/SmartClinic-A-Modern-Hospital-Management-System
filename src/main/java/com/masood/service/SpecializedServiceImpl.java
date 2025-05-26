@@ -1,7 +1,9 @@
 package com.masood.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +25,15 @@ public class SpecializedServiceImpl implements SpecilaizedInterface
 	}
 
 	public List<Specialized> getAllSpecialization() {
-		return spr.findAll();
+		 List<Specialized> all = spr.findAll().stream().distinct().sorted(Comparator.comparing(Specialized::getSpecialization)).collect(Collectors.toList());
+		 return all;
 	}
 
 	public void deleteSpecializationByid(String id) {
 		spr.deleteById(id);
 	}
 
-	public void deleteByspecialization(String name) {
+	public void deleteByspecializationName(String name) {
 		spr.deleteSpecializationByName(name);
 	}
 

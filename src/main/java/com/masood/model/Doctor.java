@@ -52,12 +52,12 @@ public class Doctor {
 		this.payment = payment;
 	}
 	
-	public List<Specialized> getSpecialized_at() {
+	public List<Specialized> getspecializations() {
 		return specializations;
 	}
 
-	public void setSpecialized_at(List<Specialized> specialized_at) {
-		this.specializations = specialized_at;
+	public void setspecializations(List<Specialized> specializations) {
+		this.specializations = specializations;
 	}
 
 	public List<DoctorBills> getPayment() {

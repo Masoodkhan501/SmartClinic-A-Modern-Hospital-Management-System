@@ -11,7 +11,7 @@ public interface SpecilaizedInterface
 	public Optional<Specialized> getById(String id);
 	public List<Specialized> getAllSpecialization();
 	public void deleteSpecializationByid(String id);
-	public void deleteByspecialization(String name);
+	public void deleteByspecializationName(String name);
 	public Optional<Specialized> getByspecialization(String name);
 	public List<Specialized> getByDoctorId(String id);
 	public List<Specialized> getByDoctorName(String name);

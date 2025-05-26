@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CareWell New Doctor</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}" />
+</head>
+
+<body>
+    <div class="min-h-screen bg-sky-100 p-10 flex justify-center">
+        <div class="bg-white shadow-xl shadow-gray-400 w-2/3">
+            <header class="flex flex-col items-center p-5 md:py-10">
+                <div>
+                    <p class="text-2xl md:text-6xl md:font-extrabold text-sky-800 font-bold md:pb-3">
+                        CareWell Hospital
+                    </p>
+                    <p class="text-lg font-semibold text-end text-gray-400 md:text-4xl md:font-bold">
+                        New Doctor
+                    </p>
+                </div>
+            </header>
+            <section class="flex">
+                <div class="w-full md:w-2/3 p-5 md:p-10">
+                    <form th:action="@{/save/doctor}" method="post" th:object="${DoctorDTO}">
+                        <!-- Full Name -->
+                        <input type="text" th:field="*{user.name}" autofocus placeholder="Full Name" required
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
+
+                        <!-- Phone Number -->
+                        <input type="tel" placeholder="eg., 9852364712"
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
+
+                        <!-- Specializations: multiple select -->
+                        <label for="specializations" class="block font-semibold mb-1 md:text-lg">Specializations<span class="text-sm text-gray-400">( if u want to select more than one then select pressing ctrl )</span></label>
+                        <select th:field="*{doctor.specializations}" multiple
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg">
+                            <option th:each="spec : ${specializations}" th:value="${spec.id}" th:text="${spec.specialization}"></option>
+                        </select>
+
+                        <!-- Years of Experience -->
+                        <input type="number" th:field="*{doctor.expreince}" placeholder="Years of Experience"
+                            max="50" required
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
+
+                        <!-- Email -->
+                        <input type="email" th:field="*{user.email}" required placeholder="Email"
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
+
+                        <!-- Password -->
+                        <input type="password" th:field="*{user.password}" required placeholder="Password"
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
+
+                        <!-- Confirm Password -->
+                         <p class="text-red-600 text-center py-3" th:unless="${isrepassword}">wrong password! please
+                                re enter the password to confirm</p>
+                        <input type="password" required name="repassword" placeholder="Confirm Password"
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
+
+                        <!-- Submit button -->
+                        <input type="submit" vlaue="Submit"
+                            class="bg-sky-700 hover:bg-sky-900 text-white font-bold py-2 px-4 rounded-lg w-full mt-5">
+                    </form>
+                    <div class="text-center mt-6">
+                        <p class="text-gray-600 mb-2">Already have an account?</p>
+                        <a th:href="@{/login/doctor}"
+                            class="inline-flex items-center justify-center px-6 py-3 border border-sky-600 rounded-lg shadow-sm text-lg font-semibold text-sky-600 bg-white hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition duration-150 ease-in-out">
+                            Back to Login
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden w-1/3 md:flex pt-20">
+                    <img th:src="@{/images/Doctor-pana.png}" alt="Doctor Illustration"  class="h-2/3"/>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>
