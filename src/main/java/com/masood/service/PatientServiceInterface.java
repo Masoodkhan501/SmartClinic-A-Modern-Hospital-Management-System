@@ -14,4 +14,6 @@ public interface PatientServiceInterface
 	public void deletePatientById(String id);
 	public Patient getByEmail(String email);
 	public Patient getByNameLike(String name);
+	public Double getTotalAmountofDueBills(Patient p);
+	public Byte getPatientAge(Patient p);
 }

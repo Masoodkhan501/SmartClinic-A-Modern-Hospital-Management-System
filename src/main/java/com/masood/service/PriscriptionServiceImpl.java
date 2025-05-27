@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.priscription;
@@ -49,6 +50,12 @@ public class PriscriptionServiceImpl implements PrescriptionInterface
 
 	public Optional<priscription> getByAppointmentId(Long id ) {
 		return pr.findByAppointid(id);
+	}
+
+	public priscription getlatestpriscription()
+	{
+		return pr.findLatestPriscription(PageRequest.of(0, 1))
+                .stream().findFirst().orElse(null);
 	}
 
 }

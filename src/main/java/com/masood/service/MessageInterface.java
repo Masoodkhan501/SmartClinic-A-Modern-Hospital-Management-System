@@ -20,7 +20,6 @@ public interface MessageInterface
     public void deleteMessage(Long id);
     void deleteMessagesBySenderId(Long senderId);
     void deleteMessagesByReceiverId(Long receiverId);
-
     void deleteMessagesBySenderUsername(String senderUsername);
     void deleteMessagesByReceiverUsername(String receiverUsername);
 }

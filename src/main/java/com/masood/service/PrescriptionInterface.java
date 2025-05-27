@@ -16,4 +16,5 @@ public interface PrescriptionInterface
 	public List<priscription> getByDoctorName(String name);
 	public List<priscription> getByPatientName(String name);
 	public Optional<priscription> getByAppointmentId(Long id);
+	public priscription getlatestpriscription();
 }

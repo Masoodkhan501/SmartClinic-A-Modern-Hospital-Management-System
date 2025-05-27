@@ -3,6 +3,7 @@ package com.masood.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,6 @@ public interface PriscriptionRepo extends JpaRepository<priscription, Long>
 	public List<priscription> findByPatientName(@Param("name") String name);
 	@Query("select p from priscription p where p.appointid.app_id=:id")
 	public Optional<priscription> findByAppointid(@Param("id") Long id);
+	@Query("SELECT p FROM priscription p ORDER BY p.id DESC")
+	List<priscription> findLatestPriscription(Pageable pageable);
 }

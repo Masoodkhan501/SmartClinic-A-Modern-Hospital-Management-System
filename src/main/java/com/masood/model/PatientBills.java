@@ -21,7 +21,7 @@ public class PatientBills
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="patientBill_id")
+	@Column(name="patient_bill_id")
 	private Long patientBill_id;
 	
 	@ManyToOne

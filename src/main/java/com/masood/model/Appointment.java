@@ -36,6 +36,10 @@ public class Appointment {
 	private Disease disease;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "date_of_operation")
+	private Date dateOfOperation;
+	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
 	private Date dateofAppointment;
 
@@ -50,13 +54,14 @@ public class Appointment {
 	}
 
 	public Appointment(Doctor d_id, Patient p_id, Disease disease, Date date_of_appointment,
-			Appointmentstatus status, String notes) {
-		this.d_id = d_id;
-		this.p_id = p_id;
-		this.disease = disease;
-		this.dateofAppointment = date_of_appointment;
-		this.status = status;
-		this.notes = notes;
+	        Appointmentstatus status, String notes, Date dateOfOperation) {
+	    this.d_id = d_id;
+	    this.p_id = p_id;
+	    this.disease = disease;
+	    this.dateofAppointment = date_of_appointment;
+	    this.status = status;
+	    this.notes = notes;
+	    this.dateOfOperation = dateOfOperation;
 	}
 
 	public Long getApp_id() {
@@ -69,6 +74,13 @@ public class Appointment {
 
 	public Doctor getDoctor() {
 		return d_id;
+	}
+	public Date getDateOfOperation() {
+	    return dateOfOperation;
+	}
+
+	public void setDateOfOperation(Date dateOfOperation) {
+	    this.dateOfOperation = dateOfOperation;
 	}
 
 	public void setD_id(Doctor d_id) {

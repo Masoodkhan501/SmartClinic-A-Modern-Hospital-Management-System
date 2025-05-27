@@ -27,7 +27,7 @@ public class priscription {
 	@Column(name="medicines")
 	private String medicines;
 	
-	@Column(name="doctorsAdvice")
+	@Column(name="doctors_advice")
 	private String advice;
 
 	public priscription() {

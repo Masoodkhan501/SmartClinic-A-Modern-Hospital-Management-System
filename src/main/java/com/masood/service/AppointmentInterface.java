@@ -22,4 +22,7 @@ public interface AppointmentInterface
 	public List<Appointment> getByDoctorName(String name);
 	public List<Appointment> getByPatientName(String name);
 	public List<Appointmentstatus> getAppointmentStatus();
+	public Appointment getLatestAppointmentWhoseappointmentisComplete();
+	public List<Appointment> getByDateBetween(Date d1,Date d2);
+	public List<Appointment> getByDateAfter(Date d);
 }

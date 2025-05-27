@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.masood.model.Role;
 import com.masood.model.User;
 import com.masood.service.UserImpl;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller("homeContorller")
@@ -68,7 +72,7 @@ public class HomeController
 	}
 
 	@GetMapping({"/book/appointment","/login/patient"})
-	public String PatientLogin(Model model)
+	public String PatientLogin(Model model,HttpServletResponse res)
 	{
 		User u = new User();
 		boolean isUser=true;
@@ -78,16 +82,29 @@ public class HomeController
 		model.addAttribute("ispassword",ispassword);
 		model.addAttribute("role", role);
 		model.addAttribute("User", u);
+		Cookie cookie = new Cookie("role", role);
+		cookie.setPath("/");
+		res.addCookie(cookie);
+		
 		return "UserLogin";
 	}
 	
-	@GetMapping("/check/user")
-	public String userLogin(@ModelAttribute String role)
+	@PostMapping("/check/user")
+	public String userLogin(@RequestParam("sender") String role,RedirectAttributes redirectmsg,
+			@ModelAttribute("User") User u)
 	{
 		if(role.equals("patient"))
+		{
+			redirectmsg.addFlashAttribute("role", role);
+			redirectmsg.addFlashAttribute("User", u);
 			return "redirect:/check/patient";
+		}
 		else
+		{
+			redirectmsg.addFlashAttribute("role", role);
+			redirectmsg.addFlashAttribute("User", u);
 			return "redirect:/check/doctor";
+		}
 	}
 	
 	@GetMapping("/career/doctor")
