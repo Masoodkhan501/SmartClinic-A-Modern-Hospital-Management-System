@@ -64,10 +64,10 @@ public class PatientController
 			Patient p = pdto.getPatient();
 			Patient savePatient = ps.savePatient(p, u);
 			u = pdto.getUser();
-//			Optional<User> userById = us.findUserById(savePatient.getUser_id());
-//			session.setAttribute("user", userById.get());
+			Optional<User> userById = us.findUserById(savePatient.getUser_id());
+			User u1 = userById.get();
+			session.setAttribute("user",u1 );
 			session.setAttribute("patient",savePatient);
-			session.setAttribute("user", u);
 			page = "redirect:/patient/page";
 		} else {
 			boolean isrepasscorrect = false;
@@ -116,7 +116,8 @@ public class PatientController
 	
 	@GetMapping("/patient/page")
 	public String patientpage(@SessionAttribute("user") User u,
-			@SessionAttribute("patient") Patient p,Model m)
+			@SessionAttribute("patient") Patient p,Model m,
+			HttpSession session)
 	{
 		Double price = ps.getTotalAmountofDueBills(p);
 		Math.round(price);
@@ -130,6 +131,9 @@ public class PatientController
 		PatientDTO pdto = new PatientDTO(p, u);
 		pdto.setAppoint(latestAppointment);
 		pdto.setPris(getlatestpriscription);
+		session.setAttribute("PatientDTO", pdto);
+		session.removeAttribute("user");
+		session.removeAttribute("patient");
 		m.addAttribute("PatientDTO", pdto);
 		m.addAttribute("age", patientAge);
 		m.addAttribute("lastVisit", latestAppointment);
@@ -140,5 +144,13 @@ public class PatientController
 		boolean isNewPatient = latestAppointment == null && getlatestpriscription == null && sizeofAppt == 0;
 		m.addAttribute("isNew", isNewPatient);
 		return "patientLandingPage";
+	}
+	
+	@GetMapping("/logout/home")
+	public String logoutPatient(Model m,
+			HttpSession session)
+	{
+		session.invalidate();
+		return "home";
 	}
 }

@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.masood.model.Appointment;
 import com.masood.model.Appointmentstatus;
+import com.masood.model.Doctor;
+import com.masood.model.Patient;
 public interface AppointmentRepo extends JpaRepository<Appointment, Long> 
 {
 	public List<Appointment> findAppointmentByStatus(Appointmentstatus status);
@@ -35,5 +37,8 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long>
 	public List<Appointment> findLatestOperationDate(@Param("status") Appointmentstatus status, Pageable pageable);
 	@Query("SELECT a FROM appointment a WHERE a.d_id.id = :docId AND a.status = :status AND a.dateOfOperation IS NOT NULL ORDER BY a.dateOfOperation DESC")
 	public List<Appointment> findLatestOperationDateByDoctor(@Param("docId") Long docId, @Param("status") Appointmentstatus status, Pageable pageable);
-
+	@Query("SELECT DISTINCT a.patient FROM appointment a WHERE a.d_id.user_id.name = :name")
+    public List<Patient> findPatientsByDoctorName(@Param("name") String name);
+	@Query("SELECT DISTINCT a.patient FROM appointment a WHERE a.p_id.user_id.name = :name")
+    public List<Doctor> findDoctorByPatientName(@Param("name") String name);
 }

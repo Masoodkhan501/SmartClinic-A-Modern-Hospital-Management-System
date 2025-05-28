@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CareWell | Doctor Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/output.css}">
+    <link rel="stylesheet" href="../static/css/output.css">
     <style>
         /* Add any specific custom styles here if needed, or integrate directly into output.css */
         .svg-icon {
@@ -19,15 +19,19 @@
         <section class="shadow-xl rounded-xl bg-white md:flex justify-between items-center px-6 md:px-10 py-8">
             <div class="pb-4 md:pb-0">
                 <h1 class="text-3xl font-bold text-sky-800 flex items-center">
-                    <img src="../static/images/doctor-svgrepo-com.svg" alt="doctor svg" class="w-10">
-                    Welcome, <span th:text="*{user.name}"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 text-sky-700 svg-icon" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 4.354a4 4 0 110 5.292M12 20a9 9 0 100-18 9 9 0 000 18zm0-11a7 7 0 110-14 7 7 0 010 14zM12 14c-1.657 0-3 1.343-3 3v2a1 1 0 001 1h4a1 1 0 001-1v-2c0-1.657-1.343-3-3-3z" />
+                    </svg>
+                    Welcome, <span th:text="*{user.name}">Dr. [Doctor Name]</span>!
                 </h1>
                 <p class="text-sm text-gray-600 mt-2">
-                    Doctor ID: <span th:text="*{doctor.id}" class="font-medium text-gray-700"></span> |
-                    Specialization: <span th:each="special : *{doctor.specialization}" th:text="${special}"
-                        class="font-medium text-gray-700"></span> |
-                    <span th:unless="${isnew==true}"> Last Login: <span th:text="${dates.format(lastLogin, 'dd MMM yyyy, HH:mm')}"
-                        class="font-medium text-gray-700"></span></span>
+                    Doctor ID: <span th:text="*{user.id}" class="font-medium text-gray-700">DR12345</span> |
+                    Specialization: <span th:text="*{specialization}"
+                        class="font-medium text-gray-700">Cardiology</span> |
+                    Last Login: <span th:text="${#dates.format(lastLogin, 'dd MMM yyyy, HH:mm')}"
+                        class="font-medium text-gray-700">27 May 2025, 14:30</span>
                 </p>
             </div>
             <div class="mt-4 md:mt-0 flex-shrink-0">
@@ -43,6 +47,9 @@
                 </a>
             </div>
         </section>
+
+        ---
+
         <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 my-10">
             <a th:href="@{/doctor/appointments/today}"
                 class="block hover:shadow-lg transition-shadow duration-200 ease-in-out group">
@@ -97,6 +104,9 @@
                 </div>
             </a>
         </section>
+
+        ---
+
         <section class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-10">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-semibold text-sky-800 flex items-center">
@@ -109,13 +119,16 @@
                 </h2>
                 <a th:href="@{/doctor/appointments/today}"
                     class="text-sm font-medium text-sky-600 hover:text-sky-800 hover:underline transition-colors"
-                    th:if="${lists.isEmpty(todayAppointments)}">View All Today &rarr;</a>
+                    th:if="${!#lists.isEmpty(todayAppointments)}">View All Today &rarr;</a>
             </div>
 
             <div th:if="${!#lists.isEmpty(todayAppointments)}" class="overflow-x-auto">
                 <table class="min-w-full text-sm">
                     <thead class="bg-slate-50">
                         <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                Time</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
                                 Patient Name</th>
@@ -132,14 +145,17 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <tr th:each="appointment : ${todayAppointments}" class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700"
+                                th:text="${#dates.format(appointment.time, 'HH:mm')}">10:00 AM</td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-700 font-medium"
-                                th:text="${appointment.p_id.user_id.name}"></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-gray-700" th:text="${appointment.notes}">
-                                </td>
+                                th:text="${appointment.patientName}">Patient Name</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700" th:text="${appointment.type}">
+                                Consultation</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span th:text="${appointment.status}"
                                     class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
-                                    th:classappend="${appointment.status == 'CONFIRMED' ? 'bg-green-100 text-green-800' : (appointment.status == 'Pending' ? 'bg-yellow-100 text-yellow-800' : (appointment.status == 'Cancelled' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'))}">    
+                                    th:classappend="${appointment.status == 'Confirmed' ? 'bg-green-100 text-green-800' : (appointment.status == 'Pending' ? 'bg-yellow-100 text-yellow-800' : (appointment.status == 'Cancelled' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'))}">
+                                    Confirmed
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -147,11 +163,37 @@
                                     class="text-sky-600 hover:text-sky-900 hover:underline">View Patient &rarr;</a>
                             </td>
                         </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">10:30 AM</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700 font-medium">Jane Smith</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">Follow-up</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    Confirmed
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="#" class="text-sky-600 hover:text-sky-900 hover:underline">View Patient &rarr;</a>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">11:00 AM</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700 font-medium">David Lee</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">New Consultation</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    Pending
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="#" class="text-sky-600 hover:text-sky-900 hover:underline">View Patient &rarr;</a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div th:if="${lists.isEmpty(todayAppointments)}" class="text-center text-gray-500 py-10">
+            <div th:if="${#lists.isEmpty(todayAppointments)}" class="text-center text-gray-500 py-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -162,6 +204,9 @@
                 <p class="mt-1 text-sm text-gray-500">Take a moment to prepare for tomorrow!</p>
             </div>
         </section>
+
+        ---
+
         <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
             <a th:href="@{/doctor/patient/new-consultation}"
                 class="group flex items-center justify-center bg-green-600 text-white px-6 py-4 rounded-lg shadow-md hover:bg-green-700 hover:shadow-lg transition-all duration-200 ease-in-out text-base font-semibold">
@@ -194,6 +239,7 @@
                 View Pending Tasks
             </a>
         </section>
+
     </div>
 </body>
 

@@ -7,6 +7,8 @@ import java.util.Optional;
 import com.masood.model.Appointment;
 import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
+import com.masood.model.Doctor;
+import com.masood.model.Patient;
 
 public interface AppointmentInterface 
 {
@@ -25,4 +27,6 @@ public interface AppointmentInterface
 	public Appointment getLatestAppointmentWhoseappointmentisComplete();
 	public List<Appointment> getByDateBetween(Date d1,Date d2);
 	public List<Appointment> getByDateAfter(Date d);
+	public List<Doctor> getDoctorByPatientName(String name);
+	public List<Patient> getPatientByDoctorName(String name);
 }

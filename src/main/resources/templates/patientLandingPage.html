@@ -11,93 +11,137 @@
 <body>
     <div class=" min-h-screen bg-sky-50">
         <div class="md:w-4/5 w-10/12 mx-auto py-10" th:object="${PatientDTO}">
-            <section class="shadow-xl rounded-xl bg-white md:flex justify-between px-5 md:px-10 py-7">
-                <div class="pb-3 md:pb-0">
-                    <p class="text-2xl font-bold text-sky-800">
-                        👋
-                        <span th:if="${lastvisit == null}">Welcome, <span th:text="*{user.name}"></span>! Glad to have
-                            you onboard.</span>
-                        <span th:unless="${lastvisit == null}">Welcome back, <span
-                                th:text="*{user.name}"></span>!</span>
-                    </p>
-
-                    <p class="text-gray-600" th:if="${lastvisit == null}">
-                        Let's get started with your first appointment.
-                    </p>
-                    <p class="text-gray-600" th:unless="${lastvisit == null}">
-                        Patient ID: <span th:text="*{user.id}"></span> | Age: [[${age}]] | Last Visit: [[${lastvisit}]]
-                    </p>
+            <section class="shadow-xl rounded-xl bg-white md:flex justify-between items-center px-6 md:px-10 py-8"> 
+                <div class="pb-4 md:pb-0"> 
+                    <h1 class="text-3xl font-bold text-sky-800 flex items-center"> 
+                            <span class="mr-2">👋</span> 
+                            <span th:if="${lastvisit == null}">Welcome, <span th:text="*{user.name}"></span>!</span>
+                            <span th:unless="${lastvisit == null}">Welcome back, <span
+                                    th:text="*{user.name}"></span>!</span>
+                        </h1>
+                        <p class="text-gray-700 mt-1" th:if="${lastvisit == null}">
+                            We're glad to have you. Let's get started with your health journey.
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2" th:unless="${lastvisit == null}"> 
+                            Patient ID: <span th:text="*{user.id}" class="font-medium text-gray-700"></span> |
+                            Age: <span th:text="${age}" class="font-medium text-gray-700"></span> |
+                            Last Visit: <span th:text="${lastvisit}" class="font-medium text-gray-700"></span>
+                        </p>
                 </div>
-                <div class="flex justify-center md:items-center">
-                    <button class="bg-sky-600 text-white rounded-lg h-10 w-28">
-                        View Profile
-                    </button>
+                <div class="mt-4 md:mt-0 flex-shrink-0"> 
+                    <a th:href="@{/logout/home}"
+                        class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-base font-medium rounded-lg text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition ease-in-out duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Log out
+                    </a>
                 </div>
             </section>
-            <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 my-10">
-                <a th:href="@{/patient/appointmetns}">
-                    <div>
-                        <div class="bg-white rounded-2xl p-7 shadow border-l-4 border-blue-500">
-                            <p class="text-gray-600 ">Total Appointments</p>
-                            <p class="text-blue-800 font-bold">[[${noofAppointments}]]</p>
+            <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 my-10">
+                <a th:href="@{/patient/appointmetns}"
+                    class="block hover:shadow-lg transition-shadow duration-200 ease-in-out group">
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md border-l-4 border-blue-500 h-full flex flex-col justify-between">
+
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Appointments</p>
+                            <p class="text-3xl font-bold text-blue-700 mt-1">[[${noofAppointments}]]</p>
                         </div>
+                        <div class="text-xs text-blue-600 mt-2 group-hover:underline">View Details &rarr;</div>
                     </div>
                 </a>
-                <a th:href="@{/patient/upcomingappointmetns}">
-                    <div>
-                        <div class="bg-white rounded-2xl p-7 shadow border-l-4 border-lime-500">
-                            <p class="text-gray-600 ">Upcoming Appointments</p>
-                            <p class="text-green-800 font-bold">[[${upcomingAppointments}]]</p>
+
+                <a th:href="@{/patient/upcomingappointmetns}"
+                    class="block hover:shadow-lg transition-shadow duration-200 ease-in-out group">
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md border-l-4 border-lime-500 h-full flex flex-col justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Upcoming Appointments</p>
+                            <p class="text-3xl font-bold text-green-600 mt-1">[[${upcomingAppointments}]]</p>
                         </div>
+                        <div class="text-xs text-green-600 mt-2 group-hover:underline">View Details &rarr;</div>
                     </div>
                 </a>
-                <a th:href="@{/patient/bills}">
-                    <div>
-                        <div class="bg-white rounded-2xl p-7 shadow border-l-4 border-red-500">
-                            <p class="text-gray-600 ">Pending Bills</p>
-                            <p class="text-red-800 font-bold">[[${TotalDeu}]]</p>
+
+                <a th:href="@{/patient/bills}"
+                    class="block hover:shadow-lg transition-shadow duration-200 ease-in-out group">
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md border-l-4 border-red-500 h-full flex flex-col justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Pending Bills</p>
+                            <p class="text-3xl font-bold text-red-600 mt-1">[[${TotalDeu}]]</p>
                         </div>
+                        <div class="text-xs text-red-600 mt-2 group-hover:underline">Pay Now &rarr;</div>
                     </div>
                 </a>
-                <a th:href="@{/patient/messages}">
-                    <div>
-                        <div class="bg-white rounded-2xl p-7 shadow border-l-4 border-orange-500">
-                            <p class="text-gray-600 ">Unread Messages</p>
-                            <p class="font-bold"
-                                th:classappend="${noofUnreadMessages > 0 ? 'text-orange-700' : 'text-gray-400'}"
-                                th:text="${noofUnreadMessages > 0 ? noofUnreadMessages : 'No new messages'}">
+
+                <a th:href="@{/patient/messages}"
+                    class="block hover:shadow-lg transition-shadow duration-200 ease-in-out group">
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500 h-full flex flex-col justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Unread Messages</p>
+                            <p class="text-3xl font-bold mt-1"
+                                th:classappend="${noofUnreadMessages > 0 ? 'text-orange-600' : 'text-gray-400'}" 
+                               th:text="${noofUnreadMessages > 0 ? noofUnreadMessages : '0'}">
                             </p>
                         </div>
+                        <div th:if="${noofUnreadMessages > 0}"
+                            class="text-xs text-orange-600 mt-2 group-hover:underline">View Messages &rarr;</div>
+                        <div th:unless="${noofUnreadMessages > 0}" class="text-xs text-gray-400 mt-2">No new
+                            messages</div>
                     </div>
                 </a>
             </section>
-            <section class="bg-white rounded-2xl shadow-md border border-gray-200 p-6 mb-10">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-sky-800">📅 Recent Appointments</h2>
-                    <a th:href="@{/patient/appointments}" class="text-sky-600 hover:underline"
-                        th:if="${PatientDTO.appoint != null}">View All</a>
+            <section class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-10">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-semibold text-sky-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-sky-700" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Recent Appointments
+                    </h2>
+                    <a th:href="@{/patient/appointments}"
+                        class="text-sm font-medium text-sky-600 hover:text-sky-800 hover:underline transition-colors"
+                        th:if="${PatientDTO.appoint != null}">View All &rarr;</a>
                 </div>
 
                 <div th:if="${PatientDTO.appoint != null}" class="overflow-x-auto">
                     <table class="min-w-full text-sm">
-                        <thead>
-                            <tr class="bg-gray-100 text-left">
-                                <th class="px-4 py-2">Date</th>
-                                <th class="px-4 py-2">Doctor</th>
-                                <th class="px-4 py-2">Department</th>
-                                <th class="px-4 py-2">Status</th>
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    Date</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    Doctor</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    Department</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="border-t">
-                                <td class="px-4 py-2" th:text="${PatientDTO.appoint.date}"></td>
-                                <td class="px-4 py-2" th:text="${PatientDTO.appoint.doctorName}"></td>
-                                <td class="px-4 py-2" th:text="${PatientDTO.appoint.specialization}"></td>
-                                <td class="px-4 py-2">
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-700"
+                                    th:text="${PatientDTO.appoint.date}"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-700"
+                                    th:text="${PatientDTO.appoint.doctorName}"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-700"
+                                    th:text="${PatientDTO.appoint.specialization}"></td>
+                                <td class="px-6 py-4 whitespace-nowrap">
                                     <span th:text="${PatientDTO.appoint.status}"
-                                        class="px-2 py-1 rounded-full text-white text-xs"
-                                        th:classappend="${PatientDTO.appoint.status == 'Upcoming' ? 'bg-green-500' : 'bg-gray-400'}">
-                                        Upcoming
+                                        class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
+                                        th:classappend="${PatientDTO.appoint.status == 'Upcoming' ? 'bg-green-100 text-green-800' : (PatientDTO.appoint.status == 'Completed' ? 'bg-sky-100 text-sky-800' : 'bg-gray-100 text-gray-800')}">
                                     </span>
                                 </td>
                             </tr>
@@ -105,45 +149,95 @@
                     </table>
                 </div>
 
-                <div th:if="${PatientDTO.appoint == null}" class="text-center text-gray-500 italic">
-                    <p>😅 No appointments yet!</p>
-                    <p>Why not <a th:href="@{/patient/book-appointment}" class="text-sky-600 underline">book your first
-                            one</a> today?</p>
+                <div th:if="${PatientDTO.appoint == null}" class="text-center text-gray-500 py-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 13H9m3 0V9m0 4v4m4-4H5" />
+                    </svg>
+                    <p class="mt-3 text-lg font-medium text-gray-700">No appointments yet!</p>
+                    <p class="mt-1 text-sm text-gray-500">Why not <a th:href="@{/patient/book-appointment}"
+                            class="text-sky-600 font-semibold hover:underline">book your first one</a> today?</p>
                 </div>
             </section>
 
-            <section class="bg-white rounded-2xl shadow-md border border-gray-200 p-6 mb-10">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-purple-800">💊 Latest Prescriptions</h2>
-                    <a th:href="@{/patient/prescriptions}" class="text-purple-600 hover:underline">View All</a>
+            <section class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-10">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-semibold text-sky-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-sky-700" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Latest Prescriptions
+                    </h2>
+                    <a th:href="@{/patient/prescriptions}"
+                        class="text-sm font-medium text-sky-600 hover:text-sky-800 hover:underline transition-colors"
+                        th:if="${PatientDTO.pris != null}">View All &rarr;</a>
                 </div>
+
                 <div th:if="${PatientDTO.pris != null}">
-                    <ul class="list-disc pl-5 text-sm text-gray-700">
-                        <li>
-                            <strong th:text="${PatientDTO.pris.date}"></strong> -
-                            <span th:text="${PatientDTO.pris.details}"></span>
-                            <p th:text="${PatientDTO.pris.medicines}"></p>
-                            <p th:text="${PatientDTO.pris.advice}"></p>
-                        </li>
-                    </ul>
+                    <div class="border-l-4 border-sky-500 pl-4 py-3 bg-sky-50 rounded-md">
+                        <p class="text-base font-semibold text-sky-700 mb-1" th:text="${PatientDTO.pris.date}"></p>
+                        <p class="text-sm text-gray-700 mb-2">
+                            <span class="font-medium">Details:</span> <span th:text="${PatientDTO.pris.details}"></span>
+                        </p>
+                        <div class="text-sm text-gray-600 mb-2">
+                            <p class="font-medium text-gray-800">Medicines:</p>
+                            <p class="pl-2" th:text="${PatientDTO.pris.medicines}"></p>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p class="font-medium text-gray-800">Advice:</p>
+                            <p class="pl-2" th:text="${PatientDTO.pris.advice}"></p>
+                        </div>
+                    </div>
                 </div>
-                <div th:if="${PatientDTO.pris == null}" class="text-center text-gray-500 italic">
-                    <p>🧾 No prescriptions found!</p>
-                    <p>Your doctor's notes will appear here after your first visit.</p>
+
+                <div th:if="${PatientDTO.pris == null}" class="text-center text-gray-500 py-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-4-4m0 0l-4 4m4-4v12" />
+                    </svg>
+                    <p class="mt-3 text-lg font-medium text-gray-700">No prescriptions found!</p>
+                    <p class="mt-1 text-sm text-gray-500">Your doctor's notes will appear here after your visit.</p>
                 </div>
             </section>
 
             <!-- 💬 Quick Action Buttons -->
-            <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-10">
                 <a th:href="@{/patient/book-appointment}"
-                    class="bg-green-600 text-white p-4 rounded-xl text-center hover:bg-green-700 transition">➕ Book
-                    Appointment</a>
+                    class="group flex items-center justify-center bg-green-600 text-white px-6 py-4 rounded-lg shadow-md hover:bg-green-700 hover:shadow-lg transition-all duration-200 ease-in-out text-base font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 mr-2 transform group-hover:scale-110 transition-transform" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Book Appointment
+                </a>
                 <a th:href="@{/patient/messages}"
-                    class="bg-orange-500 text-white p-4 rounded-xl text-center hover:bg-orange-600 transition">💬 Send
-                    Message</a>
+                    class="group flex items-center justify-center bg-orange-500 text-white px-6 py-4 rounded-lg shadow-md hover:bg-orange-600 hover:shadow-lg transition-all duration-200 ease-in-out text-base font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 mr-2 transform group-hover:scale-110 transition-transform" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    Send Message
+                </a>
                 <a th:href="@{/patient/bills}"
-                    class="bg-red-500 text-white p-4 rounded-xl text-center hover:bg-red-600 transition">💳 Pay
-                    Bills</a>
+                    class="group flex items-center justify-center bg-red-500 text-white px-6 py-4 rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg transition-all duration-200 ease-in-out text-base font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 mr-2 transform group-hover:scale-110 transition-transform" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    Pay Bills
+                </a>
             </section>
 
         </div>

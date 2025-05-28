@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.masood.model.Appointment;
 import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
+import com.masood.model.Doctor;
+import com.masood.model.Patient;
 import com.masood.repository.AppointmentHistoryRepo;
 import com.masood.repository.AppointmentRepo;
 
@@ -97,5 +99,13 @@ public class AppointmentService implements AppointmentInterface {
 	public Appointment getLatestOperationAppointmentByDoctor(Long docId) {
 	    List<Appointment> ops = ar.findLatestOperationDateByDoctor(docId, Appointmentstatus.DONE, PageRequest.of(0, 1));
 	    return ops.isEmpty() ? null : ops.get(0);
+	}
+
+	public List<Doctor> getDoctorByPatientName(String name) {
+		return ar.findDoctorByPatientName(name);
+	}
+
+	public List<Patient> getPatientByDoctorName(String name) {
+		return ar.findPatientsByDoctorName(name);
 	}
 }

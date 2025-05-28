@@ -1,6 +1,8 @@
 package com.masood.controller;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,14 +11,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.masood.DTO.DoctorDTO;
+import com.masood.model.Appointment;
 import com.masood.model.Doctor;
+import com.masood.model.Message;
+import com.masood.model.Patient;
 import com.masood.model.Specialized;
 import com.masood.model.User;
+import com.masood.service.AppointmentService;
 import com.masood.service.DoctorSerivce;
+import com.masood.service.MessageService;
+import com.masood.service.PatientServiceimpl;
+import com.masood.service.PriscriptionServiceImpl;
 import com.masood.service.SpecializedServiceImpl;
 import com.masood.service.UserImpl;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller("DoctorController")
 public class DoctorController 
@@ -28,6 +40,14 @@ public class DoctorController
 	
 	@Autowired
 	private SpecializedServiceImpl seps;
+	@Autowired
+	private AppointmentService as;
+	@Autowired
+	private MessageService ms;
+	@Autowired
+	private PriscriptionServiceImpl pres;
+	@Autowired
+	private PatientServiceimpl ps;
 	
 	@GetMapping("/login/doctor")
 	public String LoginDoctor(Model model)
@@ -44,7 +64,7 @@ public class DoctorController
 	}
 	
 	@GetMapping("/check/doctor")
-	public String validDoctor(@ModelAttribute("User") User u,Model m)
+	public String validDoctor(@ModelAttribute("User") User u,Model m,HttpSession session)
 	{
 		boolean isUser=true;
 		boolean ispassword=true;
@@ -60,7 +80,12 @@ public class DoctorController
 		{
 			isUser=true;
 			ispassword=true;
-			page="DoctorLandingPage";
+			Optional<User> user = us.getByEmail(u.getEmail());
+			User u1 = user.get();
+			Doctor d = ds.getByEmail(u.getEmail());
+			session.setAttribute("user", u1);
+			session.setAttribute("doctor", d);
+			page="redirect:/doctor/page";
 		}
 		else
 		{
@@ -89,18 +114,43 @@ public class DoctorController
 	
 	@PostMapping("/save/doctor")
 	public String saveDoctor(@ModelAttribute("DoctorDTO") DoctorDTO ddto,
-			@RequestParam("repassword") String confirmPassword
+			@RequestParam("repassword") String confirmPassword,HttpSession session
 			,Model m)
 	{
 		String page="";
 		if (confirmPassword.equals(ddto.getUser().getPassword())) {
 			ds.saveDoctor(ddto.getDoctor(), ddto.getUser());
-			page = "DoctorLandingPage";
+			Doctor d = ds.getByEmail(ddto.getUser().getEmail());
+			Optional<User> user = us.getByEmail(ddto.getUser().getEmail());
+			User u = user.get();
+			session.setAttribute("user", u);
+			session.setAttribute("doctor", d);
+			page = "redirect:/doctor/page";
 		} else {
 			boolean isrepasscorrect = false;
 			m.addAttribute("isrepassword", isrepasscorrect);
 			page = "createnewDoctor";
 		}
 		return page;
+	}
+	
+	@GetMapping("/doctor/page")
+	public String doctorpage(@SessionAttribute("user") User u,
+			@SessionAttribute("doctor") Doctor d,
+			HttpSession session,Model m)
+	{
+		DoctorDTO ddto = new DoctorDTO(d, u);
+		m.addAttribute("DoctorDTO", ddto);
+		List<Appointment> appointmentbydate = as.getByDate(new Date());
+		m.addAttribute("todayAppointmentsCount",appointmentbydate.size() );
+		List<Appointment> upcommingappt = as.getByDateAfter(new Date());
+		m.addAttribute("upcomingAppointmentsCount", upcommingappt.size());
+		List<Message> messagesByStatus = ms.getMessagesByStatus("unread");
+		m.addAttribute("unreadMessagesCount", messagesByStatus.size());
+		List<Patient> patientByDoctorName = as.getPatientByDoctorName(u.getName());
+		m.addAttribute("totalPatientsCount",patientByDoctorName.size());
+		List<Appointment> byDate = as.getByDate(new Date());
+		m.addAttribute("todayAppointments", byDate);
+		return "DoctorLandingPage";
 	}
 }
