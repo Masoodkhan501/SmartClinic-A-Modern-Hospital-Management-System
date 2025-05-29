@@ -19,7 +19,10 @@ public class MessageService implements MessageInterface
 	private MessageRepo mr;
 
 	public Message sendMessage(Message message) {
-		return mr.save(message);
+		message.setSentAt();
+		message.setStatus("unread");
+		Message save = mr.save(message);
+		return save;
 	}
 
 	public List<Message> getAllMessages() {

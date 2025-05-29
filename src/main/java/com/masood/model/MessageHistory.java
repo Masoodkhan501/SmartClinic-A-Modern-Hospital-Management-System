@@ -70,8 +70,8 @@ public class MessageHistory {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(LocalDate updatedAt) {
-		this.updatedAt = updatedAt;
+	public void setUpdatedAt() {
+		this.updatedAt = LocalDate.now();
 	}
 
 	public String getUpdateReason() {
