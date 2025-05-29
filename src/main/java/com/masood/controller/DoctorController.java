@@ -1,5 +1,6 @@
 package com.masood.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,8 @@ import com.masood.model.User;
 import com.masood.service.AppointmentService;
 import com.masood.service.DoctorSerivce;
 import com.masood.service.MessageService;
-import com.masood.service.PatientServiceimpl;
-import com.masood.service.PriscriptionServiceImpl;
+//import com.masood.service.PatientServiceimpl;
+//import com.masood.service.PriscriptionServiceImpl;
 import com.masood.service.SpecializedServiceImpl;
 import com.masood.service.UserImpl;
 
@@ -44,10 +45,10 @@ public class DoctorController
 	private AppointmentService as;
 	@Autowired
 	private MessageService ms;
-	@Autowired
-	private PriscriptionServiceImpl pres;
-	@Autowired
-	private PatientServiceimpl ps;
+//	@Autowired
+//	private PriscriptionServiceImpl pres;
+//	@Autowired
+//	private PatientServiceimpl ps;
 	
 	@GetMapping("/login/doctor")
 	public String LoginDoctor(Model model)
@@ -69,7 +70,7 @@ public class DoctorController
 		boolean isUser=true;
 		boolean ispassword=true;
 		String page = "";
-		int validPatient = us.isValidPatient(u.getEmail(), u.getPassword());
+		int validPatient = us.isValidDoctor(u.getEmail(), u.getPassword());
 		if(validPatient == 3 || validPatient == 0)
 		{
 			isUser=false;
@@ -119,9 +120,10 @@ public class DoctorController
 	{
 		String page="";
 		if (confirmPassword.equals(ddto.getUser().getPassword())) {
-			ds.saveDoctor(ddto.getDoctor(), ddto.getUser());
-			Doctor d = ds.getByEmail(ddto.getUser().getEmail());
-			Optional<User> user = us.getByEmail(ddto.getUser().getEmail());
+			Doctor saveDoctor = ds.saveDoctor(ddto.getDoctor(), ddto.getUser());
+			Optional<Doctor> doc = ds.getDoctorById(saveDoctor.getDoc_id());
+			Doctor d = doc.get();
+			Optional<User> user = us.getByEmail(saveDoctor.getUser_id().getEmail());
 			User u = user.get();
 			session.setAttribute("user", u);
 			session.setAttribute("doctor", d);
@@ -151,6 +153,13 @@ public class DoctorController
 		m.addAttribute("totalPatientsCount",patientByDoctorName.size());
 		List<Appointment> byDate = as.getByDate(new Date());
 		m.addAttribute("todayAppointments", byDate);
+		session.setAttribute("DoctorDTO", ddto);
+		boolean isnew = true;
+		if(patientByDoctorName.size()<0)
+			isnew=false;
+		m.addAttribute("isnew",isnew );
+		LocalDate dates = LocalDate.now().minusDays(1);
+		m.addAttribute("dates",dates);
 		return "DoctorLandingPage";
 	}
 }

@@ -80,7 +80,7 @@ public class DoctorSerivce implements DoctorServiceInterface {
 	public List<Doctor> getByNameAndSpecialization(String name, String specialization) {
 		List<Doctor> doctors = dr.findByNameLike(name);
 		return doctors.stream()
-				.filter(doc -> doc.getspecializations().stream()
+				.filter(doc -> doc.getSpecializations().stream()
 						.anyMatch(special -> special.getId().equalsIgnoreCase(specialization)))
 				.collect(Collectors.toList());
 	}

@@ -19,14 +19,14 @@
         <section class="shadow-xl rounded-xl bg-white md:flex justify-between items-center px-6 md:px-10 py-8">
             <div class="pb-4 md:pb-0">
                 <h1 class="text-3xl font-bold text-sky-800 flex items-center">
-                    <img src="../static/images/doctor-svgrepo-com.svg" alt="doctor svg" class="w-10">
+                    <img th:src="@{/images/doctor-svgrepo-com.svg}" alt="doctor svg" class="w-10">
                     Welcome, <span th:text="*{user.name}"></span>
                 </h1>
                 <p class="text-sm text-gray-600 mt-2">
-                    Doctor ID: <span th:text="*{doctor.id}" class="font-medium text-gray-700"></span> |
-                    Specialization: <span th:each="special : *{doctor.specialization}" th:text="${special}"
-                        class="font-medium text-gray-700"></span> |
-                    <span th:unless="${isnew==true}"> Last Login: <span th:text="${dates.format(lastLogin, 'dd MMM yyyy, HH:mm')}"
+                    Doctor ID: <span th:text="*{doctor.doc_id}" class="font-medium text-gray-700"></span> |
+                    Specialization: <span th:each="special : *{doctor.specializations}" th:text="${special.specialization} + ', '"
+                        class="font-medium text-gray-700"></span>
+                    <span th:unless="${isnew==true}"> | Last Login: <span th:text="${dates.format(lastLogin, 'dd MMM yyyy, HH:mm')}"
                         class="font-medium text-gray-700"></span></span>
                 </p>
             </div>
@@ -109,7 +109,7 @@
                 </h2>
                 <a th:href="@{/doctor/appointments/today}"
                     class="text-sm font-medium text-sky-600 hover:text-sky-800 hover:underline transition-colors"
-                    th:if="${lists.isEmpty(todayAppointments)}">View All Today &rarr;</a>
+                    th:if="${#lists.isEmpty(todayAppointments)}">View All Today &rarr;</a>
             </div>
 
             <div th:if="${!#lists.isEmpty(todayAppointments)}" class="overflow-x-auto">
@@ -151,7 +151,7 @@
                 </table>
             </div>
 
-            <div th:if="${lists.isEmpty(todayAppointments)}" class="text-center text-gray-500 py-10">
+            <div th:if="${#lists.isEmpty(todayAppointments)}" class="text-center text-gray-500 py-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                     <path stroke-linecap="round" stroke-linejoin="round"

@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -14,7 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-@Entity(name = "Doctor")
+@Entity(name = "Doctor") 
 @Table(name = "Doctor_detials")
 public class Doctor {
 	@Id
@@ -25,7 +26,7 @@ public class Doctor {
 	@JoinColumn(name = "user_Id")
 	private User user_id;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Doctor_specialization", joinColumns = @JoinColumn(name = "Doctor_id"), inverseJoinColumns = @JoinColumn(name = "specialization_id"))
 	private List<Specialized> specializations;
 
@@ -52,11 +53,11 @@ public class Doctor {
 		this.payment = payment;
 	}
 	
-	public List<Specialized> getspecializations() {
+	public List<Specialized> getSpecializations() {
 		return specializations;
 	}
 
-	public void setspecializations(List<Specialized> specializations) {
+	public void setSpecializations(List<Specialized> specializations) {
 		this.specializations = specializations;
 	}
 

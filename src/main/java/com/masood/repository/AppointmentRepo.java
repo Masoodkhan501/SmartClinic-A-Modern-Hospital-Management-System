@@ -37,8 +37,8 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long>
 	public List<Appointment> findLatestOperationDate(@Param("status") Appointmentstatus status, Pageable pageable);
 	@Query("SELECT a FROM appointment a WHERE a.d_id.id = :docId AND a.status = :status AND a.dateOfOperation IS NOT NULL ORDER BY a.dateOfOperation DESC")
 	public List<Appointment> findLatestOperationDateByDoctor(@Param("docId") Long docId, @Param("status") Appointmentstatus status, Pageable pageable);
-	@Query("SELECT DISTINCT a.patient FROM appointment a WHERE a.d_id.user_id.name = :name")
+	@Query("SELECT DISTINCT a.p_id FROM appointment a WHERE a.d_id.user_id.name = :name")
     public List<Patient> findPatientsByDoctorName(@Param("name") String name);
-	@Query("SELECT DISTINCT a.patient FROM appointment a WHERE a.p_id.user_id.name = :name")
+	@Query("SELECT DISTINCT a.d_id FROM appointment a WHERE a.p_id.user_id.name = :name")
     public List<Doctor> findDoctorByPatientName(@Param("name") String name);
 }
