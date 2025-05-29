@@ -78,8 +78,8 @@ public class Message
 		return sentAt;
 	}
 
-	public void setSentAt(LocalDate sentAt) {
-		this.sentAt = sentAt;
+	public void setSentAt() {
+		this.sentAt = LocalDate.now();
 	}
 
 	public User getSender() {

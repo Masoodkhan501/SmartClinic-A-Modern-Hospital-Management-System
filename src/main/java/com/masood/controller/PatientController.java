@@ -132,8 +132,6 @@ public class PatientController
 		pdto.setAppoint(latestAppointment);
 		pdto.setPris(getlatestpriscription);
 		session.setAttribute("PatientDTO", pdto);
-		session.removeAttribute("user");
-		session.removeAttribute("patient");
 		m.addAttribute("PatientDTO", pdto);
 		m.addAttribute("age", patientAge);
 		m.addAttribute("lastVisit", latestAppointment);
