@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details page</title>
+    <link rel="stylesheet" href="../static/css/output.css">
+</head>
+
+<body class="p-6 bg-gray-100 min-h-screen">
+
+    <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-2xl p-6">
+        
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 capitalize" th:text="'Showing: ' + ${reason}"></h2>
+
+        <div th:switch="${reason}">
+
+            <!-- Appointments -->
+            <div th:case="'todayappointments'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-blue-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No appointments scheduled for today.</p>
+                </div>
+
+                <!-- Appointment Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-blue-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Date</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Status
+                                </th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Symptoms
+                                </th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Check
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
+                            <tr class="hover:bg-blue-100 transition duration-200">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.p_id.user_id.name}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.status}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${appt.notes}"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    ><a th:href="/prescription/craete" class="hover:underline hover:underline-offset-4">Check</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Upcoming Appointments -->
+            <div th:case="'upcomingappointments'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-indigo-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m2 4H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v7a2 2 0 01-2 2z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No upcoming appointments found.</p>
+                </div>
+
+                <!-- Appointment Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}">
+                    <div class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-indigo-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-indigo-700 uppercase">
+                                        Patient Name</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-indigo-700 uppercase">Date
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-indigo-700 uppercase">
+                                        Status</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-indigo-700 uppercase">
+                                        Symptoms</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
+                                <tr class="hover:bg-indigo-50 transition duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.p_id.user_id.name}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${#dates.format(appt.date, 'dd MMM yyyy')}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span th:text="${appt.status}"
+                                            th:classappend="${appt.status == 'confirmed'} ? 'text-green-600 font-medium' : 'text-yellow-600 font-medium'">
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.notes}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div th:case="'unreadmessages'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-yellow-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12.79V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6.79a2 2 0 00.895 1.664l7 4.667a2 2 0 002.21 0l7-4.667A2 2 0 0021 12.79z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No unread messages found.</p>
+                </div>
+
+                <!-- Messages Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}">
+                    <div class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-yellow-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        From</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">Date
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">Subject And Message
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        Send replie</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="msg : ${dataList}">
+                                <tr class="hover:bg-yellow-50 transition duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${msg.sender.name}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${msg.sentAt}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <div th:text="${msg.subject}"></div>
+                                        <div th:text="${content}"></div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <a th:href="@{/doctor/messages/new}">replie</a>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients -->
+            <div th:case="'doctorpatients'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <div class="flex justify-center">
+                        <img th:src="@{/images/doctor-svgrepo-com.svg}" alt="doctor svg" class="h-20">
+                    </div>
+                    <p class="text-gray-600 mt-4 text-lg">No patients linked to this doctor yet.</p>
+                </div>
+
+                <!-- Patient Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-red-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Patient ID
+                                </th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Name</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Age</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" th:each="patient : ${dataList}">
+                            <tr class="hover:bg-red-50 transition duration-200">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.id}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.name}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.age}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.gender}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Fallback -->
+            <div th:case="*">
+                <div class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No data available to show.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center mt-5">
+        <a href="/doctor/page"
+            class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+            &larr; Back to Dashboard
+        </a>
+    </div>
+</body>
+
+</html>

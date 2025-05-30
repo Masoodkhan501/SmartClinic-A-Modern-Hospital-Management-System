@@ -13,22 +13,21 @@ import com.masood.model.Appointment;
 import com.masood.model.Appointmentstatus;
 import com.masood.model.Doctor;
 import com.masood.model.Patient;
+import com.masood.model.PaymentStatus;
 public interface AppointmentRepo extends JpaRepository<Appointment, Long> 
 {
 	public List<Appointment> findAppointmentByStatus(Appointmentstatus status);
-	@Query("select a from appointment a where LOWER (a.disease.name) LIKE LOWER (CONCAT('%',:disease,'%'))")
-	public List<Appointment> findAppointmentByDisease(@Param("disease") String disease);
 	public List<Appointment> findByDateofAppointment(Date date);
-	@Query("select a from appointment a where a.d_id=:id")
+	@Query("select a from appointment a where a.d_id.doc_id=:id")
 	public List<Appointment> findByDoctor(@Param("id") String id);
-	@Query("select a from appointment a where a.p_id=:id")
+	@Query("select a from appointment a where a.p_id.patient_Id=:id")
 	public List<Appointment> findByPatient(@Param("id") String id);
 	@Query("select a from appointment a where LOWER(a.d_id.user_id.name) LIKE(CONCAT('%',:name,'%'))")
 	public List<Appointment> findByDoctorName(@Param("name") String name);
 	@Query("select a from appointment a where LOWER(a.p_id.user_id.name) LIKE (CONCAT('%',:name,'%'))")
 	public List<Appointment> findByPatientName(@Param("name") String name);
 	@Query("SELECT a FROM appointment a ORDER BY a.app_id DESC")
-	List<Appointment> findLatestAppointment(Pageable pageable);
+	public List<Appointment> findLatestAppointment(Pageable pageable);
 	@Query("SELECT a FROM appointment a WHERE a.status = :status ORDER BY a.app_id DESC")
 	public List<Appointment> findLatestCompletedAppointments(@Param("status") Appointmentstatus status, PageRequest pageable);
 	public List<Appointment> findByDateofAppointmentAfter(Date date);
@@ -43,7 +42,10 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long>
     public List<Doctor> findDoctorByPatientName(@Param("name") String name);
 	@Query("select distinct a.p_id from appointment a where a.d_id.doc_id = :id")
 	public List<Patient> findPatientByDoctorId(@Param("id") String id);
-	
 	@Query("select distinct a.d_id from appointment a where a.p_id.patient_Id = :id")
 	public List<Doctor> findDoctorByPatientId(@Param("id") String id);
+	@Query("SELECT a FROM appointment a WHERE a.operationRequired = com.masood.model.OperationNeeded.YES")
+	List<Appointment> findByOperationRequiredYes();
+
+	List<Appointment> findByPaymentStatus(PaymentStatus paymentStatus);
 }

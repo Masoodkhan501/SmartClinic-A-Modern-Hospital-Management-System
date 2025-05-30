@@ -9,6 +9,7 @@ import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
 import com.masood.model.Doctor;
 import com.masood.model.Patient;
+import com.masood.model.PaymentStatus;
 
 public interface AppointmentInterface 
 {
@@ -31,4 +32,7 @@ public interface AppointmentInterface
 	public List<Patient> getPatientByDoctorName(String name);
 	public List<Doctor> getDoctorByPatientId(String id);
 	public List<Patient> getPatientByDoctorId(String id);
+	public List<Appointment> getAppointmentsWhereOperationRequiredIsYes();
+
+    public List<Appointment> getAppointmentsByPaymentStatus(PaymentStatus paymentStatus);
 }

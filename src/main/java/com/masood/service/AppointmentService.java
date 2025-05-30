@@ -14,6 +14,7 @@ import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
 import com.masood.model.Doctor;
 import com.masood.model.Patient;
+import com.masood.model.PaymentStatus;
 import com.masood.repository.AppointmentHistoryRepo;
 import com.masood.repository.AppointmentRepo;
 
@@ -119,5 +120,13 @@ public class AppointmentService implements AppointmentInterface {
 	public List<Patient> getPatientByDoctorId(String id) 
 	{
 		return ar.findPatientByDoctorId(id);
+	}
+
+	public List<Appointment> getAppointmentsWhereOperationRequiredIsYes() {
+		return ar.findByOperationRequiredYes();
+	}
+
+	public List<Appointment> getAppointmentsByPaymentStatus(PaymentStatus paymentStatus) {
+		return ar.findByPaymentStatus(paymentStatus);
 	}
 }

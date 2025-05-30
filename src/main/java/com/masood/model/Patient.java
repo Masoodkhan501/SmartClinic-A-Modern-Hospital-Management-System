@@ -1,13 +1,11 @@
 package com.masood.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -31,28 +29,15 @@ public class Patient {
 	@Column(name = "p_b_group")
 	private String blood_group;
 
-	@OneToMany(mappedBy = "patient_id")
-	private List<PatientBills> bills;
-
 	public Patient() {
 	}
 
-	public Patient(String patient_Id, User user_id, LocalDate date_of_birth, String gender, String blood_group,
-			List<PatientBills> bills) {
+	public Patient(String patient_Id, User user_id, LocalDate date_of_birth, String gender, String blood_group) {
 		this.patient_Id = patient_Id;
 		this.user_id = user_id;
 		this.date_of_birth = date_of_birth;
 		this.gender = gender;
 		this.blood_group = blood_group;
-		this.bills = bills;
-	}
-
-	public List<PatientBills> getBills() {
-		return bills;
-	}
-
-	public void setBills(List<PatientBills> bills) {
-		this.bills = bills;
 	}
 
 	public String getPatient_Id() {

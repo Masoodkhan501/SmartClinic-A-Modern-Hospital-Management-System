@@ -31,14 +31,24 @@ public class Appointment {
 	@JoinColumn(name = "p_id")
 	private Patient p_id;
 
-	@ManyToOne
-	@JoinColumn(name = "disease_id")
-	private Disease disease;
+	@Column(name = "appointment_fee")
+	private Double treatmentFee;
+
+	@Column(name = "operation_fee")
+	private Double operationFee;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_operation")
 	private Date dateOfOperation;
 	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "operation_required")
+    private OperationNeeded operationRequired;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private PaymentStatus paymentStatus;
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
 	private Date dateofAppointment;
@@ -53,11 +63,10 @@ public class Appointment {
 	public Appointment() {
 	}
 
-	public Appointment(Doctor d_id, Patient p_id, Disease disease, Date date_of_appointment,
+	public Appointment(Doctor d_id, Patient p_id, Date date_of_appointment,
 	        Appointmentstatus status, String notes, Date dateOfOperation) {
 	    this.d_id = d_id;
 	    this.p_id = p_id;
-	    this.disease = disease;
 	    this.dateofAppointment = date_of_appointment;
 	    this.status = status;
 	    this.notes = notes;
@@ -78,7 +87,23 @@ public class Appointment {
 	public Date getDateOfOperation() {
 	    return dateOfOperation;
 	}
+	
+	public Double getTreatmentFee() {
+		return treatmentFee;
+	}
 
+	public void setTreatmentFee(Double treatmentFee) {
+		this.treatmentFee = treatmentFee;
+	}
+
+	public Double getOperationFee() {
+	    return operationFee;
+	}
+
+	public void setOperationFee(Double operationFee) {
+	    this.operationFee = operationFee;
+	}
+	
 	public void setDateOfOperation(Date dateOfOperation) {
 	    this.dateOfOperation = dateOfOperation;
 	}
@@ -87,6 +112,38 @@ public class Appointment {
 		this.d_id= d_id;
 	}
 
+	public OperationNeeded getOperationRequired() {
+		return operationRequired;
+	}
+
+	public void setOperationRequired(OperationNeeded operationRequired) {
+		this.operationRequired = operationRequired;
+	}
+
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public Date getDateofAppointment() {
+		return dateofAppointment;
+	}
+
+	public void setDateofAppointment(Date dateofAppointment) {
+		this.dateofAppointment = dateofAppointment;
+	}
+
+	public Doctor getD_id() {
+		return d_id;
+	}
+
+	public Patient getP_id() {
+		return p_id;
+	}
+	
 	public Patient getPatient() {
 		return p_id;
 	}
@@ -119,17 +176,16 @@ public class Appointment {
 		this.notes = notes;
 	}
 
-	public Disease getDisease() {
-		return disease;
-	}
-
-	public void setDisease(Disease disease) {
-		this.disease = disease;
-	}
-
 	public String toString() {
-		return "Appointment [app_id=" + app_id + ", d_id=" + d_id + ", p_id=" + p_id + ", disease=" + disease
-				+ ", date_of_appointment=" + dateofAppointment + ", status=" + status + ", notes=" + notes + "]";
+		return "Appointment [" + (app_id != null ? "app_id=" + app_id + ", " : "")
+				+ (d_id != null ? "d_id=" + d_id + ", " : "") + (p_id != null ? "p_id=" + p_id + ", " : "")
+				+ (treatmentFee != null ? "treatmentFee=" + treatmentFee + ", " : "")
+				+ (operationFee != null ? "operationFee=" + operationFee + ", " : "")
+				+ (dateOfOperation != null ? "dateOfOperation=" + dateOfOperation + ", " : "")
+				+ (operationRequired != null ? "operationRequired=" + operationRequired + ", " : "")
+				+ (paymentStatus != null ? "paymentStatus=" + paymentStatus + ", " : "")
+				+ (dateofAppointment != null ? "dateofAppointment=" + dateofAppointment + ", " : "")
+				+ (status != null ? "status=" + status + ", " : "") + (notes != null ? "notes=" + notes : "") + "]";
 	}
 
 }

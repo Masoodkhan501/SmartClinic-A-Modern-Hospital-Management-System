@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masood.model.OperationNeeded;
 import com.masood.model.Patient;
-import com.masood.model.PatientBills;
 import com.masood.model.PaymentStatus;
 import com.masood.model.User;
 import com.masood.repository.patientRepo;
@@ -26,7 +26,7 @@ public class PatientServiceimpl implements PatientServiceInterface
 	@Autowired
 	private UserImpl ur;
 	@Autowired
-	private PatientBillsImpl pbi;
+	private AppointmentService as;
 
 	
 	public Patient savePatient(Patient p,User u) 
@@ -74,12 +74,7 @@ public class PatientServiceimpl implements PatientServiceInterface
 		return pr.findByNameLike(name);
 	}
 
-	public Double getTotalAmountofDueBills(Patient p)
-	{
-		return pbi.getAllBillsByPatientId(p.getPatient_Id()).stream()
-				.filter((bills)->bills.getPay_status().equals(PaymentStatus.UNPAID))
-				.mapToDouble(PatientBills::getTotal_charges).sum();
-	}
+	
 
 	public Byte getPatientAge(Patient p) {
 		LocalDate date_of_birth = p.getDate_of_birth();
@@ -91,6 +86,20 @@ public class PatientServiceimpl implements PatientServiceInterface
 	    int age = Period.between(date_of_birth, currentDate).getYears();
 
 	    return (byte) age;
+	}
+
+	public Double getTotalAmountofDueBills(Patient p) {
+		return as.getByPatient(p.getPatient_Id()).stream()
+				.filter(appt->appt.getPaymentStatus().equals(PaymentStatus.UNPAID))
+				.mapToDouble(appt -> {
+	                if (appt.getOperationRequired().equals(OperationNeeded.YES)) {
+	                    return (appt.getTreatmentFee() != null ? appt.getTreatmentFee() : 0.0)
+	                         + (appt.getOperationFee() != null ? appt.getOperationFee() : 0.0);
+	                } else {
+	                    return (appt.getTreatmentFee() != null ? appt.getTreatmentFee() : 0.0);
+	                }
+	            })
+	            .sum();
 	}
 	
 	

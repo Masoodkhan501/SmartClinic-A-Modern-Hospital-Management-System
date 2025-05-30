@@ -81,8 +81,12 @@ public class priscription {
 	}
 
 	public String toString() {
-		return "priscription [id=" + id + ", appoint_id=" + appointid + ", diagnosis=" + diagnosis + ", medicines="
-				+ medicines + ", advice=" + advice + "]";
+		return "priscription [" + (id != null ? "id=" + id + ", " : "")
+				+ (appointid != null ? "appointid=" + appointid + ", " : "")
+				+ (diagnosis != null ? "diagnosis=" + diagnosis + ", " : "")
+				+ (medicines != null ? "medicines=" + medicines + ", " : "")
+				+ (advice != null ? "advice=" + advice + ", " : "")
+				+ "]";
 	}
 
 }
