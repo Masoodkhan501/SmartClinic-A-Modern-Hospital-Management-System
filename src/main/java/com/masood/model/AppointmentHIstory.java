@@ -65,8 +65,8 @@ public class AppointmentHIstory {
 		return date_changed;
 	}
 
-	public void setDate_changed(Date date_changed) {
-		this.date_changed = date_changed;
+	public void setDate_changed() {
+		this.date_changed = new Date();
 	}
 
 	public String getOldNotes() {

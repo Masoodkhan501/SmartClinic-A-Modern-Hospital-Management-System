@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.masood.DTO.DoctorDTO;
+import com.masood.DTO.DoctorDetailedPage;
 import com.masood.model.Appointment;
 import com.masood.model.Doctor;
 import com.masood.model.Message;
@@ -29,6 +30,7 @@ import com.masood.service.MessageService;
 import com.masood.service.SpecializedServiceImpl;
 import com.masood.service.UserImpl;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller("DoctorController")
@@ -149,11 +151,12 @@ public class DoctorController
 		m.addAttribute("upcomingAppointmentsCount", upcommingappt.size());
 		List<Message> messagesByStatus = ms.getMessagesByStatus("unread");
 		m.addAttribute("unreadMessagesCount", messagesByStatus.size());
-		List<Patient> patientByDoctorName = as.getPatientByDoctorName(u.getName());
+		List<Patient> patientByDoctorName = as.getPatientByDoctorId(d.getDoc_id());
 		m.addAttribute("totalPatientsCount",patientByDoctorName.size());
-		List<Appointment> byDate = as.getByDate(new Date());
-		m.addAttribute("todayAppointments", byDate);
+		m.addAttribute("todayAppointments", appointmentbydate);
 		session.setAttribute("DoctorDTO", ddto);
+		DoctorDetailedPage ddp = new DoctorDetailedPage(appointmentbydate, appointmentbydate, messagesByStatus, patientByDoctorName);
+		session.setAttribute("docdetails", ddp);
 		boolean isnew = true;
 		if(patientByDoctorName.size()<0)
 			isnew=false;
@@ -161,5 +164,38 @@ public class DoctorController
 		LocalDate dates = LocalDate.now().minusDays(1);
 		m.addAttribute("dates",dates);
 		return "DoctorLandingPage";
+	}
+	
+	@GetMapping({"/doctor/appointments/today",
+		"/doctor/appointments/upcoming",
+		"/doctor/unread/messages",
+		"/doctor/patients"})
+	public String handlingDoctorDetialPage(HttpServletRequest req,Model m,
+			@SessionAttribute("docdetails") DoctorDetailedPage ddp)
+	{
+		String url = req.getRequestURI();
+		String reason = "";
+		if(url.contains("/appointments/today"))
+		{
+			reason = "todayappointments";
+			m.addAttribute("todayappt",ddp.getTodayAppointments());
+		}
+		else if(url.contains("/appointments/upcoming"))
+		{
+			reason = "upcomingappointments";
+			m.addAttribute("upcomingappt",ddp.getUpcomingAppointments());
+		}
+		else if(url.contains("/unread/messages")) 
+		{
+			reason = "unreadmessages";
+			m.addAttribute("unreadmsg", ddp.getUnreadMessages());
+		}
+		else
+		{
+			reason = "doctorpatients";
+			m.addAttribute("docpatients", ddp.getRelatedPatients());
+		}
+		m.addAttribute("reason", reason);
+		return "doctordetailspage";
 	}
 }

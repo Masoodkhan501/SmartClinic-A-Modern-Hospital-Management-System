@@ -99,8 +99,8 @@ public class Appointment {
 		return dateofAppointment;
 	}
 
-	public void setdateofAppointment(Date date_of_appointment) {
-		this.dateofAppointment = date_of_appointment;
+	public void setdateofAppointment() {
+		this.dateofAppointment = new Date();
 	}
 
 	public Appointmentstatus getStatus() {

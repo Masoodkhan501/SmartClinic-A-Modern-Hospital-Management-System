@@ -34,7 +34,7 @@ public class MessageHistroyImpl implements MessageHistoryInterface {
 	}
 
 	public List<MessageHistory> getHistoryBetweenDates(LocalDate startDate, LocalDate endDate) {
-		return mhr.findByDateBetween(startDate, endDate);
+		return mhr.findByUpdatedAtBetween(startDate, endDate);
 	}
 
 	public void deletebyId(Long msghis) {

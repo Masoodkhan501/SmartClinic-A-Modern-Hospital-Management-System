@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -37,20 +36,15 @@ public class Doctor {
 	@Column(name = "doc_status")
 	private Status status;
 
-	@OneToMany(mappedBy = "doctor")
-	private List<DoctorBills> payment;
-
 	public Doctor() {
 	}
 
-	public Doctor(String doc_id, User user_id, List<Specialized> specializations, byte expreince, Status status,
-			List<DoctorBills> payment) {
+	public Doctor(String doc_id, User user_id, List<Specialized> specializations, byte expreince, Status status) {
 		this.doc_id = doc_id;
 		this.user_id = user_id;
 		this.specializations = specializations;
 		this.expreince = expreince;
 		this.status = status;
-		this.payment = payment;
 	}
 	
 	public List<Specialized> getSpecializations() {
@@ -59,14 +53,6 @@ public class Doctor {
 
 	public void setSpecializations(List<Specialized> specializations) {
 		this.specializations = specializations;
-	}
-
-	public List<DoctorBills> getPayment() {
-		return payment;
-	}
-
-	public void setPayment(List<DoctorBills> payment) {
-		this.payment = payment;
 	}
 
 	public String getDoc_id() {

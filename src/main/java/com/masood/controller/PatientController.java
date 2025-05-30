@@ -126,7 +126,7 @@ public class PatientController
 		Date d = new Date();
 		int upcomingappt = as.getByDateAfter(d).size();
 		int noofUnread = ms.getMessagesByStatus("unread").size();
-		Appointment latestAppointment = as.getLatestOperationAppointment();
+		Appointment latestAppointment = as.getLatestAppointmentWhoseappointmentisComplete();
 		priscription getlatestpriscription = pres.getlatestpriscription();
 		PatientDTO pdto = new PatientDTO(p, u);
 		pdto.setAppoint(latestAppointment);

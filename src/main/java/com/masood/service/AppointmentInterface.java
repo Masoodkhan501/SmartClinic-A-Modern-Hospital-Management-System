@@ -29,4 +29,6 @@ public interface AppointmentInterface
 	public List<Appointment> getByDateAfter(Date d);
 	public List<Doctor> getDoctorByPatientName(String name);
 	public List<Patient> getPatientByDoctorName(String name);
+	public List<Doctor> getDoctorByPatientId(String id);
+	public List<Patient> getPatientByDoctorId(String id);
 }

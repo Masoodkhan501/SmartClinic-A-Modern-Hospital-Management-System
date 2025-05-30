@@ -28,8 +28,10 @@ public class AppointmentService implements AppointmentInterface {
 	private AppointmentHistoryRepo ahr;
 
 	public Appointment saveAppointment(Appointment a, AppointmentHIstory ah) {
+		a.setdateofAppointment();
 		Appointment save = ar.save(a);
 		ah.setAppoint_id(a);
+		ah.setDate_changed();
 		ahr.save(ah);
 		return save;
 	}
@@ -107,5 +109,15 @@ public class AppointmentService implements AppointmentInterface {
 
 	public List<Patient> getPatientByDoctorName(String name) {
 		return ar.findPatientsByDoctorName(name);
+	}
+
+	public List<Doctor> getDoctorByPatientId(String id) 
+	{
+		return ar.findDoctorByPatientId(id);
+	}
+
+	public List<Patient> getPatientByDoctorId(String id) 
+	{
+		return ar.findPatientByDoctorId(id);
 	}
 }
