@@ -1,6 +1,7 @@
 package com.masood.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.masood.DTO.PatientDTO;
+import com.masood.DTO.PatientDetailsPage;
 import com.masood.model.Appointment;
+import com.masood.model.Message;
 import com.masood.model.Patient;
+import com.masood.model.PaymentStatus;
 import com.masood.model.Role;
 import com.masood.model.User;
 import com.masood.model.priscription;
@@ -23,6 +28,7 @@ import com.masood.service.PatientServiceimpl;
 import com.masood.service.PriscriptionServiceImpl;
 import com.masood.service.UserImpl;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller("PatientController")
@@ -122,10 +128,15 @@ public class PatientController
 		Double price = ps.getTotalAmountofDueBills(p);
 		Math.round(price);
 		Byte patientAge = ps.getPatientAge(p);
-		int sizeofAppt = as.getAllAppointment().size();
+		List<Appointment> sizeofAppt = as.getAllAppointment();
 		Date d = new Date();
-		int upcomingappt = as.getByDateAfter(d).size();
-		int noofUnread = ms.getMessagesByStatus("unread").size();
+		List<Appointment> upcomingappt = as.getByDateAfter(d);
+		List<Message> noofUnread = ms.getMessagesByStatus("unread");
+		List<Appointment> unpaidAppointmentsByPatient = as.getUnpaidAppointmentsByPatient(p.getPatient_Id());
+		List<Message> bySenderId = ms.getBySenderId(p.getUser_id().getId());
+		List<Message> byRecieverId = ms.getByRecieverId(p.getUser_id().getId());
+		PatientDetailsPage pdp = new PatientDetailsPage(sizeofAppt, upcomingappt, noofUnread, unpaidAppointmentsByPatient, byRecieverId, bySenderId);
+		session.setAttribute("patientdetailpage", pdp);
 		Appointment latestAppointment = as.getLatestAppointmentWhoseappointmentisComplete();
 		priscription getlatestpriscription = pres.getlatestpriscription();
 		PatientDTO pdto = new PatientDTO(p, u);
@@ -135,11 +146,11 @@ public class PatientController
 		m.addAttribute("PatientDTO", pdto);
 		m.addAttribute("age", patientAge);
 		m.addAttribute("lastVisit", latestAppointment);
-		m.addAttribute("noofAppointments",sizeofAppt);
-		m.addAttribute("upcomingAppointments", upcomingappt);
-		m.addAttribute("noofUnreadMessages",noofUnread);
+		m.addAttribute("noofAppointments",sizeofAppt.size());
+		m.addAttribute("upcomingAppointments", upcomingappt.size());
+		m.addAttribute("noofUnreadMessages",noofUnread.size());
 		m.addAttribute("TotalDeu", price);
-		boolean isNewPatient = latestAppointment == null && getlatestpriscription == null && sizeofAppt == 0;
+		boolean isNewPatient = latestAppointment == null && getlatestpriscription == null && sizeofAppt.size() == 0;
 		m.addAttribute("isNew", isNewPatient);
 		return "patientLandingPage";
 	}
@@ -151,4 +162,74 @@ public class PatientController
 		session.invalidate();
 		return "home";
 	}
+	
+	@GetMapping({"/patient/total/appointmetns",
+		"/patient/upcoming/appointmetns",
+		"/patient/pending/bills",
+		"/patient/unread/messages",
+		"/patient/allsend/messages"})
+	public String handlingPatientDetailsPage(HttpServletRequest req,Model m,
+			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
+	{
+		String url = req.getRequestURI();
+		String reason="";
+		if(url.contains("/total/appointments"))
+		{
+			reason = "appointments";
+			m.addAttribute("todayappt",pdp.getAppointments());
+		}
+		else if(url.contains("/upcoming/appointments"))
+		{
+			reason = "upcomingappointments";
+			m.addAttribute("upcomingappt",pdp.getUpcomingappointments());
+		}
+		else if(url.contains("/unread/messages")) 
+		{
+			reason = "unreadmessages";
+			m.addAttribute("unreadmsg", pdp.getUnreadMessages());
+		}
+		else if(url.contains("/pending/bills"))
+		{
+			reason = "unpaidAppointments";
+			m.addAttribute("docpatients", pdp.getUnpaidappointments());
+		}
+		else if(url.contains("/allsend/messages"))
+		{
+			reason = "showAllsendmessages";
+			m.addAttribute("allsendmessage",pdp.getAllsendMsg() );
+		}
+		else
+		{
+			reason="showallrecievemessages";
+			m.addAttribute("allrecievemessages", pdp.getAllrecievedMsg());
+		}
+		m.addAttribute("reason", reason);
+		return "patientDetailspage";
+	}
+	
+	@GetMapping("/pay/bills/{apptid}")
+	public String paymentdone(@PathVariable("apptid") Appointment app_id,
+			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
+	{
+		pdp.getUnpaidappointments()
+		.removeIf(a->
+		{
+			if(a.getApp_id().equals(app_id.getApp_id()))
+			{
+				a.setPaymentStatus(PaymentStatus.PAID);
+				return true;
+			}
+			return false;
+		});
+		return "redirect:/patient/pending/bills";
+	}
+	
+	@GetMapping("/pay/bills/all")
+	public String paymentall(@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
+	{
+		pdp.getUnpaidappointments().forEach(a->a.setPaymentStatus(PaymentStatus.PAID));
+		pdp.getUnpaidappointments().clear();
+		return "redirect:/patient/pending/bills";
+	}
+	
 }

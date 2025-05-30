@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -51,10 +52,6 @@ public class AppointmentService implements AppointmentInterface {
 
 	public List<Appointment> getAppointmentByStatus(Appointmentstatus Status) {
 		return ar.findAppointmentByStatus(Status);
-	}
-
-	public List<Appointment> getAppointmentByDisease(String disease) {
-		return ar.findAppointmentByDisease(disease);
 	}
 
 	public List<Appointment> getByDate(Date date) {
@@ -128,5 +125,11 @@ public class AppointmentService implements AppointmentInterface {
 
 	public List<Appointment> getAppointmentsByPaymentStatus(PaymentStatus paymentStatus) {
 		return ar.findByPaymentStatus(paymentStatus);
+	}
+
+	public List<Appointment> getUnpaidAppointmentsByPatient(String id) {
+		return getByPatient(id).stream()
+				.filter(p->p.getPaymentStatus().equals(PaymentStatus.UNPAID))
+				.collect(Collectors.toList());
 	}
 }

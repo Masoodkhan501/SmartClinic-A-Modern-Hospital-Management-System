@@ -11,6 +11,8 @@ public interface MessageInterface
 	public Message sendMessage(Message message);
 	public Optional<Message> getByid(Long id);
     public List<Message> getAllMessages();
+    public List<Message> getBySenderId(Long id);
+    public List<Message> getByRecieverId(Long id);
     public List<Message> getMessagesByDoctorUserId(Long doctorUserId);
     public List<Message> getMessagesByPatientUserId(Long patientUserId);
     public List<Message> getMessagesBySenderAndReceiver(Long senderId, Long receiverId);

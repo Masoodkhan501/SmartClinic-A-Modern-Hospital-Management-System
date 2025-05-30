@@ -18,7 +18,6 @@ public interface AppointmentInterface
 	public List<Appointment> getAllAppointment();
 	public void deleteAppointmentById(Long id);
 	public List<Appointment> getAppointmentByStatus(Appointmentstatus Status);
-	public List<Appointment> getAppointmentByDisease(String disease);
 	public List<Appointment> getByDate(Date date);
 	public List<Appointment> getByPatient(String id);
 	public List<Appointment> getByDoctor(String id);
@@ -33,6 +32,6 @@ public interface AppointmentInterface
 	public List<Doctor> getDoctorByPatientId(String id);
 	public List<Patient> getPatientByDoctorId(String id);
 	public List<Appointment> getAppointmentsWhereOperationRequiredIsYes();
-
+	public List<Appointment> getUnpaidAppointmentsByPatient(String id);
     public List<Appointment> getAppointmentsByPaymentStatus(PaymentStatus paymentStatus);
 }

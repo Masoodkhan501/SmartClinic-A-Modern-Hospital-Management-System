@@ -431,9 +431,6 @@
   .h-32 {
     height: calc(var(--spacing) * 32);
   }
-  .h-36 {
-    height: calc(var(--spacing) * 36);
-  }
   .h-72 {
     height: calc(var(--spacing) * 72);
   }
@@ -527,9 +524,6 @@
   .flex-shrink-0 {
     flex-shrink: 0;
   }
-  .table-auto {
-    table-layout: auto;
-  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -615,6 +609,9 @@
   .gap-x-5 {
     column-gap: calc(var(--spacing) * 5);
   }
+  .gap-x-10 {
+    column-gap: calc(var(--spacing) * 10);
+  }
   .gap-x-24 {
     column-gap: calc(var(--spacing) * 24);
   }
@@ -644,6 +641,13 @@
       --tw-space-x-reverse: 0;
       margin-inline-start: calc(calc(var(--spacing) * 8) * var(--tw-space-x-reverse));
       margin-inline-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-x-reverse)));
+    }
+  }
+  .space-x-10 {
+    :where(& > :not(:last-child)) {
+      --tw-space-x-reverse: 0;
+      margin-inline-start: calc(calc(var(--spacing) * 10) * var(--tw-space-x-reverse));
+      margin-inline-end: calc(calc(var(--spacing) * 10) * calc(1 - var(--tw-space-x-reverse)));
     }
   }
   .divide-y {
@@ -1124,9 +1128,6 @@
   .text-purple-800 {
     color: var(--color-purple-800);
   }
-  .text-red-400 {
-    color: var(--color-red-400);
-  }
   .text-red-600 {
     color: var(--color-red-600);
   }
@@ -1306,13 +1307,6 @@
         --tw-scale-y: 105%;
         --tw-scale-z: 105%;
         scale: var(--tw-scale-x) var(--tw-scale-y);
-      }
-    }
-  }
-  .hover\:bg-blue-50 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-blue-50);
       }
     }
   }

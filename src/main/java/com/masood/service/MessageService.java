@@ -77,4 +77,12 @@ public class MessageService implements MessageInterface
 		mr.deleteByReceiverUsername(receiverUsername);
 	}
 
+	public List<Message> getBySenderId(Long id) {
+		return mr.findBySender_Id(id);
+	}
+
+	public List<Message> getByRecieverId(Long id) {
+		return mr.findByReceiver_Id(id);
+	}
+
 }
