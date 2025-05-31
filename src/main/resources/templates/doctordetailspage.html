@@ -38,7 +38,7 @@
                                 </th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Symptoms
                                 </th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Check
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Action
                                 </th>
                             </tr>
                         </thead>
@@ -202,13 +202,123 @@
                     <p class="text-gray-600 mt-4 text-lg">No data available to show.</p>
                 </div>
             </div>
+            <!-- all sended message -->
+            <div th:case="'showAllsendmessages'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-yellow-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12.79V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6.79a2 2 0 00.895 1.664l7 4.667a2 2 0 002.21 0l7-4.667A2 2 0 0021 12.79z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No unread messages found.</p>
+                </div>
+
+                <!-- Messages Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}">
+                    <div class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-yellow-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        To</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">Date
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        Subject And Message
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="msg : ${dataList}">
+                                <tr class="hover:bg-yellow-50 transition duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${msg.sender.name}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${msg.sentAt}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <div th:text="${msg.subject}"></div>
+                                        <div th:text="${content}"></div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <a th:href="@{/patient/messages/edit}" class="hover:underline hover:underline-offset-4">Edit Msg</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div th:case="'showallrecievemessages'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-yellow-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12.79V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6.79a2 2 0 00.895 1.664l7 4.667a2 2 0 002.21 0l7-4.667A2 2 0 0021 12.79z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No unread messages found.</p>
+                </div>
+
+                <!-- Messages Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}">
+                    <div class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-yellow-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        From</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">Date
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        Subject And Message
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                        Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="msg : ${dataList}">
+                                <tr class="hover:bg-yellow-50 transition duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${msg.sender.name}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${msg.sentAt}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <div th:text="${msg.subject}"></div>
+                                        <div th:text="${content}"></div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <a th:href="@{/patient/messages/new}" class="hover:underline hover:underline-offset-4">replie</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="flex justify-center mt-5">
-        <a href="/doctor/page"
-            class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
-            &larr; Back to Dashboard
-        </a>
+    <div class="flex justify-center gap-x-16">
+        <div class="flex justify-center mt-5">
+            <a href="/doctor/page"
+                class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                &larr; Back to Dashboard
+            </a>
+        </div>
+        <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
+                <a th:href="@{/doctor/allsend/messages}"
+                    class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                    Get All send Messages
+                </a>
+            </div>
+            <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
+                <a th:href="@{/doctor/allrecieve/messages}"
+                    class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                    Get All recived Messages
+                </a>
+            </div>
     </div>
 </body>
 

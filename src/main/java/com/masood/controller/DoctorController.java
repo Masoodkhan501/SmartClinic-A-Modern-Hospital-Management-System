@@ -155,7 +155,9 @@ public class DoctorController
 		m.addAttribute("totalPatientsCount",patientByDoctorName.size());
 		m.addAttribute("todayAppointments", appointmentbydate);
 		session.setAttribute("DoctorDTO", ddto);
-		DoctorDetailedPage ddp = new DoctorDetailedPage(appointmentbydate, appointmentbydate, messagesByStatus, patientByDoctorName);
+		List<Message> bySenderId = ms.getBySenderId(d.getUser_id().getId());
+		List<Message> byRecieverId = ms.getByRecieverId(d.getUser_id().getId());
+		DoctorDetailedPage ddp = new DoctorDetailedPage(appointmentbydate, upcommingappt, messagesByStatus, patientByDoctorName,bySenderId,byRecieverId);
 		session.setAttribute("docdetails", ddp);
 		boolean isnew = true;
 		if(patientByDoctorName.size()<0)
@@ -169,7 +171,9 @@ public class DoctorController
 	@GetMapping({"/doctor/appointments/today",
 		"/doctor/appointments/upcoming",
 		"/doctor/unread/messages",
-		"/doctor/patients"})
+		"/doctor/patients",
+		"/doctor/allsend/messages",
+		"/doctor/allrecieve/messages"})
 	public String handlingDoctorDetialPage(HttpServletRequest req,Model m,
 			@SessionAttribute("docdetails") DoctorDetailedPage ddp)
 	{
@@ -178,22 +182,32 @@ public class DoctorController
 		if(url.contains("/appointments/today"))
 		{
 			reason = "todayappointments";
-			m.addAttribute("todayappt",ddp.getTodayAppointments());
+			m.addAttribute("dataList",ddp.getTodayAppointments());
 		}
 		else if(url.contains("/appointments/upcoming"))
 		{
 			reason = "upcomingappointments";
-			m.addAttribute("upcomingappt",ddp.getUpcomingAppointments());
+			m.addAttribute("dataList",ddp.getUpcomingAppointments());
 		}
 		else if(url.contains("/unread/messages")) 
 		{
 			reason = "unreadmessages";
-			m.addAttribute("unreadmsg", ddp.getUnreadMessages());
+			m.addAttribute("dataList", ddp.getUnreadMessages());
+		}
+		else if(url.contains("/doctor/patients"))
+		{
+			reason = "doctorpatients";
+			m.addAttribute("dataList", ddp.getRelatedPatients());
+		}
+		else if(url.contains("/allsend/messages"))
+		{
+			reason = "doctorsendedMessages";
+			m.addAttribute("dataList", ddp.getAllsendMessage());
 		}
 		else
 		{
-			reason = "doctorpatients";
-			m.addAttribute("docpatients", ddp.getRelatedPatients());
+			reason = "doctorrecievedMessages";
+			m.addAttribute("dataList", ddp.getAllrecieveMessages());
 		}
 		m.addAttribute("reason", reason);
 		return "doctordetailspage";

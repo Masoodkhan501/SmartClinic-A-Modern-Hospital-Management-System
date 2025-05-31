@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.masood.model.Appointment;
-import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
 import com.masood.model.Doctor;
 import com.masood.model.Patient;
@@ -13,7 +12,7 @@ import com.masood.model.PaymentStatus;
 
 public interface AppointmentInterface 
 {
-	public Appointment saveAppointment(Appointment a,AppointmentHIstory ah);
+	public Appointment saveAppointment(Appointment a);
 	public Optional<Appointment> getAppointmentbyId(Long id);
 	public List<Appointment> getAllAppointment();
 	public void deleteAppointmentById(Long id);

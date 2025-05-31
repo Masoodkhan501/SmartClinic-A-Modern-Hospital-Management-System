@@ -84,7 +84,9 @@ public class PatientController
 	}
 	
 	@GetMapping("/check/patient")
-	public String loginPatient(@ModelAttribute("User") User u ,Model m,HttpSession session)
+	public String loginPatient(@ModelAttribute("User") User u ,
+			Model m,HttpSession session,
+			@SessionAttribute("dest") String destination)
 	{
 		boolean isUser=true;
 		boolean ispassword=true;
@@ -105,7 +107,10 @@ public class PatientController
 			Patient p = ps.getByEmail(u.getEmail());
 			session.setAttribute("user",u2);
 			session.setAttribute("patient", p);
-			page="redirect:/patient/page";
+			if(destination.equals("appointmentpage"))
+				page="redirect:/book/new/appointment";
+			else
+				page="redirect:/patient/page";
 		}
 		else
 		{
@@ -128,7 +133,7 @@ public class PatientController
 		Double price = ps.getTotalAmountofDueBills(p);
 		Math.round(price);
 		Byte patientAge = ps.getPatientAge(p);
-		List<Appointment> sizeofAppt = as.getAllAppointment();
+		List<Appointment> sizeofAppt = as.getByPatient(p.getPatient_Id());
 		Date d = new Date();
 		List<Appointment> upcomingappt = as.getByDateAfter(d);
 		List<Message> noofUnread = ms.getMessagesByStatus("unread");
@@ -163,11 +168,12 @@ public class PatientController
 		return "home";
 	}
 	
-	@GetMapping({"/patient/total/appointmetns",
-		"/patient/upcoming/appointmetns",
+	@GetMapping({"/patient/total/appointments",
+		"/patient/upcoming/appointments",
 		"/patient/pending/bills",
 		"/patient/unread/messages",
-		"/patient/allsend/messages"})
+		"/patient/allsend/messages",
+		"/patient/allrecieve/messages"})
 	public String handlingPatientDetailsPage(HttpServletRequest req,Model m,
 			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
 	{
@@ -176,32 +182,32 @@ public class PatientController
 		if(url.contains("/total/appointments"))
 		{
 			reason = "appointments";
-			m.addAttribute("todayappt",pdp.getAppointments());
+			m.addAttribute("dataList",pdp.getAppointments());
 		}
 		else if(url.contains("/upcoming/appointments"))
 		{
 			reason = "upcomingappointments";
-			m.addAttribute("upcomingappt",pdp.getUpcomingappointments());
+			m.addAttribute("dataList",pdp.getUpcomingappointments());
 		}
 		else if(url.contains("/unread/messages")) 
 		{
 			reason = "unreadmessages";
-			m.addAttribute("unreadmsg", pdp.getUnreadMessages());
+			m.addAttribute("dataList", pdp.getUnreadMessages());
 		}
 		else if(url.contains("/pending/bills"))
 		{
 			reason = "unpaidAppointments";
-			m.addAttribute("docpatients", pdp.getUnpaidappointments());
+			m.addAttribute("dataList", pdp.getUnpaidappointments());
 		}
 		else if(url.contains("/allsend/messages"))
 		{
 			reason = "showAllsendmessages";
-			m.addAttribute("allsendmessage",pdp.getAllsendMsg() );
+			m.addAttribute("dataList",pdp.getAllsendMsg() );
 		}
 		else
 		{
 			reason="showallrecievemessages";
-			m.addAttribute("allrecievemessages", pdp.getAllrecievedMsg());
+			m.addAttribute("dataList", pdp.getAllrecievedMsg());
 		}
 		m.addAttribute("reason", reason);
 		return "patientDetailspage";

@@ -3,6 +3,7 @@ package com.masood.service;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -11,12 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.masood.model.Appointment;
-import com.masood.model.AppointmentHIstory;
 import com.masood.model.Appointmentstatus;
 import com.masood.model.Doctor;
 import com.masood.model.Patient;
 import com.masood.model.PaymentStatus;
-import com.masood.repository.AppointmentHistoryRepo;
 import com.masood.repository.AppointmentRepo;
 
 import jakarta.transaction.Transactional;
@@ -26,16 +25,11 @@ import jakarta.transaction.Transactional;
 public class AppointmentService implements AppointmentInterface {
 	@Autowired
 	private AppointmentRepo ar;
-	@Autowired
-	private AppointmentHistoryRepo ahr;
 
-	public Appointment saveAppointment(Appointment a, AppointmentHIstory ah) {
-		a.setdateofAppointment();
-		Appointment save = ar.save(a);
-		ah.setAppoint_id(a);
-		ah.setDate_changed();
-		ahr.save(ah);
-		return save;
+	public Appointment saveAppointment(Appointment a) {
+		a.setStatus(Appointmentstatus.PENDING);
+		a.setPaymentStatus(PaymentStatus.UNPAID);
+		 return ar.save(a); 
 	}
 
 	public Optional<Appointment> getAppointmentbyId(Long id) {
@@ -129,7 +123,7 @@ public class AppointmentService implements AppointmentInterface {
 
 	public List<Appointment> getUnpaidAppointmentsByPatient(String id) {
 		return getByPatient(id).stream()
-				.filter(p->p.getPaymentStatus().equals(PaymentStatus.UNPAID))
+				.filter(p->Objects.equals(p.getPaymentStatus(), PaymentStatus.UNPAID) )
 				.collect(Collectors.toList());
 	}
 }

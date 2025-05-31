@@ -3,6 +3,7 @@ package com.masood.service;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,7 @@ public class PatientServiceimpl implements PatientServiceInterface
 		return as.getByPatient(p.getPatient_Id()).stream()
 				.filter(appt->appt.getPaymentStatus().equals(PaymentStatus.UNPAID))
 				.mapToDouble(appt -> {
-	                if (appt.getOperationRequired().equals(OperationNeeded.YES)) {
+	                if (Objects.equals(appt.getOperationRequired(), OperationNeeded.YES)) {
 	                    return (appt.getTreatmentFee() != null ? appt.getTreatmentFee() : 0.0)
 	                         + (appt.getOperationFee() != null ? appt.getOperationFee() : 0.0);
 	                } else {

@@ -15,7 +15,7 @@ import jakarta.persistence.TemporalType;
 
 @Entity(name = "appointmenthistory")
 @Table(name = "appointment_history")
-public class AppointmentHIstory {
+public class AppointmentHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "h_id")
@@ -29,16 +29,16 @@ public class AppointmentHIstory {
 	@Column(name = "notes_modifydate")
 	private Date date_changed;
 
-	@Column(name = "oldNotes")
+	@Column(name = "old_notes")
 	private String oldNotes;
 
 	@Column(name = "Changedby")
 	private String changedBy;
 
-	public AppointmentHIstory() {
+	public AppointmentHistory() {
 	}
 
-	public AppointmentHIstory(Appointment appoint_id, Date date_changed, String oldNotes, String changedBy) {
+	public AppointmentHistory(Appointment appoint_id, Date date_changed, String oldNotes, String changedBy) {
 		this.appoint_id = appoint_id;
 		this.date_changed = date_changed;
 		this.oldNotes = oldNotes;

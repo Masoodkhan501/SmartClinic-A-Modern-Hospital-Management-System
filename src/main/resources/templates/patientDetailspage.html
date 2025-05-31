@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Details page</title>
-    <link rel="stylesheet" href="@{/css/output.css}">
+    <link rel="stylesheet" th:href="@{/css/output.css}">
 </head>
 
 <body class="p-6 bg-gray-100 min-h-screen">
@@ -28,37 +28,37 @@
                     <p class="text-gray-600 mt-4 text-lg">No appointments uptill now.</p>
                 </div>
 
-                <!-- Appointment Table -->
-                <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-blue-100">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Date</th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Status
-                                </th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Symptoms
-                                </th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">update
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
-                            <tr class="hover:bg-blue-100 transition duration-200">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${appt.p_id.user_id.name}">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.status}">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.notes}">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><a
-                                        th:href="/appointment/update"
-                                        class="hover:underline hover:underline-offset-4">update</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- Appointment Table -->
+                    <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-blue-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Date</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Status
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Symptoms
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">update
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
+                                <tr class="hover:bg-blue-100 transition duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.p_id.user_id.name}">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.status}">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.notes}">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><a
+                                            th:href="@{/appointment/update/{app_id}(app_id=*{appt.app_id})}"
+                                            class="hover:underline hover:underline-offset-4">update</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             <!-- Upcoming Appointments -->
             <div th:case="'upcomingappointments'">
                 <!-- Empty State -->
@@ -190,9 +190,8 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                     th:text="${appt.dateofAppointment}">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${appt.notes}">
-                                    </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.notes}">
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                     th:text="${appt.treatmentFee + appt.operationFee}">
                                 </td>
@@ -249,7 +248,8 @@
                                         <div th:text="${content}"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/patient/messages/edit}" class="hover:underline hover:underline-offset-4">Edit Msg</a>
+                                        <a th:href="@{/patient/messages/edit}"
+                                            class="hover:underline hover:underline-offset-4">Edit Msg</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -296,7 +296,8 @@
                                         <div th:text="${content}"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/patient/messages/new}" class="hover:underline hover:underline-offset-4">replie</a>
+                                        <a th:href="@{/patient/messages/new}"
+                                            class="hover:underline hover:underline-offset-4">replie</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -319,8 +320,8 @@
     </div>
     <div class="flex justify-center gap-x-10">
         <div class="flex justify-center mt-5">
-            <a th:href="@{/doctor/page}"
-                class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+            <a th:href="@{/patient/page}"
+                class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 &larr; Back to Dashboard
             </a>
         </div>
@@ -331,13 +332,13 @@
             </a>
         </div>
         <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
-            <a th:href="@{/patient/all/messages}"
+            <a th:href="@{/patient/allsend/messages}"
                 class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 Get All send Messages
             </a>
         </div>
         <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
-            <a th:href="@{/patient/all/messages}"
+            <a th:href="@{/patient/allrecieve/messages}"
                 class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 Get All recived Messages
             </a>

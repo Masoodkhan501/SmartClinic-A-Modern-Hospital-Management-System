@@ -15,8 +15,8 @@ import com.masood.model.Role;
 import com.masood.model.User;
 import com.masood.service.UserImpl;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller("homeContorller")
@@ -72,7 +72,7 @@ public class HomeController
 	}
 
 	@GetMapping({"/book/appointment","/login/patient"})
-	public String PatientLogin(Model model,HttpServletResponse res)
+	public String PatientLogin(Model model,HttpSession session,HttpServletRequest req)
 	{
 		User u = new User();
 		boolean isUser=true;
@@ -82,10 +82,11 @@ public class HomeController
 		model.addAttribute("ispassword",ispassword);
 		model.addAttribute("role", role);
 		model.addAttribute("User", u);
-		Cookie cookie = new Cookie("role", role);
-		cookie.setPath("/");
-		res.addCookie(cookie);
-		
+		String url = req.getRequestURI();
+		if(url.contains("/book/appointment"))
+			session.setAttribute("dest", "appointmentpage");
+		else
+			session.setAttribute("dest", "patientpage");
 		return "UserLogin";
 	}
 	
