@@ -24,4 +24,5 @@ public interface MessageInterface
     void deleteMessagesByReceiverId(Long receiverId);
     void deleteMessagesBySenderUsername(String senderUsername);
     void deleteMessagesByReceiverUsername(String receiverUsername);
+    public List<Message> getMessageByUserandStatus(Long id, String status);
 }

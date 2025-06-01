@@ -32,4 +32,9 @@ public class AppointmentHistoryImpl implements AppointmentHistoryInterface {
 		ahr.deleteById(id);
 	}
 
+	public List<AppointmentHistory> getallAppointmentHistoryDesc() 
+	{
+		return ahr.findAllByOrderByIdDesc();
+	}
+
 }

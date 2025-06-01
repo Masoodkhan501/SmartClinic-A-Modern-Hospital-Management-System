@@ -11,8 +11,8 @@ import com.masood.model.Message;
 
 public interface MessageRepo extends JpaRepository<Message, Long> 
 {
-	public List<Message> findBySender_Id(Long senderId);
-    public List<Message> findByReceiver_Id(Long receiverId);
+	public List<Message> findBySender_IdOrderByIdDesc(Long senderId);
+    public List<Message> findByReceiver_IdOrderByIdDesc(Long receiverId);
 
     // Find by sender or receiver name
     @Query("SELECT m FROM Message m WHERE m.sender.name = :name")
@@ -47,4 +47,6 @@ public interface MessageRepo extends JpaRepository<Message, Long>
     
     @Query("DELETE FROM Message m WHERE m.receiver.name = :senderUsername")
     void deleteBySenderUsername(@Param("senderUsername") String senderUsername);
+    
+    public List<Message> findByReceiver_IdAndStatus(Long receiverId, String status);
 }

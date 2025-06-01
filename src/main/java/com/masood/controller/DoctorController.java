@@ -149,7 +149,7 @@ public class DoctorController
 		m.addAttribute("todayAppointmentsCount",appointmentbydate.size() );
 		List<Appointment> upcommingappt = as.getByDateAfter(new Date());
 		m.addAttribute("upcomingAppointmentsCount", upcommingappt.size());
-		List<Message> messagesByStatus = ms.getMessagesByStatus("unread");
+		List<Message> messagesByStatus = ms.getMessageByUserandStatus(d.getUser_id().getId(),"unread");
 		m.addAttribute("unreadMessagesCount", messagesByStatus.size());
 		List<Patient> patientByDoctorName = as.getPatientByDoctorId(d.getDoc_id());
 		m.addAttribute("totalPatientsCount",patientByDoctorName.size());

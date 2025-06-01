@@ -78,11 +78,15 @@ public class MessageService implements MessageInterface
 	}
 
 	public List<Message> getBySenderId(Long id) {
-		return mr.findBySender_Id(id);
+		return mr.findBySender_IdOrderByIdDesc(id);
 	}
 
 	public List<Message> getByRecieverId(Long id) {
-		return mr.findByReceiver_Id(id);
+		return mr.findByReceiver_IdOrderByIdDesc(id);
+	}
+
+	public List<Message> getMessageByUserandStatus(Long id, String status) {
+		return mr.findByReceiver_IdAndStatus(id, status);
 	}
 
 }

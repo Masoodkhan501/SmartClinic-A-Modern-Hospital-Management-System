@@ -52,22 +52,6 @@ public class AppointmentService implements AppointmentInterface {
 		return ar.findByDateofAppointment(date);
 	}
 
-	public List<Appointment> getByPatient(String id) {
-		return ar.findByPatient(id);
-	}
-
-	public List<Appointment> getByDoctor(String id) {
-		return ar.findByDoctor(id);
-	}
-
-	public List<Appointment> getByDoctorName(String name) {
-		return ar.findByDoctorName(name);
-	}
-
-	public List<Appointment> getByPatientName(String name) {
-		return ar.findByPatientName(name);
-	}
-
 	public List<Appointmentstatus> getAppointmentStatus() {
 		return Arrays.asList(Appointmentstatus.values());
 	}
@@ -95,14 +79,6 @@ public class AppointmentService implements AppointmentInterface {
 	    return ops.isEmpty() ? null : ops.get(0);
 	}
 
-	public List<Doctor> getDoctorByPatientName(String name) {
-		return ar.findDoctorByPatientName(name);
-	}
-
-	public List<Patient> getPatientByDoctorName(String name) {
-		return ar.findPatientsByDoctorName(name);
-	}
-
 	public List<Doctor> getDoctorByPatientId(String id) 
 	{
 		return ar.findDoctorByPatientId(id);
@@ -125,5 +101,17 @@ public class AppointmentService implements AppointmentInterface {
 		return getByPatient(id).stream()
 				.filter(p->Objects.equals(p.getPaymentStatus(), PaymentStatus.UNPAID) )
 				.collect(Collectors.toList());
+	}
+
+	public List<Appointment> getallAppointmentInrev() {
+		return ar.findAllAppointmentsSortedByAppIdDesc();
+	}
+
+	public List<Appointment> getByPatient(String id) {
+		return ar.findByPatientOrderByIdDesc(id);
+	}
+
+	public List<Appointment> getByDoctor(String id) {
+		return ar.findByDoctorOrderByIdDesc(id);
 	}
 }

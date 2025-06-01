@@ -13,4 +13,6 @@ public interface AppointmentHistoryInterface
     public List<AppointmentHistory> findByAppointmentId(Long appointmentId);
     
     public void deleteAppointmentById(Long id);
+    
+    public List<AppointmentHistory> getallAppointmentHistoryDesc();
 }

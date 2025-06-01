@@ -20,17 +20,14 @@ public interface AppointmentInterface
 	public List<Appointment> getByDate(Date date);
 	public List<Appointment> getByPatient(String id);
 	public List<Appointment> getByDoctor(String id);
-	public List<Appointment> getByDoctorName(String name);
-	public List<Appointment> getByPatientName(String name);
 	public List<Appointmentstatus> getAppointmentStatus();
 	public Appointment getLatestAppointmentWhoseappointmentisComplete();
 	public List<Appointment> getByDateBetween(Date d1,Date d2);
 	public List<Appointment> getByDateAfter(Date d);
-	public List<Doctor> getDoctorByPatientName(String name);
-	public List<Patient> getPatientByDoctorName(String name);
 	public List<Doctor> getDoctorByPatientId(String id);
 	public List<Patient> getPatientByDoctorId(String id);
 	public List<Appointment> getAppointmentsWhereOperationRequiredIsYes();
 	public List<Appointment> getUnpaidAppointmentsByPatient(String id);
     public List<Appointment> getAppointmentsByPaymentStatus(PaymentStatus paymentStatus);
+    public List<Appointment> getallAppointmentInrev();
 }

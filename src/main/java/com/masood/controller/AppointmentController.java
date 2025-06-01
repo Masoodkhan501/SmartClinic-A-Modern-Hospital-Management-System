@@ -78,7 +78,7 @@ public class AppointmentController
 	public String updateAppointment(@ModelAttribute("appointmentdto") AppointmentDTO dto, 
 	                                @SessionAttribute("user") User currentUser) {
 
-	    Optional<Appointment> Appt = as.getAppointmentbyId(dto.getAppt().getApp_id());
+	    Optional<Appointment> Appt = as.getAppointmentbyId(dto.getAppt().getAppId());
 	    Appointment existingAppt = Appt.get();
 	    // Only create history if notes changed
 	    if (!existingAppt.getNotes().equals(dto.getAppt().getNotes())) {

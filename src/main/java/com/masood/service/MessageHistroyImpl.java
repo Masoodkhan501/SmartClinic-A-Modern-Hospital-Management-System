@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.masood.model.MessageHistory;
 import com.masood.repository.MessageHistoryRepo;
-
+@Service("messageHistoryservice")
 public class MessageHistroyImpl implements MessageHistoryInterface {
 	
 	@Autowired

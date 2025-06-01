@@ -136,7 +136,7 @@ public class PatientController
 		List<Appointment> sizeofAppt = as.getByPatient(p.getPatient_Id());
 		Date d = new Date();
 		List<Appointment> upcomingappt = as.getByDateAfter(d);
-		List<Message> noofUnread = ms.getMessagesByStatus("unread");
+		List<Message> noofUnread = ms.getMessageByUserandStatus(p.getUser_id().getId(),"unread");
 		List<Appointment> unpaidAppointmentsByPatient = as.getUnpaidAppointmentsByPatient(p.getPatient_Id());
 		List<Message> bySenderId = ms.getBySenderId(p.getUser_id().getId());
 		List<Message> byRecieverId = ms.getByRecieverId(p.getUser_id().getId());

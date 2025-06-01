@@ -32,37 +32,56 @@ public class HomeController
 		String firstpage="";
 		Optional<User> byRole = us.getByRole(Role.ADMIN);
 		if(byRole.isEmpty())
-			firstpage="redirect:/admin/login";
+			firstpage="redirect:/admin/create";
 		else
 			firstpage="redirect:/home";
 		return firstpage;
 	}
 	
-	@GetMapping("/admin/login")
+	@GetMapping("/admin/create")
 	public String AdminLogin(Model model)
 	{
 		User u = new User();
+		boolean ispassword=true;
+		model.addAttribute("ispaword", ispassword);
 		model.addAttribute("user", u);
 		return "admin_login";
 	}
 	
-	@PostMapping("/save/admin")
+	@PostMapping("/check/admin")
 	public String postMethodName(@ModelAttribute("user") User u,
-			@RequestParam("confirmPassword") String confirmPass,
-			Model model)
+			@RequestParam(name ="confirmPassword", required=false) String confirmPass,
+			Model model,HttpSession session)
 	{
-		if(u.getPassword().equals(confirmPass))
+		Optional<User> byEmail = us.getByEmail(u.getEmail());
+		User u1 = byEmail.get();
+		if(u1.getEmail().equals(u.getEmail()))
+		{
+			if(u.getPassword().equals(u1.getPassword()))
+			{
+				session.setAttribute("user", u1);
+				return "redirect:/admin/page";
+			}
+			else
+			{
+				boolean ispassword=false;
+				model.addAttribute("ispaword", ispassword);
+				return "admin_login";
+			}
+		}
+		else if(u.getPassword().equals(confirmPass))
 		{
 			u.setCreatedAt();
 			u.setRole(Role.ADMIN);
 			us.saveUser(u);
+			session.setAttribute("user", u);
+			return "redirect:/admin/page";
 		}
 		else
 		{
 			model.addAttribute("user", u);
 			return "admin_login";
 		}
-		return "redirect:admin_homePage";
 	}
 	
 	@GetMapping("/home")

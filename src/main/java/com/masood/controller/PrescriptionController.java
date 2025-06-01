@@ -1,5 +1,9 @@
 package com.masood.controller;
 
-public class PrescriptionController {
+import org.springframework.stereotype.Controller;
 
+@Controller("perscriptionController")
+public class PrescriptionController
+{
+	
 }
