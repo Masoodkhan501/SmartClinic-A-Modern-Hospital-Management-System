@@ -25,7 +25,7 @@ import com.masood.service.MessageHistroyImpl;
 import com.masood.service.MessageService;
 import com.masood.service.PatientServiceimpl;
 import com.masood.service.PriscriptionServiceImpl;
-import com.masood.service.UserImpl;
+//import com.masood.service.UserImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -33,8 +33,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller("AdminController")
 public class AdminController 
 {
-	@Autowired
-	private UserImpl us;
+//	@Autowired
+//	private UserImpl us;
 	@Autowired
 	private AppointmentService as;
 	@Autowired
@@ -154,6 +154,7 @@ public class AdminController
 			m.addAttribute("dataList", adto.getAllrecieveMsg());
 		}
 		m.addAttribute("reason", reason);
+		m.addAttribute("AdminDTO",adto);
 		return "admindetailpage";
 	}
 	

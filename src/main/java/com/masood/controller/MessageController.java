@@ -26,7 +26,9 @@ public class MessageController
 //	@Autowired
 //	private UserImpl us;
 //	
-	@GetMapping({"/doctor/messages/new","/patient/messages/new"})
+	@GetMapping({"/doctor/messages/new",
+		"/patient/messages/new",
+		"/admin/messages/new"})
 	public String checkSender(HttpServletRequest req,RedirectAttributes redirect)
 	{
 		String url = req.getRequestURI();
@@ -42,6 +44,7 @@ public class MessageController
 		}
 		else
 		{
+			redirect.addAttribute("by","admin");
 			return "redirect:/admin/send/message";
 		}
 	}
