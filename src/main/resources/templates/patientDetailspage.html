@@ -28,37 +28,47 @@
                     <p class="text-gray-600 mt-4 text-lg">No appointments uptill now.</p>
                 </div>
 
-                    <!-- Appointment Table -->
-                    <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-blue-100">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Date</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Status
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Symptoms
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">update
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
-                                <tr class="hover:bg-blue-100 transition duration-200">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${appt.p_id.user_id.name}">
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.status}">
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.notes}">
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><a
-                                            th:href="@{/appointment/update/{app_id}(app_id=*{appt.app_id})}"
-                                            class="hover:underline hover:underline-offset-4">update</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- Appointment Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-blue-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Date</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Status
+                                </th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Symptoms
+                                </th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">update
+                                </th>
+                                <th th:if="${isadmin==true}"
+                                    class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
+                            <tr class="hover:bg-blue-100 transition duration-200">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${appt.p_id.user_id.name}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.status}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.notes}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><a
+                                        th:href="@{/appointment/update/{app_id}(app_id=*{appt.app_id})}"
+                                        class="hover:underline hover:underline-offset-4">update</a>
+
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                    <a th:href="@{/appointment/delete{app_id}(app_id=*{appt.app_id})}"
+                                        th:if="${isadmin==true}" class="
+                                        hover:underline text-red-600 hover:underline-offset-4">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
             <!-- Upcoming Appointments -->
             <div th:case="'upcomingappointments'">
                 <!-- Empty State -->
@@ -85,6 +95,12 @@
                                         Status</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-indigo-700 uppercase">
                                         Symptoms</th>
+                                    <th th:unless="${isadmin==true}"
+                                        class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">update
+                                    </th>
+                                    <th th:if="${isadmin==true}"
+                                        class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Action
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
@@ -100,6 +116,17 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${appt.notes}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><a
+                                            th:unless="${isadmin==true}"
+                                            th:href="@{/appointment/update/{app_id}(app_id=*{appt.app_id})}"
+                                            class="hover:underline hover:underline-offset-4">update</a>
+
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/appointment/delete/{app_id}(app_id=*{appt.app_id})}"
+                                            th:if="${isadmin==true}" class="
+                                            hover:underline text-red-600 hover:underline-offset-4">Delete</a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -132,7 +159,8 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Subject And Message
                                     </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                    <th th:unless="${isadmin==true}"
+                                        class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Send reply</th>
                                 </tr>
                             </thead>
@@ -147,7 +175,7 @@
                                         <div th:text="${content}"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/doctor/messages/new}">Reply</a>
+                                        <a th:unless="${isadmin==true}" th:href="@{/patient/messages/new}">Reply</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -193,10 +221,10 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.notes}">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${appt.treatmentFee + appt.operationFee}">
+                                    th:text="${(appt.treatmentFee ?: 0.0) + (appt.operationFee ?: 0.0)}">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                    <div class="flex justify-center px-3 py-2 rounded-lg text-white">
+                                    <div>
                                         <a th:href="@{pay/bill/{apptid}(apptid=${appt.app_id})}">Pay</a>
                                     </div>
                                 </td>
@@ -232,7 +260,8 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Subject And Message
                                     </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                    <th th:if="${isadmin==true}"
+                                        class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Action
                                     </th>
                                 </tr>
@@ -248,7 +277,7 @@
                                         <div th:text="${content}"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/patient/messages/edit}"
+                                        <a th:if="${isadmin==true}" th:href="@{/patient/messages/edit}"
                                             class="hover:underline hover:underline-offset-4">Edit Msg</a>
                                     </td>
                                 </tr>
@@ -281,7 +310,8 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Subject And Message
                                     </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                    <th th:if="${isadmin==true}"
+                                        class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Action</th>
                                 </tr>
                             </thead>
@@ -296,7 +326,7 @@
                                         <div th:text="${content}"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/patient/messages/new}"
+                                        <a th:if="${isadmin==true}" th:href="@{/patient/messages/new}"
                                             class="hover:underline hover:underline-offset-4">reply</a>
                                     </td>
                                 </tr>
@@ -320,7 +350,7 @@
     </div>
     <div class="flex justify-center gap-x-10">
         <div class="flex justify-center mt-5">
-            <a th:href="@{/patient/page}"
+            <a th:href="@{isadmin==true?'/admin/manage/patients':/patient/page}"
                 class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 &larr; Back to Dashboard
             </a>

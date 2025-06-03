@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -138,25 +139,45 @@ public class DoctorController
 		return page;
 	}
 	
-	@GetMapping("/doctor/page")
+	@GetMapping({"/doctor/page","/admin/manage/doctor/{id}"})
 	public String doctorpage(@SessionAttribute("user") User u,
-			@SessionAttribute("doctor") Doctor d,
-			HttpSession session,Model m)
+			@SessionAttribute(name = "doctor",required = false) Doctor d,
+			@PathVariable(required=false) String id,
+			HttpSession session,Model m,
+			HttpServletRequest req)
 	{
-		DoctorDTO ddto = new DoctorDTO(d, u);
+		String url = req.getRequestURI();
+		Doctor d1=new Doctor();
+		User u1=new User();
+		boolean isadmin = true;
+		if(url.contains("/doctor/page"))
+		{
+			d1=d;
+			u1=u;
+			isadmin = false;
+		}
+		else
+		{
+			Optional<Doctor> doctorById = ds.getDoctorById(id);
+			d1 = doctorById.get();
+			Optional<User> byEmail = us.getByEmail(d1.getUser_id().getEmail());
+			u1 = byEmail.get();
+			isadmin = true;
+		}
+		DoctorDTO ddto = new DoctorDTO(d1, u1);
 		m.addAttribute("DoctorDTO", ddto);
 		List<Appointment> appointmentbydate = as.getByDate(new Date());
 		m.addAttribute("todayAppointmentsCount",appointmentbydate.size() );
 		List<Appointment> upcommingappt = as.getByDateAfter(new Date());
 		m.addAttribute("upcomingAppointmentsCount", upcommingappt.size());
-		List<Message> messagesByStatus = ms.getMessageByUserandStatus(d.getUser_id().getId(),"unread");
+		List<Message> messagesByStatus = ms.getMessageByUserandStatus(d1.getUser_id().getId(),"unread");
 		m.addAttribute("unreadMessagesCount", messagesByStatus.size());
-		List<Patient> patientByDoctorName = as.getPatientByDoctorId(d.getDoc_id());
+		List<Patient> patientByDoctorName = as.getPatientByDoctorId(d1.getDoc_id());
 		m.addAttribute("totalPatientsCount",patientByDoctorName.size());
 		m.addAttribute("todayAppointments", appointmentbydate);
 		session.setAttribute("DoctorDTO", ddto);
-		List<Message> bySenderId = ms.getBySenderId(d.getUser_id().getId());
-		List<Message> byRecieverId = ms.getByRecieverId(d.getUser_id().getId());
+		List<Message> bySenderId = ms.getBySenderId(d1.getUser_id().getId());
+		List<Message> byRecieverId = ms.getByRecieverId(d1.getUser_id().getId());
 		DoctorDetailedPage ddp = new DoctorDetailedPage(appointmentbydate, upcommingappt, messagesByStatus, patientByDoctorName,bySenderId,byRecieverId);
 		session.setAttribute("docdetails", ddp);
 		boolean isnew = true;
@@ -165,6 +186,7 @@ public class DoctorController
 		m.addAttribute("isnew",isnew );
 		LocalDate dates = LocalDate.now().minusDays(1);
 		m.addAttribute("dates",dates);
+		m.addAttribute("isadmin", isadmin);
 		return "DoctorLandingPage";
 	}
 	
@@ -175,7 +197,8 @@ public class DoctorController
 		"/doctor/allsend/messages",
 		"/doctor/allrecieve/messages"})
 	public String handlingDoctorDetialPage(HttpServletRequest req,Model m,
-			@SessionAttribute("docdetails") DoctorDetailedPage ddp)
+			@SessionAttribute("docdetails") DoctorDetailedPage ddp,
+			@RequestParam(required=false) boolean isadmin)
 	{
 		String url = req.getRequestURI();
 		String reason = "";
@@ -183,33 +206,47 @@ public class DoctorController
 		{
 			reason = "todayappointments";
 			m.addAttribute("dataList",ddp.getTodayAppointments());
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/appointments/upcoming"))
 		{
 			reason = "upcomingappointments";
 			m.addAttribute("dataList",ddp.getUpcomingAppointments());
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/unread/messages")) 
 		{
 			reason = "unreadmessages";
 			m.addAttribute("dataList", ddp.getUnreadMessages());
+			if(isadmin==false)
+			{
+				List<Message> unreadMessages = ddp.getUnreadMessages();
+				unreadMessages.forEach(msg->msg.setStatus("read"));
+				ms.saveAll(unreadMessages);
+			}
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/doctor/patients"))
 		{
 			reason = "doctorpatients";
 			m.addAttribute("dataList", ddp.getRelatedPatients());
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/allsend/messages"))
 		{
 			reason = "doctorsendedMessages";
 			m.addAttribute("dataList", ddp.getAllsendMessage());
+			m.addAttribute("isadmin",isadmin);
 		}
 		else
 		{
 			reason = "doctorrecievedMessages";
 			m.addAttribute("dataList", ddp.getAllrecieveMessages());
+			m.addAttribute("isadmin",isadmin);
 		}
 		m.addAttribute("reason", reason);
 		return "doctordetailspage";
 	}
+	
+	
 }

@@ -51,6 +51,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
+
                             <tr class="hover:bg-gray-50 transition-colors" th:each="appointment : ${dataList}">
                                 <td class="px-6 py-4 whitespace-nowrap text-gray-700"
                                     th:text="${appointment.p_id.user_id.name}"></td>
@@ -109,28 +110,29 @@
                                         Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" th:each="doc : ${dataList}">
-                                <tr class="hover:bg-indigo-50 transition duration-200">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${doc.doc_id}"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${doc.user_id.name}"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <span th:each="spec : ${doc.specializations}">
-                                            <span th:text="${spec.specialization}"></span>
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${doc.expreince}"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a th:href="@{/admin/appointments/delete/{id}(id=${doc.doc_id})}"
-                                            class="text-red-600 hover:text-red-900">Delete</a>
-                                    </td>
+                            <tbody class="bg-white divide-y divide-gray-200" >
+                                <tr class="hover:bg-indigo-50 transition duration-200" th:each="doc : ${dataList}">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                            <a th:text="${doc.doc_id}" th:href="@{/admin/manage/doctor/{id}(id=${doc.doc_id})}"></a></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                            th:text="${doc.user_id.name}"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                            <span th:each="spec : ${doc.specializations}">
+                                                <span th:text="${spec.specialization}"></span>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                            th:text="${doc.expreince}"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a th:href="@{/admin/doctor/delete/{id}(id=${doc.doc_id})}"
+                                                class="text-red-600 hover:text-red-900">Delete</a>
+                                        </td>
+                                    </a>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>  
             </div>
 
             <!-- Messages -->
@@ -162,8 +164,8 @@
                                         Send reply</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" th:each="msg : ${dataList}">
-                                <tr class="hover:bg-yellow-50 transition duration-200">
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-yellow-50 transition duration-200"  th:each="msg : ${dataList}">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sender.name}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
@@ -173,7 +175,8 @@
                                         <div th:text="${content}"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/admin/messages/new}" class="hover:underline hover:underline-offset-4">Reply</a>
+                                        <a th:href="@{/admin/messages/new}"
+                                            class="hover:underline hover:underline-offset-4">Reply</a>
                                         <a th:href="@{/admin/messages/edit}"
                                             class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
                                             Msg</a>
@@ -211,26 +214,26 @@
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Action</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200" th:each="patient : ${dataList}">
-                            <tr class="hover:bg-red-50 transition duration-200">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${patient.patient_Id}">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${patient.user_id.name}">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${patient.date_of_birth}">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${patient.gender}"></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:text="${patient.blood_group}"></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a th:href="@{/admin/appointments/delete/{id}(id=${patient.patient_Id})}"
-                                        class="text-red-600 hover:text-red-900">Delete</a>
-                                </td>
-
+                        <tbody class="bg-white divide-y divide-gray-200" >
+                            <tr class="hover:bg-red-50 transition duration-200" th:each="patient : ${dataList}">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <a th:href="@{/admin/manage/patient/{id}(id=${patient.patient_Id})}" th:text="${patient.patient_Id}"></a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${patient.user_id.name}">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${patient.date_of_birth}">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${patient.gender}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${patient.blood_group}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a th:href="@{/admin/patient/delete/{id}(id=${patient.patient_Id})}"
+                                            class="text-red-600 hover:text-red-900">Delete</a>
+                                    </td>
+                                </a>
                             </tr>
                         </tbody>
                     </table>

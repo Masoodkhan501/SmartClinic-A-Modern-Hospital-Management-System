@@ -1,6 +1,7 @@
 package com.masood.model;
 
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -92,6 +93,23 @@ public class Doctor {
 	public String toString() {
 		return "Doctor [doc_id=" + doc_id + ", user_id=" + user_id + ", specialized_at=" + specializations
 				+ ", expreince=" + expreince + ", status=" + status + "]";
+	}
+
+	public int hashCode() {
+		return Objects.hash(doc_id, expreince, specializations, status, user_id);
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Doctor other = (Doctor) obj;
+		return Objects.equals(doc_id, other.doc_id) && expreince == other.expreince
+				&& Objects.equals(specializations, other.specializations) && status == other.status
+				&& Objects.equals(user_id, other.user_id);
 	}
 
 }

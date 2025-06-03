@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Set Appointment</title>
+    <link rel="stylesheet" href="../static/css/output.css">
+</head>
+
+<body>
+
+    <body class="p-6 bg-gray-100 min-h-screen">
+
+        <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-2xl p-6">
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 capitalize" th:text="'Showing: ' + ${reason}"></h2>
+
+            <div th:switch="${reason}">
+
+                <div th:case="'settingDoc'">
+                    <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-teal-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
+                        <p class="text-gray-600 mt-4 text-lg">No appointments without an assigned doctor.</p>
+                    </div>
+                    <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-teal-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-teal-700 uppercase">Appt
+                                        ID
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-teal-700 uppercase">
+                                        Patient
+                                        Name</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-teal-700 uppercase">
+                                        Symptoms
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-teal-700 uppercase">Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
+                                <tr class="hover:bg-teal-50 transition duration-200">
+                                    <td class="px-6 py-4 text-sm text-gray-700" th:text="${appt.app_id}">
+                                        <input type="hidden" name="apptId" th:value="${appt.app_id}" />
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-700" th:text="${appt.p_id.user_id.name}">
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-700" th:text="${appt.notes}"></td>
+
+                                    <!-- Submit Button -->
+                                    <td class="px-6 py-4 text-sm text-gray-700">
+                                        <a th:href="@{admin/set/doctoranddate}" class=" bg-teal-700 rounded-sm px-3 py-1 text-white">Set Doc</a>
+                                    </td>
+                                    </form>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div th:case="'settingfees'">
+                    <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-receipt-indian-rupee-icon text-purple-400 h-24 w-36 mx-auto block lucide-receipt-indian-rupee">
+                            <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                            <path d="M8 7h8" />
+                            <path d="M12 17.5 8 15h1a4 4 0 0 0 0-8" />
+                            <path d="M8 11h8" />
+                        </svg>
+                        <p class="text-gray-600 mt-4 text-lg">No appointments To set fees (no operation).</p>
+                    </div>
+                    <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-purple-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">Appt
+                                        ID
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">
+                                        Patient
+                                        Name</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">
+                                        Diagnose</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">
+                                        Operation Needed?
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">
+                                        TretmentFee
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
+                                <tr class="hover:bg-purple-50 transition duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.app_id}">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.p_id.user_id.name}"></td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${prescriptionMap[appt.app_id] != null ? prescriptionMap[appt.app_id].diagnosis : 'No Diagnosis'}">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.operationRequired}">
+                                    </td>
+                                    <form th:action="@{/admin/setAppointmentFee(appt.app_id)}" method="post"
+                                        class="flex items-center space-x-2">
+                                        <td class="px-6 py-4 text-sm text-gray-700">
+                                            <input type="number" name="fee" placeholder="₹"
+                                                th:value="${appt.treatmentFee != null ? appt.treatmentFee : ''}"
+                                                class="w-24 px-2 py-1 border rounded text-sm text-gray-700" min="0"
+                                                required />
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-700">
+                                            <input type="submit" value="save"
+                                                class="bg-purple-600 text-white px-5 py-1 rounded hover:bg-purple-700 text-sm">
+
+                                            </input>
+                                        </td>
+                                    </form>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div th:case="'settingopfees'">
+                    <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
+                            class="mx-auto h-28 w-36 text-sky-300">
+                            <path fill="currentColor"
+                                d="M63.117 63.529h-5.633v-9.514H6.899v9.514H1.215V27.663c0-1.551 1.222-2.811 2.778-2.811v-.002c1.552 0 2.906 1.262 2.906 2.813v19.54h50.585V33.357c0-1.552 1.266-2.812 2.819-2.812s2.813 1.26 2.813 2.812z" />
+                            <path fill="currentColor"
+                                d="M14.517 30.868a4.324 4.324 0 1 1 0 8.649a4.33 4.33 0 0 1-4.332-4.326a4.326 4.326 0 0 1 4.332-4.323m4.325 12.046a2.134 2.134 0 0 1-2.132 2.133h-6.148a2.13 2.13 0 0 1-2.13-2.133c0-1.173.952-2.126 2.13-2.126h6.148a2.13 2.13 0 0 1 2.132 2.126M51.964 32.55c1.9 0 3.435 1.489 3.454 3.379l.007 9.121H20.713V32.554l31.251-.003zm-20.57-1.979V10.83a3.855 3.855 0 0 0-3.849-3.851a3.834 3.834 0 0 0-3.83 3.828a.65.65 0 0 1-.648.65a.65.65 0 0 1-.648-.65a.853.853 0 0 0-1.706 0a2.36 2.36 0 0 0 2.355 2.358c1.3 0 2.355-1.056 2.355-2.358c0-1.168.952-2.12 2.123-2.12c1.178 0 2.139.96 2.139 2.143v19.741h1.71z" />
+                            <path fill="currentColor"
+                                d="M24.224 24.585h2.172s.427-1.851.427-4.805s-.427-4.803-.427-4.803h-5.551s-.497 1.495-.497 4.803c0 3.309.497 4.805.497 4.805h2.209c0 .005-.005.009-.005.016c.002.037.07 3.601-2.265 5.97h1.538c1.94-2.591 1.905-5.74 1.902-5.986M39.637.65v22.378h23.482V.65zm2.007 5.084a2.984 2.984 0 0 1 2.992-2.987h13.499a2.986 2.986 0 0 1 2.989 2.987v8.114h-1.812l-1.122-3.05a.473.473 0 0 0-.889.005l-.629 1.784l-1.482-6.209a.475.475 0 0 0-.932.055l-.992 8.829c-.402-.602-.801-1.205-.801-1.205a.48.48 0 0 0-.395-.209h-1.824c-.186-.511-1.119-3.05-1.119-3.05a.48.48 0 0 0-.448-.309c-.2 0-.376.128-.441.314l-.632 1.784l-1.482-6.209a.473.473 0 0 0-.931.055s-.769 6.864-.992 8.829l-.801-1.205a.47.47 0 0 0-.392-.209h-1.363V5.735h-.001zm16.491 15.428H44.636a2.99 2.99 0 0 1-2.992-2.992v-3.377h1.108c.233.348 1.379 2.074 1.379 2.074a.476.476 0 0 0 .866-.209s.508-4.53.836-7.428c.546 2.302 1.224 5.136 1.224 5.136a.47.47 0 0 0 .434.362a.47.47 0 0 0 .471-.314l.727-2.058l.785 2.128a.47.47 0 0 0 .441.309h1.9l1.38 2.074a.47.47 0 0 0 .504.197a.47.47 0 0 0 .36-.406l.838-7.431l1.224 5.138a.47.47 0 0 0 .434.362a.47.47 0 0 0 .471-.314s.388-1.091.727-2.058c.362.99.783 2.128.783 2.128a.47.47 0 0 0 .441.309h2.144v3.377a2.99 2.99 0 0 1-2.988 2.992z" />
+                        </svg>
+                        <p class="text-gray-600 mt-4 text-lg">No appointments requiring operation fees to set.</p>
+                    </div>
+                    <div th:if="${!#lists.isEmpty(dataList)}" class="overflow-x-auto shadow-lg rounded-lg mt-6">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-orange-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">Appt
+                                        ID
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
+                                        Symptoms</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
+                                        Doctor
+                                        Name</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
+                                        Diagnosis
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">Set
+                                        Opt Date
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">Set
+                                        Opt Fee
+
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
+                                <tr class="hover:bg-orange-50 transition duration-200">
+                                    <form th:action="@{/admin/setOperationDetails}" method="post" class="contents">
+                                        <input type="hidden" name="apptId" th:value="${appt.app_id}" />
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                            th:text="${appt.app_id}"></td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                            th:text="${appt.notes}"></td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                            th:text="${appt.d_id != null ? appt.d_id.user_id.name : 'N/A'}"></td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                            th:text="${prescriptionMap[appt.app_id] != null ? prescriptionMap[appt.app_id].diagnosis : 'No Diagnosis'}">
+                                        </td>
+
+                                        <!-- Operation Date Input -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                            <input type="date" name="operationDate"
+                                                th:value="${appt.o != null ? #dates.format(appt.o, 'yyyy-MM-dd') : ''}"
+                                                class="border px-2 py-1 rounded text-sm text-gray-700 w-36" required />
+                                        </td>
+
+                                        <!-- Operation Fee Input -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                            <input type="number" name="operationFee" placeholder="₹ opt fee + appt fee"
+                                                th:value="${appt.operationFee != null ? appt.operationFee : ''}"
+                                                class="border px-2 py-1 rounded text-sm text-gray-700 w-24" min="0"
+                                                required />
+                                        </td>
+
+                                        <!-- Submit Button -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <button type="submit"
+                                                class="bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-1 rounded">
+                                                Save
+                                            </button>
+                                        </td>
+                                    </form>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div th:case="*">
+                    <div class="text-center py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-gray-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-gray-600 mt-4 text-lg">No data available to show.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center gap-x-16">
+            <div class="flex justify-center mt-5">
+                <a href="/doctor/page"
+                    class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                    &larr; Back to Dashboard
+                </a>
+            </div>
+            <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
+                <a th:href="@{/doctor/allsend/messages}"
+                    class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                    Get All send Messages
+                </a>
+            </div>
+            <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
+                <a th:href="@{/doctor/allrecieve/messages}"
+                    class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                    Get All recived Messages
+                </a>
+            </div>
+        </div>
+    </body>
+</body>
+
+</html>

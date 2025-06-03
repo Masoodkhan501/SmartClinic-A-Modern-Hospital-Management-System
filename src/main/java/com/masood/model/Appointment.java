@@ -152,14 +152,6 @@ public class Appointment {
 		this.p_id = p_id;
 	}
 
-	public Date getdateofAppointment() {
-		return dateofAppointment;
-	}
-
-	public void setdateofAppointment() {
-		this.dateofAppointment = new Date();
-	}
-
 	public Appointmentstatus getStatus() {
 		return status;
 	}

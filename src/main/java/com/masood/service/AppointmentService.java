@@ -81,12 +81,12 @@ public class AppointmentService implements AppointmentInterface {
 
 	public List<Doctor> getDoctorByPatientId(String id) 
 	{
-		return ar.findDoctorByPatientId(id);
+		return ar.findDoctorByPatientId(id).stream().distinct().collect(Collectors.toList());
 	}
 
 	public List<Patient> getPatientByDoctorId(String id) 
 	{
-		return ar.findPatientByDoctorId(id);
+		return ar.findPatientByDoctorId(id).stream().distinct().collect(Collectors.toList());
 	}
 
 	public List<Appointment> getAppointmentsWhereOperationRequiredIsYes() {

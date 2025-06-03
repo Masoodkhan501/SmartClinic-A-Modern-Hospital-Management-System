@@ -89,4 +89,8 @@ public class MessageService implements MessageInterface
 		return mr.findByReceiver_IdAndStatus(id, status);
 	}
 
+	public void saveAll(List<Message> allmsg) {
+		mr.saveAll(allmsg);
+	}
+
 }

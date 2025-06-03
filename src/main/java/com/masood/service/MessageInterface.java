@@ -9,6 +9,7 @@ import com.masood.model.Message;
 public interface MessageInterface 
 {
 	public Message sendMessage(Message message);
+	public void saveAll(List<Message> allmsg);
 	public Optional<Message> getByid(Long id);
     public List<Message> getAllMessages();
     public List<Message> getBySenderId(Long id);

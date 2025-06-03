@@ -42,10 +42,10 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long>
 	@Query("SELECT a FROM appointment a WHERE a.d_id.id = :docId AND a.status = :status AND a.dateOfOperation IS NOT NULL ORDER BY a.dateOfOperation DESC")
 	public List<Appointment> findLatestOperationDateByDoctor(@Param("docId") Long docId, @Param("status") Appointmentstatus status, Pageable pageable);
 	
-	@Query("select distinct a.p_id from appointment a where a.d_id.doc_id = :id ORDER BY a.p_id DESC")
+	@Query("select a.p_id from appointment a where a.d_id.doc_id = :id ORDER BY a.p_id DESC")
 	public List<Patient> findPatientByDoctorId(@Param("id") String id);
 	
-	@Query("select distinct a.d_id from appointment a where a.p_id.patient_Id = :id ORDER BY a.d_id DESC")
+	@Query("select a.d_id from appointment a where a.p_id.patient_Id = :id ORDER BY a.d_id DESC")
 	public List<Doctor> findDoctorByPatientId(@Param("id") String id);
 	
 	@Query("SELECT a FROM appointment a WHERE a.operationRequired = com.masood.model.OperationNeeded.YES")

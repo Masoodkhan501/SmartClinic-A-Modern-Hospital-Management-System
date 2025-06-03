@@ -125,26 +125,47 @@ public class PatientController
 		return page;
 	}
 	
-	@GetMapping("/patient/page")
+	@GetMapping({"/patient/page","/admin/manage/patient/{id}"})
 	public String patientpage(@SessionAttribute("user") User u,
-			@SessionAttribute("patient") Patient p,Model m,
+			@SessionAttribute(name="patient",required=false) Patient p,
+			@PathVariable(name = "id",required = false) String patientId,
+			Model m,HttpServletRequest req,
 			HttpSession session)
 	{
-		Double price = ps.getTotalAmountofDueBills(p);
+		Patient p1=new Patient();
+		User u1 = new User();
+		String url = req.getRequestURI();
+		boolean isAdmin = true;
+		if(url.contains("/patient/page"))
+		{
+			p1 = p;
+			isAdmin = false;
+			Optional<User> user = us.getByEmail(p.getUser_id().getEmail());
+			u1 = user.get();
+		}
+		else
+		{
+			Optional<Patient> byPatientId = ps.getPatientById(patientId);
+			p1 = byPatientId.get();
+			isAdmin = true;
+			Optional<User> user = us.getByEmail(p1.getUser_id().getEmail());
+			u1 = user.get();
+		}
+		Double price = ps.getTotalAmountofDueBills(p1);
 		Math.round(price);
-		Byte patientAge = ps.getPatientAge(p);
-		List<Appointment> sizeofAppt = as.getByPatient(p.getPatient_Id());
+		Byte patientAge = ps.getPatientAge(p1);
+		List<Appointment> sizeofAppt = as.getByPatient(p1.getPatient_Id());
 		Date d = new Date();
 		List<Appointment> upcomingappt = as.getByDateAfter(d);
-		List<Message> noofUnread = ms.getMessageByUserandStatus(p.getUser_id().getId(),"unread");
-		List<Appointment> unpaidAppointmentsByPatient = as.getUnpaidAppointmentsByPatient(p.getPatient_Id());
-		List<Message> bySenderId = ms.getBySenderId(p.getUser_id().getId());
-		List<Message> byRecieverId = ms.getByRecieverId(p.getUser_id().getId());
+		List<Message> noofUnread = ms.getMessageByUserandStatus(p1.getUser_id().getId(),"unread");
+		List<Appointment> unpaidAppointmentsByPatient = as.getUnpaidAppointmentsByPatient(p1.getPatient_Id());
+		List<Message> bySenderId = ms.getBySenderId(p1.getUser_id().getId());
+		List<Message> byRecieverId = ms.getByRecieverId(p1.getUser_id().getId());
 		PatientDetailsPage pdp = new PatientDetailsPage(sizeofAppt, upcomingappt, noofUnread, unpaidAppointmentsByPatient, byRecieverId, bySenderId);
 		session.setAttribute("patientdetailpage", pdp);
 		Appointment latestAppointment = as.getLatestAppointmentWhoseappointmentisComplete();
 		priscription getlatestpriscription = pres.getlatestpriscription();
-		PatientDTO pdto = new PatientDTO(p, u);
+		PatientDTO pdto = new PatientDTO(p1, u1);
 		pdto.setAppoint(latestAppointment);
 		pdto.setPris(getlatestpriscription);
 		session.setAttribute("PatientDTO", pdto);
@@ -157,6 +178,7 @@ public class PatientController
 		m.addAttribute("TotalDeu", price);
 		boolean isNewPatient = latestAppointment == null && getlatestpriscription == null && sizeofAppt.size() == 0;
 		m.addAttribute("isNew", isNewPatient);
+		m.addAttribute("isadmin",isAdmin);
 		return "patientLandingPage";
 	}
 	
@@ -175,7 +197,8 @@ public class PatientController
 		"/patient/allsend/messages",
 		"/patient/allrecieve/messages"})
 	public String handlingPatientDetailsPage(HttpServletRequest req,Model m,
-			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
+			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp,
+			@RequestParam(required=false) boolean isadmin)
 	{
 		String url = req.getRequestURI();
 		String reason="";
@@ -183,31 +206,43 @@ public class PatientController
 		{
 			reason = "appointments";
 			m.addAttribute("dataList",pdp.getAppointments());
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/upcoming/appointments"))
 		{
 			reason = "upcomingappointments";
 			m.addAttribute("dataList",pdp.getUpcomingappointments());
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/unread/messages")) 
 		{
 			reason = "unreadmessages";
 			m.addAttribute("dataList", pdp.getUnreadMessages());
+			if(isadmin==false)
+			{
+				List<Message> unreadMessages = pdp.getUnreadMessages();
+				unreadMessages.forEach(msg->msg.setStatus("read"));
+				ms.saveAll(unreadMessages);
+			}
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/pending/bills"))
 		{
 			reason = "unpaidAppointments";
 			m.addAttribute("dataList", pdp.getUnpaidappointments());
+			m.addAttribute("isadmin",isadmin);
 		}
 		else if(url.contains("/allsend/messages"))
 		{
 			reason = "showAllsendmessages";
 			m.addAttribute("dataList",pdp.getAllsendMsg() );
+			m.addAttribute("isadmin",isadmin);
 		}
 		else
 		{
 			reason="showallrecievemessages";
 			m.addAttribute("dataList", pdp.getAllrecievedMsg());
+			m.addAttribute("isadmin",isadmin);
 		}
 		m.addAttribute("reason", reason);
 		return "patientDetailspage";

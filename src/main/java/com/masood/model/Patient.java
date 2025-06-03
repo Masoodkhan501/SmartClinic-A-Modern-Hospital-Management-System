@@ -1,6 +1,7 @@
 package com.masood.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -83,6 +84,23 @@ public class Patient {
 	public String toString() {
 		return "Patient [patient_Id=" + patient_Id + ", user_id=" + user_id + ", date_of_birth=" + date_of_birth
 				+ ", gender=" + gender + ", blood_group=" + blood_group + "]";
+	}
+
+	public int hashCode() {
+		return Objects.hash(blood_group, date_of_birth, gender, patient_Id, user_id);
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Patient other = (Patient) obj;
+		return Objects.equals(blood_group, other.blood_group) && Objects.equals(date_of_birth, other.date_of_birth)
+				&& Objects.equals(gender, other.gender) && Objects.equals(patient_Id, other.patient_Id)
+				&& Objects.equals(user_id, other.user_id);
 	}
 
 }
