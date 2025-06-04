@@ -143,8 +143,8 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a th:href="@{'/doctor/patient/' + ${appointment.patientId}}"
-                                        class="text-sky-600 hover:text-sky-900 hover:underline">View Patient &rarr;</a>
+                                    <a th:href="@{/prescription/create/{id}(id=${appt.app_id})}"
+                                        class="text-sky-600 hover:text-sky-900 hover:underline">check &rarr;</a>
                                 </td>
                             </tr>
                         </tbody>

@@ -55,7 +55,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${appt.notes}">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><a
-                                        th:href="/prescription/craete"
+                                        th:href="@{/prescription/create/{id}(id=${appt.app_id})}"
                                         class="hover:underline hover:underline-offset-4">Check</a></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:if="${isadmin==true}">
                                     <a th:href="/delete/appointment/{id}(id=${appt.app_id})"
@@ -198,20 +198,24 @@
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Patient ID
                                 </th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Name</th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Age</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Blood Group</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Gender</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Action</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" th:each="patient : ${dataList}">
                             <tr class="hover:bg-red-50 transition duration-200">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.id}">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.patient_Id}">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.name}">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.user_id.name}">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.age}">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.blood_group}">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                     th:text="${patient.gender}"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    >
+                                <a th:href="@{doctor/send/msg/{id}(id=${patient.patient_Id})}">Send Message</a></td>
                             </tr>
                         </tbody>
                     </table>

@@ -91,7 +91,7 @@ public class PatientServiceimpl implements PatientServiceInterface
 
 	public Double getTotalAmountofDueBills(Patient p) {
 		return as.getByPatient(p.getPatient_Id()).stream()
-				.filter(appt->appt.getPaymentStatus().equals(PaymentStatus.UNPAID))
+				.filter(appt->Objects.equals(appt.getPaymentStatus(), PaymentStatus.UNPAID))
 				.mapToDouble(appt -> {
 	                if (Objects.equals(appt.getOperationRequired(), OperationNeeded.YES)) {
 	                    return (appt.getTreatmentFee() != null ? appt.getTreatmentFee() : 0.0)

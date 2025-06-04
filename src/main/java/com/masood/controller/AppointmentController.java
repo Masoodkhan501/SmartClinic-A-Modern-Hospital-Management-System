@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.masood.DTO.AppointmentDTO;
 import com.masood.model.Appointment;
 import com.masood.model.AppointmentHistory;
+import com.masood.model.Appointmentstatus;
 import com.masood.model.Patient;
+import com.masood.model.PaymentStatus;
 import com.masood.model.User;
 import com.masood.service.AppointmentHistoryImpl;
 import com.masood.service.AppointmentService;
@@ -46,6 +48,8 @@ public class AppointmentController
 	{
 		Appointment a = adto.getAppt();
 		a.setP_id(p);
+		a.setStatus(Appointmentstatus.PENDING);
+		a.setPaymentStatus(PaymentStatus.UNPAID);
 		Appointment saveAppointment = as.saveAppointment(a);
 		AppointmentHistory ah = new AppointmentHistory();
 		ah.setAppoint_id(saveAppointment);

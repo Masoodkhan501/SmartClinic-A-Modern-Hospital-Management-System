@@ -2,6 +2,8 @@ package com.masood.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,6 +41,7 @@ public class Appointment {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_operation")
+	@DateTimeFormat(pattern = "yyyy-MM-dd") 
 	private Date dateOfOperation;
 	
 	@Enumerated(EnumType.STRING)
@@ -51,6 +54,7 @@ public class Appointment {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
+	@DateTimeFormat(pattern = "yyyy-MM-dd") 
 	private Date dateofAppointment;
 
 	@Enumerated(EnumType.STRING)

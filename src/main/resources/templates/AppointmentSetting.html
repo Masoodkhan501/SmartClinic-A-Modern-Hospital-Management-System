@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | Set Appointment</title>
-    <link rel="stylesheet" href="../static/css/output.css">
+    <link rel="stylesheet" th:href="@{/css/output.css}">
 </head>
 
 <body>
@@ -47,15 +47,14 @@
                             <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
                                 <tr class="hover:bg-teal-50 transition duration-200">
                                     <td class="px-6 py-4 text-sm text-gray-700" th:text="${appt.app_id}">
-                                        <input type="hidden" name="apptId" th:value="${appt.app_id}" />
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-700" th:text="${appt.p_id.user_id.name}">
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-700" th:text="${appt.notes}"></td>
 
-                                    <!-- Submit Button -->
                                     <td class="px-6 py-4 text-sm text-gray-700">
-                                        <a th:href="@{admin/set/doctoranddate}" class=" bg-teal-700 rounded-sm px-3 py-1 text-white">Set Doc</a>
+                                        <a th:href="@{/admin/set/doctoranddate/{id}(id=${appt.app_id})}"
+                                            class=" bg-teal-700 rounded-sm px-3 py-1 text-white">Set Doc</a>
                                     </td>
                                     </form>
                                 </tr>
@@ -93,9 +92,6 @@
                                         Operation Needed?
                                     </th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">
-                                        TretmentFee
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-purple-700 uppercase">
                                         Action
                                     </th>
                                 </tr>
@@ -114,21 +110,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${appt.operationRequired}">
                                     </td>
-                                    <form th:action="@{/admin/setAppointmentFee(appt.app_id)}" method="post"
-                                        class="flex items-center space-x-2">
-                                        <td class="px-6 py-4 text-sm text-gray-700">
-                                            <input type="number" name="fee" placeholder="₹"
-                                                th:value="${appt.treatmentFee != null ? appt.treatmentFee : ''}"
-                                                class="w-24 px-2 py-1 border rounded text-sm text-gray-700" min="0"
-                                                required />
-                                        </td>
-                                        <td class="px-6 py-4 text-sm text-gray-700">
-                                            <input type="submit" value="save"
-                                                class="bg-purple-600 text-white px-5 py-1 rounded hover:bg-purple-700 text-sm">
 
-                                            </input>
-                                        </td>
-                                    </form>
+                                    <td class="px-6 py-4 text-sm text-gray-700">
+                                        <a th:href="@{/admin/set/apptfees/{id}(id=*{app_id})}"
+                                            class="bg-purple-700 rounded-sm px-3 py-1 text-white">Set Fees</a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -156,19 +142,15 @@
                                         ID
                                     </th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
-                                        Symptoms</th>
+                                        Patient
+                                        Name</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
                                         Doctor
                                         Name</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
-                                        Diagnosis
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">Set
-                                        Opt Date
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">Set
-                                        Opt Fee
-
+                                        Symptoms</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
+                                        Diagnose
                                     </th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-orange-700 uppercase">
                                         Action
@@ -177,44 +159,24 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200" th:each="appt : ${dataList}">
                                 <tr class="hover:bg-orange-50 transition duration-200">
-                                    <form th:action="@{/admin/setOperationDetails}" method="post" class="contents">
-                                        <input type="hidden" name="apptId" th:value="${appt.app_id}" />
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.app_id}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.p_id.user_id.name'}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.d_id != null ? appt.d_id.user_id.name : 'N/A'}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${appt.notes}"></td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                            th:text="${appt.app_id}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${prescriptionMap[appt.app_id] != null ? prescriptionMap[appt.app_id].diagnosis : 'No Diagnosis'}">
+                                    </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                            th:text="${appt.notes}"></td>
-
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                            th:text="${appt.d_id != null ? appt.d_id.user_id.name : 'N/A'}"></td>
-
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                            th:text="${prescriptionMap[appt.app_id] != null ? prescriptionMap[appt.app_id].diagnosis : 'No Diagnosis'}">
-                                        </td>
-
-                                        <!-- Operation Date Input -->
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                            <input type="date" name="operationDate"
-                                                th:value="${appt.o != null ? #dates.format(appt.o, 'yyyy-MM-dd') : ''}"
-                                                class="border px-2 py-1 rounded text-sm text-gray-700 w-36" required />
-                                        </td>
-
-                                        <!-- Operation Fee Input -->
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                            <input type="number" name="operationFee" placeholder="₹ opt fee + appt fee"
-                                                th:value="${appt.operationFee != null ? appt.operationFee : ''}"
-                                                class="border px-2 py-1 rounded text-sm text-gray-700 w-24" min="0"
-                                                required />
-                                        </td>
-
-                                        <!-- Submit Button -->
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                            <button type="submit"
-                                                class="bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-1 rounded">
-                                                Save
-                                            </button>
-                                        </td>
+                                    <!-- Submit Button -->
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <a th:href="@{/admin/set/operationfee/{id}(id=${appt.app_id})}"
+                                        class="bg-orange-700 rounded-sm px-3 py-1 text-orange-100">Set Fees</a>
+                                    </td>
                                     </form>
                                 </tr>
                             </tbody>
@@ -237,21 +199,9 @@
         </div>
         <div class="flex justify-center gap-x-16">
             <div class="flex justify-center mt-5">
-                <a href="/doctor/page"
+                <a th:href="@{/admin/page}"
                     class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                     &larr; Back to Dashboard
-                </a>
-            </div>
-            <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
-                <a th:href="@{/doctor/allsend/messages}"
-                    class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
-                    Get All send Messages
-                </a>
-            </div>
-            <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
-                <a th:href="@{/doctor/allrecieve/messages}"
-                    class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
-                    Get All recived Messages
                 </a>
             </div>
         </div>

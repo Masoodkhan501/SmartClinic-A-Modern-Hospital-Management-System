@@ -1,17 +1,17 @@
 package com.masood.controller;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.masood.DTO.AdminDTO;
@@ -43,6 +43,7 @@ public class AdminController
 {
 
 
+
 //	@Autowired
 //	private UserImpl us;
 	@Autowired
@@ -59,6 +60,8 @@ public class AdminController
 	private AppointmentHistoryImpl aphs;
 	@Autowired
 	private MessageHistroyImpl mhs;
+
+
 
 
 //	@Autowired
@@ -184,11 +187,9 @@ public class AdminController
 		if(uri.contains("/appointments/set"))
 		{
 			List<Appointment> apptwithoutdoc = allappoint.stream()
-					.filter(a->a.getDoctor().equals(null)).collect(Collectors.toList());
+					.filter(a->a.getDoctor()==null).collect(Collectors.toList());
 			reason="settingDoc";
-			List<Doctor> allDoctor = ds.getAllDoctor();
 			addto.setWithoutDoc(apptwithoutdoc);
-			m.addAttribute("Alldoc",allDoctor);
 			m.addAttribute("dataList",apptwithoutdoc);
 		}
 		else if(uri.contains("/appointment/fees"))
@@ -196,15 +197,15 @@ public class AdminController
 			List<Appointment> appwithoutoperation = allappoint.stream()
 			.filter(a->a.getOperationRequired().equals(OperationNeeded.NO))
 			.collect(Collectors.toList());
-			Map<Long, Prescription> prescriptionMap = appwithoutoperation.stream()
+			Map<Long, priscription> prescriptionMap = appwithoutoperation.stream()
 			        .map(a -> pres.getByAppointmentId(a.getApp_id()))
 			        .filter(Optional::isPresent)
 			        .map(Optional::get)
-			        .collect(Collectors.toMap(p -> p.getAppointment().getApp_id(), p -> p));
+			        .collect(Collectors.toMap(p -> p.getAppointid().getApp_id(), p -> p));
 			reason = "settingfees";
 			addto.setWithoutOperation(appwithoutoperation);
-			m.addAttribute("prescription",prescription);
 			m.addAttribute("dataList",appwithoutoperation);
+			m.addAttribute("prescriptionMap", prescriptionMap);
 			
 		}
 		else
@@ -212,30 +213,76 @@ public class AdminController
 			List<Appointment> apptoperationneed = allappoint.stream()
 			.filter(a->a.getOperationRequired().equals(OperationNeeded.YES))
 			.collect(Collectors.toList());
+			Map<Long, priscription> prescriptionMap = apptoperationneed.stream()
+			        .map(a -> pres.getByAppointmentId(a.getApp_id()))
+			        .filter(Optional::isPresent)
+			        .map(Optional::get)
+			        .collect(Collectors.toMap(p -> p.getAppointid().getApp_id(), p -> p));
 			reason="settingopfees";
 			addto.setWithOperation(apptoperationneed);
 			m.addAttribute("dataList",apptoperationneed);
+			m.addAttribute("prescriptionMap", prescriptionMap);
 		}
 		m.addAttribute("reason",reason);
 		session.setAttribute("AppointmentDetailsDTO", addto);
 		return "AppointmentSetting";
 	}
 	
-	@PostMapping("/admin/assignDoctorAndDate")
-	public String assignDoctorAndDate(@SessionAttribute("AppointmentDetailsDTO") AppointmentDetailsDTO addto,
-									@RequestParam Long apptId,
-	                                  @RequestParam String doctorId,
-	                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date appointmentDate) {
+	@GetMapping("/admin/set/doctoranddate/{id}")
+	public String assignDoctorAndDate(@PathVariable Long id,Model m) 
+	{
 
-		Optional<Appointment> appoint = as.getAppointmentbyId(apptId);
-		Appointment appt = appoint.get();
-		Optional<Doctor> doctorById = ds.getDoctorById(doctorId);
-		Doctor doctor = doctorById.get();
-		
-		appt.setD_id(doctor);
-		appt.setDateofAppointment(appointmentDate);
-		as.saveAppointment(appt);
-	    return "redirect:/admin/appointments/set";
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(id);
+		Appointment appt = appointmentbyId.get();
+		m.addAttribute("appt",appt);
+		List<Doctor> allDoctor = ds.getAllDoctor();
+		m.addAttribute("Alldoc",allDoctor);
+	    return "settingDoc";
+	}
+	
+	@PostMapping("/admin/set/doctor")
+	public String setDoc(@ModelAttribute("appt") Appointment apppointment)
+	{
+		as.saveAppointment(apppointment);
+		return "redirect:/admin/appointments/set";
 	}
 
+	@GetMapping("/admin/set/apptfees/{id}")
+	public String setApptFees(@PathVariable Long id, Model m)
+	{
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(id);
+		Appointment appt = appointmentbyId.get();
+		m.addAttribute("appt",appt);
+		Optional<priscription> byAppointmentId = pres.getByAppointmentId(id);
+		priscription priscription = byAppointmentId.get();
+		m.addAttribute("pres",priscription);
+		return "SetApptFees";
+	}
+	
+	@PostMapping("/admin/set/treatmentFees")
+	public String setTreatmentFee(@ModelAttribute("appt") Appointment appointment)
+	{
+		as.saveAppointment(appointment);
+		return "redirect:/admin/Appointment/fees";
+	}
+	
+	
+	@GetMapping("/admin/set/operationfee/{id}")
+	public String setOptFees(@PathVariable Long id, Model m)
+	{
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(id);
+		Appointment appt = appointmentbyId.get();
+		m.addAttribute("appt",appt);
+		Optional<priscription> byAppointmentId = pres.getByAppointmentId(id);
+		priscription priscription = byAppointmentId.get();
+		m.addAttribute("pres",priscription);
+		return "SetApptFees";
+	}
+	
+	@PostMapping("/admin/set/oppointmentFee")
+	public String SetOperationFees(@ModelAttribute("appt") Appointment appointment)
+	{
+		as.saveAppointment(appointment);
+		return "redirect:/admin/Operation/fees";
+	}
 }

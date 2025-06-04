@@ -27,8 +27,7 @@ public class AppointmentService implements AppointmentInterface {
 	private AppointmentRepo ar;
 
 	public Appointment saveAppointment(Appointment a) {
-		a.setStatus(Appointmentstatus.PENDING);
-		a.setPaymentStatus(PaymentStatus.UNPAID);
+		
 		 return ar.save(a); 
 	}
 
