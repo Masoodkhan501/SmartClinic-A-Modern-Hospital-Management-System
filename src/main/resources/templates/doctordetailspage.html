@@ -59,8 +59,9 @@
                                         th:href="@{/prescription/create/{id}(id=${appt.app_id})}"
                                         class="hover:underline hover:underline-offset-4">Check</a></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:if="${isadmin==true}">
-                                    <a th:href="/delete/appointment/{id}(id=${appt.app_id})"
-                                        class="hover:underline hover:underline-offset-4">Delete</a>
+                                    <p 
+                                    th:href="@{/delete/appointment/{id}(id=${appt.app_id})}"
+                                        class="hover:underline hover:underline-offset-4">Delete</p>
                                 </td>
                             </tr>
                         </tbody>
@@ -113,8 +114,8 @@
                                         th:text="${appt.notes}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:if="${isadmin==true}">
-                                        <a th:href="/delete/appointment/{id}(id=${appt.app_id})"
-                                            class="hover:underline hover:underline-offset-4">Delete</a>
+                                        <p th:href="/delete/appointment/{id}(id=${appt.app_id})"
+                                            class="hover:underline hover:underline-offset-4">Delete</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -167,7 +168,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:unless="${isadmin==true}">
-                                        <a th:href="@{/doctor/messages/new}">reply</a>
+                                        <a th:href="@{/doctor/send/msg/{id}(id=${msg.sender})}">reply</a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:if="${isadmin==true}">
@@ -219,7 +220,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                     th:text="${patient.gender}"></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                    <a th:href="@{/doctor/send/msg/{id}(id=${patient.patient_Id})}">Send Message</a>
+                                    <a th:href="@{/doctor/send/msg/{id}(id=${patient.user_id})}">Send Message</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -270,8 +271,8 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/doctor/messages/delete}" th:unless="${isadmin==true}"
-                                            class="hover:underline hover:underline-offset-4">Delete</a>
+                                        <p th:href="@{/doctor/messages/delete}" th:unless="${isadmin==true}"
+                                            class="hover:underline hover:underline-offset-4">Delete</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -319,7 +320,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:unless="${isadmin==true}">
-                                        <a th:href="@{/patient/messages/new}" 
+                                        <a th:href="@{/doctor/send/msg/{id}(id=${msg.sender})}" 
                                             class="hover:underline hover:underline-offset-4">reply</a>
                                     </td>
                                 </tr>
