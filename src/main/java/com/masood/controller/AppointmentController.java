@@ -103,7 +103,7 @@ public class AppointmentController
 	    return "redirect:/patient/page";
 	}
 	
-	@GetMapping("/appointment/delete/{app_id}")
+	@GetMapping({"/appointment/delete/{app_id}","/admin/appointments/delete/{app_id}"})
 	public String AppointmentDelete(@PathVariable Long app_id,
 			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
 	{

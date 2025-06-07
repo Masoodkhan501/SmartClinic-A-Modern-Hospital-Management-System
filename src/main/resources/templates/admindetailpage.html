@@ -68,7 +68,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <a th:href="@{/admin/appointments/edit/{id}(id=${appointment.app_id})}"
                                         class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                    <a th:href="@{/admin/appointments/delete/{id}(id=${appointment.app_id})}"
+                                    <a th:href="@{/admin/appointments/delete/{app_id}(app_id=${appointment.app_id})}"
                                         class="text-red-600 hover:text-red-900">Delete</a>
                                 </td>
                             </tr>
@@ -126,8 +126,8 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${doc.expreince}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a th:href="@{/admin/doctor/delete/{id}(id=${doc.doc_id})}"
-                                            class="text-red-600 hover:text-red-900">Delete</a>
+                                        <p th:href="@{/admin/doctor/delete/{id}(id=${doc.doc_id})}"
+                                            class="text-red-600 hover:text-red-900">Delete</p>
                                         <a th:href="@{/admin/sendmsg/doctor/{id}(id=${doc.doc_id})}"
                                             class="text-green-600 hover:text-green-900">Send Msg</a>
                                     </td>
@@ -181,9 +181,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <a th:href="@{/admin/messages/new}"
                                             class="hover:underline hover:underline-offset-4">Reply</a>
-                                        <a th:href="@{/admin/messages/edit}"
+                                        <p th:href="@{/admin/messages/delete/{id}(id=${msg.id})}"
                                             class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
-                                            Msg</a>
+                                            Msg</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -235,8 +235,8 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                     th:text="${patient.blood_group}"></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a th:href="@{/admin/patient/delete/{id}(id=${patient.patient_Id})}"
-                                        class="text-red-600 hover:text-red-900">Delete</a>
+                                    <p th:href="@{/admin/patient/delete/{id}(id=${patient.patient_Id})}"
+                                        class="text-red-600 hover:text-red-900">Delete</p>
                                     <a th:href="@{/admin/sendmsg/patient/{id}(id=${patient.patient_Id})}"
                                         class="text-green-600 hover:text-green-900">Send Msg</a>
                                 </td>
@@ -281,7 +281,7 @@
                             <tbody class="bg-white divide-y divide-gray-200" th:each="msg : ${dataList}">
                                 <tr class="hover:bg-yellow-50 transition duration-200">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${msg.sender.name}"></td>
+                                        th:text="${msg.receiver.name}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
@@ -289,11 +289,11 @@
                                         <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/admin/messages/edit}"
-                                            class="hover:underline hover:underline-offset-4">Edit Msg</a>
-                                        <a th:href="@{/admin/messages/edit}"
+                                        <a th:href="@{/admin/messages/new/{id}(id=${msg.receiver})}"
+                                            class="hover:underline hover:underline-offset-4">Send Msg</a>
+                                        <p th:href="@{/admin/messages/edit}"
                                             class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
-                                            Msg</a>
+                                            Msg</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -340,11 +340,11 @@
                                         <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/admin/messages/new}"
+                                        <a th:href="@{/admin/messages/new/{id}(id=${msg.sender})}"
                                             class="hover:underline hover:underline-offset-4 pr-4">reply</a>
-                                        <a th:href="@{/admin/messages/edit}"
+                                        <p th:href="@{/admin/messages/edit}"
                                             class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
-                                            Msg</a>
+                                            Msg</p>
                                     </td>
                                 </tr>
                             </tbody>
