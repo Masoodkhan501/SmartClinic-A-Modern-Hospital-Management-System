@@ -104,7 +104,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${appt.p_id.user_id.name}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${#dates.format(appt.date, 'dd MMM yyyy')}"></td>
+                                        th:text="${#dates.format(appt.dateofAppointment, 'dd MMM yyyy')}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <span th:text="${appt.status}"
                                             th:classappend="${appt.status == 'confirmed'} ? 'text-green-600 font-medium' : 'text-yellow-600 font-medium'">

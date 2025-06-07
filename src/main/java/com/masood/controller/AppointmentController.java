@@ -130,7 +130,10 @@ public class AppointmentController
 	@PostMapping("/admin/update/appointmentDate")
 	public String saveUpdateAppointment(@ModelAttribute Appointment appt)
 	{
-		as.saveAppointment(appt);
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(appt.getApp_id());
+		Appointment appointment = appointmentbyId.get();
+		appointment.setDateofAppointment(appt.getDateofAppointment());
+		as.saveAppointment(appointment);
 		return "redirect:/admin/manage/appointments";
 	}
 	

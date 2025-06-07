@@ -14,33 +14,33 @@
 <body class="bg-sky-100">
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
-		<div class="heading flex justify-between p-6 " id="Home">
+		<div class="heading flex justify-between md:p-6 " id="Home">
 			<div class="logo">
 				<img th:src="@{/images/2c972fe1-53ca-42e8-94b4-36a7ac99440d.png}" alt="Hospital logo"
-					class="w-auto h-16">
+					class="w-auto h-16 hidden md:flex">
 			</div>
-			<div class="menu">
-				<ul class="flex ">
-					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+			<div class="menu hidden md:block">
+				<ul class="flex px-2 md:px-0">
+					<li class="justify-center content-center md:p-4 hover:underline hover:underline-offset-4"><a
 							href="#Home">Home</a></li>
-					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+					<li class="justify-center content-center md:p-4 hover:underline hover:underline-offset-4"><a
 							href="#AboutUs">AboutUs</a></li>
-					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+					<li class="justify-center content-center md:p-4 hover:underline hover:underline-offset-4"><a
 							href="#Provided">Why we?</a></li>
-					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+					<li class="justify-center content-center md:p-4 hover:underline hover:underline-offset-4"><a
 							href="#Reviews">Patient Reviews</a></li>
-					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+					<li class="justify-center content-center md:p-4 hover:underline hover:underline-offset-4"><a
 							th:href="@{/career/doctor}">Career</a></li>
-					<li class="justify-center content-center p-4 hover:underline hover:underline-offset-4"><a
+					<li class="justify-center content-center md:p-4 hover:underline hover:underline-offset-4"><a
 							th:href="@{/login/patient}">Login</a></li>
 				</ul>
 			</div>
 		</div>
 
-		<div class="main">
+		<div class="main pt-5 md:pt-0">
 			<div class="front h-2/3 bg-cover bg-left p-10"
 				th:style="'background-image: url(\'' + @{/images/backgroundimageforlandingpage.jpg} + '\');'">
-				<div class="w-2/3 p-10 text-white">
+				<div class="md:w-2/3 p-10 text-white">
 					<p class="text-7xl pb-5 font-roboto font-bold">Your Health is</p>
 					<p class="text-7xl pb-5 font-roboto font-bold">Our Priority</p>
 					<div class="flex gap-4 px-5">
@@ -48,14 +48,14 @@
 						<p class="text-2xl ">At CareWell, your well-being is our purpose, and compassionate care is our
 							promise.</p>
 					</div>
-					<p class="text-lg p-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eaque aliquam
+					<p class="text-lg p-5 hidden md:flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eaque aliquam
 						natus adipisci consequuntur error cupiditate odit doloribus fugit quos neque tenetur quam a, nam
 						consectetur illo! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, ipsa.</p>
-					<div class="butnav p-5 flex space-x-3">
-						<div class="appointment py-1 px-10 border-2 rounded-lg hover:bg-white hover:text-black">
+					<div class="butnav p-5 md:flex space-y-3 md:space-y-0 md:space-x-3">
+						<div class="appointment py-1 md:px-10 px-5 border-2 rounded-lg hover:bg-white hover:text-black">
 							<a th:href="@{/book/appointment}">Book Appointment</a>
 						</div>
-						<div class="login py-1 px-10 border-2 rounded-lg hover:bg-white hover:text-black">
+						<div class="login py-1 md:px-10 px-5 border-2 rounded-lg hover:bg-white hover:text-black">
 							<a th:href="@{/new/patient}">Create Account</a>
 						</div>
 					</div>
@@ -146,7 +146,7 @@
 					Experience the future of healthcare today at Care Well Hospital – where innovation meets integrity.
 				</p>
 			</div>
-			<div class="patientreview py-16" id="Reviews">
+			<div class="patientreview py-16 px-4 md:px-8 lg:px-16" id="Reviews">
 				<h2 class="text-5xl mb-12 text-center font-bold text-gray-800">Patient Reviews - Real Stories of Hope
 					and Healing</h2>
 
@@ -154,8 +154,8 @@
 
 					<div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
 						<img th:src="@{/images/front-view-old-man-sitting-bench.jpg}" alt="Mr. Arvind Mehta"
-							class="w-24 h-24 rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
-						<p class="text-xl font-semibold text-gray-900 mb-2">Mr. Arvind Mehta</p>
+							class="w-24 h-24 min-w-[96px] min-h-[96px] rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
+						<p class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Mr. Arvind Mehta</p>
 						<p class="text-sm text-gray-600 mb-4">Battled a Rare Cardiac Tumor</p>
 						<blockquote class="text-lg text-gray-700 italic">
 							"I had been misdiagnosed several times before arriving at Care Well Hospital. Their
@@ -167,8 +167,8 @@
 
 					<div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
 						<img th:src="@{/images/istockphoto-1141394561-1024x1024.jpg}" alt="Ms. Rukhsar Khan"
-							class="w-24 h-24 rounded-full object-cover object-right mb-4 ring-4 ring-sky-300 shadow-md">
-						<p class="text-xl font-semibold text-gray-900 mb-2">Ms. Rukhsar Khan</p>
+							class="w-24 h-24 min-w-[96px] min-h-[96px] rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
+						<p class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Ms. Rukhsar Khan</p>
 						<p class="text-sm text-gray-600 mb-4">Recovered from Autoimmune Encephalitis</p>
 						<blockquote class="text-lg text-gray-700 italic">
 							"For months, I was losing cognitive abilities and no one could explain why. At Care Well,
@@ -178,9 +178,9 @@
 					</div>
 
 					<div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
-						<img th:src="@{images/pleased-mature-man-crossing-hands.jpg}" alt="Master Aditya Sharma"
-							class="w-24 h-24 rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
-						<p class="text-xl font-semibold text-gray-900 mb-2">Master Aditya Sharma</p>
+						<img th:src="@{/images/pleased-mature-man-crossing-hands.jpg}" alt="Master Aditya Sharma"
+							class="w-24 h-24 min-w-[96px] min-h-[96px] rounded-full object-cover mb-4 ring-4 ring-sky-300 shadow-md">
+						<p class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Master Aditya Sharma</p>
 						<p class="text-sm text-gray-600 mb-4">Beating Ehlers-Danlos Syndrome (EDS)</p>
 						<blockquote class="text-lg text-gray-700 italic">
 							"My son was diagnosed with EDS, a rare genetic disorder, and we were told to manage symptoms
@@ -194,7 +194,7 @@
 
 				<div class="text-center mt-16">
 					<p
-						class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
+						class="inline-flex items-center justify-center px-6 py-2 md:px-10 md:py-4 text-sm md:text-base font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 transition-colors duration-200">
 						Read More Patient Stories
 						<svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 							fill="currentColor" aria-hidden="true">
@@ -229,7 +229,7 @@
 					<li><a href="#Provided" class="hover:underline">Why Choose Us</a></li>
 					<li><a href="#Reviews" class="hover:underline">Patient Reviews</a></li>
 					<li><a th:href="@{/career/doctor}" class="hover:underline">Career</a></li>
-					<li><a th:href="@{/login/user}" class="hover:underline">Login / Sign Up</a></li>
+					<li><a th:href="@{/login/patient}" class="hover:underline">Login / Sign Up</a></li>
 				</ul>
 			</div>
 
