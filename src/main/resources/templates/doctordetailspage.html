@@ -34,7 +34,8 @@
                         <thead class="bg-blue-100">
                             <tr>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Date</th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Status
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">
+                                    Appointment Status
                                 </th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Symptoms
                                 </th>
@@ -165,7 +166,7 @@
                                         <div th:text="${content}"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    th:unless="${isadmin==true}">
+                                        th:unless="${isadmin==true}">
                                         <a th:href="@{/doctor/messages/new}">reply</a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
@@ -198,43 +199,37 @@
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Patient ID
                                 </th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Name</th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Blood Group</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Blood Group
+                                </th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Gender</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Action</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" th:each="patient : ${dataList}">
                             <tr class="hover:bg-red-50 transition duration-200">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.patient_Id}">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.patient_Id}">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.user_id.name}">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.user_id.name}">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${patient.blood_group}">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.blood_group}">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                     th:text="${patient.gender}"></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                    >
-                                <a th:href="@{doctor/send/msg/{id}(id=${patient.patient_Id})}">Send Message</a></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                    <a th:href="@{/doctor/send/msg/{id}(id=${patient.patient_Id})}">Send Message</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Fallback -->
-            <div th:case="*">
-                <div class="text-center py-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-gray-400" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p class="text-gray-600 mt-4 text-lg">No data available to show.</p>
-                </div>
-            </div>
+            
             <!-- all sended message -->
-            <div th:case="'showAllsendmessages'">
+            <div th:case="'doctorsendedMessages'">
                 <!-- Empty State -->
                 <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
                     <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-yellow-400" fill="none"
@@ -258,7 +253,7 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Subject And Message
                                     </th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase" th:unless="${isadmin==true}">
                                         Action
                                     </th>
                                 </tr>
@@ -266,16 +261,17 @@
                             <tbody class="bg-white divide-y divide-gray-200" th:each="msg : ${dataList}">
                                 <tr class="hover:bg-yellow-50 transition duration-200">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${msg.sender.name}"></td>
+                                        th:text="${msg.receiver.name}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/doctor/messages/edit}" th:unless="${isadmin==true}"
-                                            class="hover:underline hover:underline-offset-4">Edit Msg</a>
+                                        <a th:href="@{/doctor/messages/delete}" th:unless="${isadmin==true}"
+                                            class="hover:underline hover:underline-offset-4">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -283,7 +279,7 @@
                     </div>
                 </div>
             </div>
-            <div th:case="'showallrecievemessages'">
+            <div th:case="'doctorrecievedMessages'">
                 <!-- Empty State -->
                 <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
                     <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-yellow-400" fill="none"
@@ -318,17 +314,29 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/patient/messages/new}" th:unless="${isadmin==true}"
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:unless="${isadmin==true}">
+                                        <a th:href="@{/patient/messages/new}" 
                                             class="hover:underline hover:underline-offset-4">reply</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <!-- Fallback -->
+            <div th:case="*">
+                <div class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No data available to show.</p>
                 </div>
             </div>
         </div>

@@ -21,8 +21,7 @@ public class PatientDTO {
 		this.user = user;
 	}
 
-	public PatientDTO(Patient patient, User user, Message msg, Appointment appoint,
-			priscription pris) {
+	public PatientDTO(Patient patient, User user, Message msg, Appointment appoint, priscription pris) {
 		this.patient = patient;
 		this.user = user;
 		this.msg = msg;
@@ -37,7 +36,9 @@ public class PatientDTO {
 	public priscription getPris() {
 		return pris;
 	}
-
+	
+	
+	
 	public void setPris(priscription pris) {
 		this.pris = pris;
 	}

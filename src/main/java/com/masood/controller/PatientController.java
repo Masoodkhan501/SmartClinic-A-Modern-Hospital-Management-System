@@ -1,4 +1,4 @@
-package com.masood.controller;
+	package com.masood.controller;
 
 import java.util.Date;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -58,7 +59,7 @@ public class PatientController
 		return "createnewUser";
 	}
 
-	@GetMapping("/create/patient")
+	@PostMapping("/create/patient")
 	public String savePatient(@RequestParam("re_password") String repassword,
 			@ModelAttribute("PatientDTO") PatientDTO pdto,HttpSession session,
 			Model m) {
@@ -70,7 +71,7 @@ public class PatientController
 			Patient p = pdto.getPatient();
 			Patient savePatient = ps.savePatient(p, u);
 			u = pdto.getUser();
-			Optional<User> userById = us.findUserById(savePatient.getUser_id());
+			Optional<User> userById = us.findUserById(savePatient.getUser_id().getId());
 			User u1 = userById.get();
 			session.setAttribute("user",u1 );
 			session.setAttribute("patient",savePatient);
@@ -86,7 +87,7 @@ public class PatientController
 	@GetMapping("/check/patient")
 	public String loginPatient(@ModelAttribute("User") User u ,
 			Model m,HttpSession session,
-			@SessionAttribute("dest") String destination)
+			@SessionAttribute(name = "dest",required=false) String destination)
 	{
 		boolean isUser=true;
 		boolean ispassword=true;
@@ -161,10 +162,11 @@ public class PatientController
 		List<Appointment> unpaidAppointmentsByPatient = as.getUnpaidAppointmentsByPatient(p1.getPatient_Id());
 		List<Message> bySenderId = ms.getBySenderId(p1.getUser_id().getId());
 		List<Message> byRecieverId = ms.getByRecieverId(p1.getUser_id().getId());
-		PatientDetailsPage pdp = new PatientDetailsPage(sizeofAppt, upcomingappt, noofUnread, unpaidAppointmentsByPatient, byRecieverId, bySenderId);
+		List<priscription> byPatientId = pres.getByPatientId(p1.getPatient_Id());
+		PatientDetailsPage pdp = new PatientDetailsPage(sizeofAppt, upcomingappt, noofUnread, unpaidAppointmentsByPatient, byRecieverId, bySenderId,byPatientId);
 		session.setAttribute("patientdetailpage", pdp);
-		Appointment latestAppointment = as.getLatestAppointmentWhoseappointmentisComplete();
-		priscription getlatestpriscription = pres.getlatestpriscription();
+		Appointment latestAppointment = as.getLatestAppointmentByPatient(p1.getPatient_Id());
+		priscription getlatestpriscription = pres.getlatestpriscription(p1.getPatient_Id());
 		PatientDTO pdto = new PatientDTO(p1, u1);
 		pdto.setAppoint(latestAppointment);
 		pdto.setPris(getlatestpriscription);
@@ -195,7 +197,8 @@ public class PatientController
 		"/patient/pending/bills",
 		"/patient/unread/messages",
 		"/patient/allsend/messages",
-		"/patient/allrecieve/messages"})
+		"/patient/allrecieve/messages",
+		"/patient/prescriptions"})
 	public String handlingPatientDetailsPage(HttpServletRequest req,Model m,
 			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp,
 			@RequestParam(required=false) boolean isadmin)
@@ -226,6 +229,13 @@ public class PatientController
 			}
 			m.addAttribute("isadmin",isadmin);
 		}
+		else if(url.contains("/patient/prescriptions"))
+		{
+			reason="patientprescription";
+			List<priscription> allpriscription = pdp.getAllpriscription();
+			m.addAttribute("dataList", allpriscription);
+			m.addAttribute("isadmin",isadmin);
+		}
 		else if(url.contains("/pending/bills"))
 		{
 			reason = "unpaidAppointments";
@@ -248,20 +258,15 @@ public class PatientController
 		return "patientDetailspage";
 	}
 	
-	@GetMapping("/pay/bills/{apptid}")
-	public String paymentdone(@PathVariable("apptid") Appointment app_id,
+	@GetMapping("/pay/bill/{apptid}")
+	public String paymentdone(@PathVariable("apptid") Long app_id,
 			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
 	{
-		pdp.getUnpaidappointments()
-		.removeIf(a->
-		{
-			if(a.getApp_id().equals(app_id.getApp_id()))
-			{
-				a.setPaymentStatus(PaymentStatus.PAID);
-				return true;
-			}
-			return false;
-		});
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(app_id);
+		Appointment appointment = appointmentbyId.get();
+		appointment.setPaymentStatus(PaymentStatus.PAID);
+		as.saveAppointment(appointment);
+		pdp.getUnpaidappointments().remove(appointment);
 		return "redirect:/patient/pending/bills";
 	}
 	

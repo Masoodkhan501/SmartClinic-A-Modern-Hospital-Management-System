@@ -2,6 +2,7 @@ package com.masood.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,15 +22,14 @@ import com.masood.model.AppointmentHistory;
 import com.masood.model.Appointmentstatus;
 import com.masood.model.Doctor;
 import com.masood.model.Message;
-import com.masood.model.MessageHistory;
 import com.masood.model.OperationNeeded;
 import com.masood.model.Patient;
+import com.masood.model.PaymentStatus;
 import com.masood.model.User;
 import com.masood.model.priscription;
 import com.masood.service.AppointmentHistoryImpl;
 import com.masood.service.AppointmentService;
 import com.masood.service.DoctorSerivce;
-import com.masood.service.MessageHistroyImpl;
 import com.masood.service.MessageService;
 import com.masood.service.PatientServiceimpl;
 import com.masood.service.PriscriptionServiceImpl;
@@ -58,8 +58,6 @@ public class AdminController
 	private PatientServiceimpl pats;
 	@Autowired
 	private AppointmentHistoryImpl aphs;
-	@Autowired
-	private MessageHistroyImpl mhs;
 
 
 
@@ -100,8 +98,6 @@ public class AdminController
 		adto.setAllsendMsg(bySenderId);
 		List<Message> byRecieverId = ms.getByRecieverId(u.getId());
 		adto.setAllrecieveMsg(byRecieverId);
-		List<MessageHistory> allHistory = mhs.getAllHistory();
-		adto.setAllMsgHis(allHistory);
 		List<AppointmentHistory> allhis = aphs.getallAppointmentHistoryDesc();
 		adto.setAllappthis(allhis);
 		session.setAttribute("AdminDTO", adto);
@@ -133,8 +129,8 @@ public class AdminController
 		"/admin/manage/patients",
 		"/admin/unread/messages",
 		"/admin/manage/appointments",
-		"",
-		""})
+		"/admin/allsend/messages",
+		"/admin/allrecieve/messages"})
 	public String admindetailPage(@SessionAttribute("AdminDTO") AdminDTO adto,
 			HttpServletRequest req,Model m)
 	{
@@ -154,6 +150,9 @@ public class AdminController
 		{
 			reason = "unreadmessages";
 			m.addAttribute("dataList", adto.getAllunreadMsg());
+			List<Message> allunreadMsg = adto.getAllunreadMsg();
+			allunreadMsg.stream().forEach(msg->msg.setStatus("read"));
+			ms.saveAll(allunreadMsg);
 		}
 		else if(url.contains("/manage/patients"))
 		{
@@ -192,10 +191,10 @@ public class AdminController
 			addto.setWithoutDoc(apptwithoutdoc);
 			m.addAttribute("dataList",apptwithoutdoc);
 		}
-		else if(uri.contains("/appointment/fees"))
+		else if(uri.contains("/Appointment/fees"))
 		{
 			List<Appointment> appwithoutoperation = allappoint.stream()
-			.filter(a->a.getOperationRequired().equals(OperationNeeded.NO))
+			.filter(a->Objects.equals(a.getOperationRequired(), OperationNeeded.NO))
 			.collect(Collectors.toList());
 			Map<Long, priscription> prescriptionMap = appwithoutoperation.stream()
 			        .map(a -> pres.getByAppointmentId(a.getApp_id()))
@@ -211,7 +210,7 @@ public class AdminController
 		else
 		{
 			List<Appointment> apptoperationneed = allappoint.stream()
-			.filter(a->a.getOperationRequired().equals(OperationNeeded.YES))
+			.filter(a->Objects.equals(a.getOperationRequired(), OperationNeeded.YES))
 			.collect(Collectors.toList());
 			Map<Long, priscription> prescriptionMap = apptoperationneed.stream()
 			        .map(a -> pres.getByAppointmentId(a.getApp_id()))
@@ -241,9 +240,13 @@ public class AdminController
 	}
 	
 	@PostMapping("/admin/set/doctor")
-	public String setDoc(@ModelAttribute("appt") Appointment apppointment)
+	public String setDoc(@ModelAttribute("appt") Appointment appointment)
 	{
-		as.saveAppointment(apppointment);
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(appointment.getApp_id());
+		Appointment exsistingAppointment = appointmentbyId.get();
+		exsistingAppointment.setD_id(appointment.getD_id());
+		exsistingAppointment.setDateofAppointment(appointment.getDateofAppointment());
+		as.saveAppointment(exsistingAppointment);
 		return "redirect:/admin/appointments/set";
 	}
 
@@ -262,7 +265,11 @@ public class AdminController
 	@PostMapping("/admin/set/treatmentFees")
 	public String setTreatmentFee(@ModelAttribute("appt") Appointment appointment)
 	{
-		as.saveAppointment(appointment);
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(appointment.getApp_id());
+		Appointment exsistingAppt = appointmentbyId.get();
+		exsistingAppt.setTreatmentFee(appointment.getTreatmentFee());
+		exsistingAppt.setPaymentStatus(PaymentStatus.UNPAID);
+		as.saveAppointment(exsistingAppt);
 		return "redirect:/admin/Appointment/fees";
 	}
 	
@@ -282,7 +289,13 @@ public class AdminController
 	@PostMapping("/admin/set/oppointmentFee")
 	public String SetOperationFees(@ModelAttribute("appt") Appointment appointment)
 	{
-		as.saveAppointment(appointment);
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(appointment.getApp_id());
+		Appointment exsistingAppt = appointmentbyId.get();
+		exsistingAppt.setTreatmentFee(appointment.getTreatmentFee());
+		exsistingAppt.setOperationFee(appointment.getOperationFee());
+		exsistingAppt.setDateOfOperation(appointment.getDateOfOperation());
+		exsistingAppt.setPaymentStatus(PaymentStatus.UNPAID);
+		as.saveAppointment(exsistingAppt);
 		return "redirect:/admin/Operation/fees";
 	}
 }

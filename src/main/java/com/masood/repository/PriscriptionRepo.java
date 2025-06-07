@@ -11,9 +11,9 @@ import org.springframework.data.repository.query.Param;
 import com.masood.model.priscription;
 public interface PriscriptionRepo extends JpaRepository<priscription, Long> 
 {
-	@Query("select p from priscription p where p.appointid.d_id=:id")
+	@Query("select p from priscription p where p.appointid.d_id.doc_id=:id")
 	public List<priscription> findByDoctorId(@Param("id") String id);
-	@Query("select p from priscription p where p.appointid.p_id=:id")
+	@Query("select p from priscription p where p.appointid.p_id.patient_Id=:id")
 	public List<priscription> findByPatientId(String id);
 	@Query("select p from priscription p where LOWER(p.appointid.d_id.user_id.name) LIKE CONCAT('%',:name,'%')")
 	public List<priscription> findByDoctorName(@Param("name") String name);
@@ -21,6 +21,7 @@ public interface PriscriptionRepo extends JpaRepository<priscription, Long>
 	public List<priscription> findByPatientName(@Param("name") String name);
 	@Query("select p from priscription p where p.appointid.app_id=:id")
 	public Optional<priscription> findByAppointid(@Param("id") Long id);
-	@Query("SELECT p FROM priscription p ORDER BY p.id DESC")
-	List<priscription> findLatestPriscription(Pageable pageable);
+	@Query("SELECT p FROM priscription p WHERE p.appointid.p_id.patient_Id = :patientId ORDER BY p.id DESC")
+	public List<priscription> findLatestPrescriptionByPatientId(@Param("patientId") String patientId, Pageable pageable);
+
 }

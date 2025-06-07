@@ -15,7 +15,7 @@ public interface patientRepo extends JpaRepository<Patient, String>
 	@Query("select p from patient p where LOWER(p.user_id.name) LIKE LOWER(CONCAT('%',:name,'%'))")
 	public Patient findByNameLike(@Param("name") String name);
 	
-	@Query("SELECT MAX(p.patient_Id) FROM patient p")
+	@Query("SELECT MAX(p.patient_Id) FROM patient p WHERE p.patient_Id LIKE 'PAT%'")
 	public String findLastEntry();
 	
 }

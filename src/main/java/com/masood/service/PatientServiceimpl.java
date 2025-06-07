@@ -29,22 +29,30 @@ public class PatientServiceimpl implements PatientServiceInterface
 	@Autowired
 	private AppointmentService as;
 
+	public String generateNewPatientId() {
+	    String lastId = pr.findLastEntry(); // e.g., "PAT015" or null
+	    int number = 0;
+
+	    if (lastId != null && lastId.length() >= 6 && lastId.startsWith("PAT")) {
+	        try {
+	            String numPart = lastId.substring(3); // Extract "015"
+	            number = Integer.parseInt(numPart);   // Convert to 15
+	        } catch (NumberFormatException e) {
+	            number = 0; // fallback if somehow broken data
+	        }
+	    }
+
+	    int newNumber = number + 1;
+	    return String.format("PAT%03d", newNumber); // e.g., "PAT016"
+	}
+
 	
 	public Patient savePatient(Patient p,User u) 
 	{
-		String lastEntry = pr.findLastEntry();
-		String id = "";
-		if (lastEntry != null) {
-			String last3Digit = lastEntry.substring(2);
-			Integer lastNumber = Integer.parseInt(last3Digit);
-			lastNumber++;
-			id = String.format("PAT%03d", lastNumber);
-		} else {
-			id = "PAT001";
-		}
+	    String newId = generateNewPatientId();
+	    p.setPatient_Id(newId);
 		u.setCreatedAt();
 		User save2 = ur.saveUser(u);
-		p.setPatient_Id(id);
 		p.setUser_id(save2);
 		Patient save = pr.save(p);
 		return save;

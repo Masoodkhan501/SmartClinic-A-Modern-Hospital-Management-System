@@ -25,8 +25,8 @@ public class UserImpl implements UserSeviceInterface {
 		return save;
 	}
 
-	public Optional<User> findUserById(User id) {
-		return ur.findById(id.getId());
+	public Optional<User> findUserById(Long id) {
+		return ur.findById(id);
 	}
 
 	public List<User> getAllUser() {

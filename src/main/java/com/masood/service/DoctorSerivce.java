@@ -24,23 +24,31 @@ public class DoctorSerivce implements DoctorServiceInterface {
 	private DoctorRepoInterface dr;
 	@Autowired
 	private UserImpl ur;
-
+	
+	public String generateNewDocid()
+	{
+		String LastId = dr.findLastEntry();
+		int number  = 0;
+		if(LastId != null && LastId.length()>=6 && LastId.startsWith("DOC"))
+		{
+			try {
+				String numPart = LastId.substring(3);
+				number = Integer.parseInt(numPart);
+			}catch (NumberFormatException e) {
+				number = 0;
+			}
+		}
+		int newNumber = number + 1;
+		return String.format("DOC%03d", newNumber);
+	}
+	
 	public Doctor saveDoctor(Doctor d, User u) 
 	{
-		String lastEntry = dr.findLastEntry();
-		String id = "";
-		if (lastEntry != null) {
-			String last3Digit = lastEntry.substring(2);
-			Integer lastNumber = Integer.parseInt(last3Digit);
-			lastNumber++;
-			id = String.format("DOC%03d", lastNumber);
-		} else {
-			id = "DOC001";
-		}
+		String newID = generateNewDocid();
+		d.setDoc_id(newID);
 		u.setCreatedAt();
 		u.setRole(Role.DOCTOR);
 		User saveUser = ur.saveUser(u);
-		d.setDoc_id(id);
 		d.setStatus(Status.ACTIVE);
 		d.setUser_id(saveUser);
 		Doctor save = dr.save(d);

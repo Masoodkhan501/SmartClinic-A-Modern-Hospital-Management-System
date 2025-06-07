@@ -1,6 +1,7 @@
 package com.masood.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -41,20 +42,20 @@ public class Appointment {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_operation")
-	@DateTimeFormat(pattern = "yyyy-MM-dd") 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfOperation;
-	
+
 	@Enumerated(EnumType.STRING)
-    @Column(name = "operation_required")
-    private OperationNeeded operationRequired;
-	
+	@Column(name = "operation_required")
+	private OperationNeeded operationRequired;
+
 	@Enumerated(EnumType.STRING)
-    @Column(name = "payment_status")
-    private PaymentStatus paymentStatus;
+	@Column(name = "payment_status")
+	private PaymentStatus paymentStatus;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_appointment")
-	@DateTimeFormat(pattern = "yyyy-MM-dd") 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateofAppointment;
 
 	@Enumerated(EnumType.STRING)
@@ -67,14 +68,14 @@ public class Appointment {
 	public Appointment() {
 	}
 
-	public Appointment(Doctor d_id, Patient p_id, Date date_of_appointment,
-	        Appointmentstatus status, String notes, Date dateOfOperation) {
-	    this.d_id = d_id;
-	    this.p_id = p_id;
-	    this.dateofAppointment = date_of_appointment;
-	    this.status = status;
-	    this.notes = notes;
-	    this.dateOfOperation = dateOfOperation;
+	public Appointment(Doctor d_id, Patient p_id, Date date_of_appointment, Appointmentstatus status, String notes,
+			Date dateOfOperation) {
+		this.d_id = d_id;
+		this.p_id = p_id;
+		this.dateofAppointment = date_of_appointment;
+		this.status = status;
+		this.notes = notes;
+		this.dateOfOperation = dateOfOperation;
 	}
 
 	public Long getApp_id() {
@@ -88,10 +89,11 @@ public class Appointment {
 	public Doctor getDoctor() {
 		return d_id;
 	}
+
 	public Date getDateOfOperation() {
-	    return dateOfOperation;
+		return dateOfOperation;
 	}
-	
+
 	public Double getTreatmentFee() {
 		return treatmentFee;
 	}
@@ -101,19 +103,19 @@ public class Appointment {
 	}
 
 	public Double getOperationFee() {
-	    return operationFee;
+		return operationFee;
 	}
 
 	public void setOperationFee(Double operationFee) {
-	    this.operationFee = operationFee;
+		this.operationFee = operationFee;
 	}
-	
+
 	public void setDateOfOperation(Date dateOfOperation) {
-	    this.dateOfOperation = dateOfOperation;
+		this.dateOfOperation = dateOfOperation;
 	}
 
 	public void setD_id(Doctor d_id) {
-		this.d_id= d_id;
+		this.d_id = d_id;
 	}
 
 	public OperationNeeded getOperationRequired() {
@@ -147,7 +149,7 @@ public class Appointment {
 	public Patient getP_id() {
 		return p_id;
 	}
-	
+
 	public Patient getPatient() {
 		return p_id;
 	}
@@ -182,6 +184,27 @@ public class Appointment {
 				+ (paymentStatus != null ? "paymentStatus=" + paymentStatus + ", " : "")
 				+ (dateofAppointment != null ? "dateofAppointment=" + dateofAppointment + ", " : "")
 				+ (status != null ? "status=" + status + ", " : "") + (notes != null ? "notes=" + notes : "") + "]";
+	}
+
+	public int hashCode() {
+		return Objects.hash(app_id, d_id, dateOfOperation, dateofAppointment, notes, operationFee, operationRequired,
+				p_id, paymentStatus, status, treatmentFee);
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Appointment other = (Appointment) obj;
+		return Objects.equals(app_id, other.app_id) && Objects.equals(d_id, other.d_id)
+				&& Objects.equals(dateOfOperation, other.dateOfOperation)
+				&& Objects.equals(dateofAppointment, other.dateofAppointment) && Objects.equals(notes, other.notes)
+				&& Objects.equals(operationFee, other.operationFee) && operationRequired == other.operationRequired
+				&& Objects.equals(p_id, other.p_id) && paymentStatus == other.paymentStatus && status == other.status
+				&& Objects.equals(treatmentFee, other.treatmentFee);
 	}
 
 }

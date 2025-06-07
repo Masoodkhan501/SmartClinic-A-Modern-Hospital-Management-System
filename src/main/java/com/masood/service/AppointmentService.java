@@ -113,4 +113,9 @@ public class AppointmentService implements AppointmentInterface {
 	public List<Appointment> getByDoctor(String id) {
 		return ar.findByDoctorOrderByIdDesc(id);
 	}
+
+	public Appointment getLatestAppointmentByPatient(String id) {
+		return ar.findLatestAppointmentByPatientId(id, PageRequest.of(0, 1))
+				.stream().findFirst().orElse(null);
+	}
 }

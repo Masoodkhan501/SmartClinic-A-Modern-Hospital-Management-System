@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.masood.DTO.AppointmentDTO;
+import com.masood.DTO.PatientDetailsPage;
 import com.masood.model.Appointment;
 import com.masood.model.AppointmentHistory;
 import com.masood.model.Appointmentstatus;
@@ -21,36 +21,42 @@ import com.masood.model.PaymentStatus;
 import com.masood.model.User;
 import com.masood.service.AppointmentHistoryImpl;
 import com.masood.service.AppointmentService;
+import com.masood.service.PatientServiceimpl;
 
 @Controller("AppointmentController")
 public class AppointmentController 
 {
 
+
 	@Autowired
 	private AppointmentService as;
 	@Autowired
 	private AppointmentHistoryImpl ahi;
+	@Autowired
+	private PatientServiceimpl ps;
+
 
 	@GetMapping("/book/new/appointment")
 	public String newAppointment(@SessionAttribute("user") User u,
 			@SessionAttribute("patient") Patient p,Model m)
 	{
 		Appointment a = new Appointment();
-		AppointmentDTO adto = new AppointmentDTO(p, u, a);
-		m.addAttribute("appointmentdto",adto);
+		Optional<Patient> patientById = ps.getPatientById(p.getPatient_Id());
+		Patient patient = patientById.get();
+		a.setP_id(patient);
+		m.addAttribute("appointment",a);
+		m.addAttribute("isnew",true);
 		return "Appointment";
 	}
 	
 	@PostMapping("/accept/appointment")
-	public String saveAppointment(@ModelAttribute("appointmentdto") AppointmentDTO adto,
-			@RequestParam String by,
-			@SessionAttribute("patient") Patient p)
+	public String saveAppointment(@ModelAttribute("appointment") Appointment appt,
+			@RequestParam String by)
 	{
-		Appointment a = adto.getAppt();
-		a.setP_id(p);
-		a.setStatus(Appointmentstatus.PENDING);
-		a.setPaymentStatus(PaymentStatus.UNPAID);
-		Appointment saveAppointment = as.saveAppointment(a);
+		
+		appt.setStatus(Appointmentstatus.PENDING);
+		appt.setPaymentStatus(PaymentStatus.UNPAID);
+		Appointment saveAppointment = as.saveAppointment(appt);
 		AppointmentHistory ah = new AppointmentHistory();
 		ah.setAppoint_id(saveAppointment);
 		ah.setOldNotes(saveAppointment.getNotes());
@@ -62,45 +68,54 @@ public class AppointmentController
 	
 	 @GetMapping("/appointment/update/{app_id}")
 	    public String editAppointment(@PathVariable("app_id") Long appointmentId,
-	                                  @SessionAttribute("user") User u,
-	                                  @SessionAttribute("patient") Patient p,
 	                                  Model m) {
 	        Optional<Appointment> optionalAppt = as.getAppointmentbyId(appointmentId);
 
 	        if (optionalAppt.isPresent()) {
 	            Appointment existingAppointment = optionalAppt.get();
-	            // Create a DTO to pre-fill the form
-	            AppointmentDTO adto = new AppointmentDTO(p, u, existingAppointment);
-	            m.addAttribute("appointmentdto", adto);
-	            return "Appointment"; // Use the same form template for editing
+	            m.addAttribute("appointment", existingAppointment);
+	            m.addAttribute("isnew",false);
+	            return "Appointment"; 
 	        } else {
 	            return "redirect:/patient/page";
 	        }
 	    }
 	
 	@PostMapping("/update/appointment")
-	public String updateAppointment(@ModelAttribute("appointmentdto") AppointmentDTO dto, 
+	public String updateAppointment(@ModelAttribute Appointment appointment, 
 	                                @SessionAttribute("user") User currentUser) {
-
-	    Optional<Appointment> Appt = as.getAppointmentbyId(dto.getAppt().getApp_id());
+		Optional<Appointment> Appt = as.getAppointmentbyId(appointment.getApp_id());
 	    Appointment existingAppt = Appt.get();
-	    // Only create history if notes changed
-	    if (!existingAppt.getNotes().equals(dto.getAppt().getNotes())) {
+	    if (!existingAppt.getNotes().equals(appointment.getNotes())) {
 	        AppointmentHistory ah = new AppointmentHistory();
 	        ah.setAppoint_id(existingAppt);
 	        ah.setOldNotes(existingAppt.getNotes());
 	        ah.setChangedBy(currentUser.getRole().toString());
-	        ah.setDate_changed(); // will set new Date()
+	        ah.setDate_changed(); 
 
 	        ahi.save(ah);
 	    }
 
-	    // Now update the actual appointment
-	    existingAppt.setNotes(dto.getAppt().getNotes());
+	    existingAppt.setNotes(appointment.getNotes());
 
 	    as.saveAppointment(existingAppt);
 
 	    return "redirect:/patient/page";
+	}
+	
+	@GetMapping("/appointment/delete/{app_id}")
+	public String AppointmentDelete(@PathVariable Long app_id,
+			@SessionAttribute("patientdetailpage") PatientDetailsPage pdp)
+	{
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(app_id);
+		Appointment appointment = new Appointment();
+		if(appointmentbyId.isPresent())
+		{
+			as.deleteAppointmentById(app_id);
+			appointment = appointmentbyId.get();
+		}
+		pdp.getAppointments().remove(appointment);
+		return "redirect:/patient/total/appointments";
 	}
 
 }

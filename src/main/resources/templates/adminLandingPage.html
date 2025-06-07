@@ -178,7 +178,7 @@
                 <div th:if="${not #lists.isEmpty(latestPrescriptions)}">
                     <div th:each="prescription : ${latestPrescriptions}"
                         class="border-l-4 border-sky-500 pl-4 py-3 bg-sky-50 rounded-md mb-4">
-                        <p class="text-base font-semibold text-sky-700 mb-1" th:text="${prescription.date}"></p>
+                        <p class="text-base font-semibold text-sky-700 mb-1" th:text="${prescription.appointid.dateofAppointment}"></p>
                         <p class="text-sm text-gray-700 mb-2">
                             <span class="font-medium">Patient:</span> <span
                                 th:text="${prescription.appointid.p_id.user_id.name}"></span> |

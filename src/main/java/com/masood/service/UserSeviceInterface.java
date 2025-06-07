@@ -9,7 +9,7 @@ import com.masood.model.User;
 public interface UserSeviceInterface 
 {
 	public User saveUser(User user);
-	public Optional<User> findUserById(User id);
+	public Optional<User> findUserById(Long id);
 	public List<User> getAllUser();
 	public void deleteUserById(Long id);
 	public Optional<User> getByRole(Role role);

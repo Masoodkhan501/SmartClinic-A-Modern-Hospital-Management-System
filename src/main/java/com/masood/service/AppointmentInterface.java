@@ -30,4 +30,5 @@ public interface AppointmentInterface
 	public List<Appointment> getUnpaidAppointmentsByPatient(String id);
     public List<Appointment> getAppointmentsByPaymentStatus(PaymentStatus paymentStatus);
     public List<Appointment> getallAppointmentInrev();
+    public Appointment getLatestAppointmentByPatient(String id);
 }

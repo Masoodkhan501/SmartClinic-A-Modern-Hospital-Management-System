@@ -26,8 +26,9 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long>
 	@Query("select a from appointment a where a.p_id.patient_Id=:id ORDER BY a.app_id DESC")
 	public List<Appointment> findByPatientOrderByIdDesc(@Param("id") String id);
 	
-	@Query("SELECT a FROM appointment a ORDER BY a.app_id DESC")
-	public List<Appointment> findLatestAppointment(Pageable pageable);
+	@Query("SELECT a FROM appointment a  WHERE a.p_id.patient_Id = :patientId ORDER BY a.app_id DESC")
+	public List<Appointment> findLatestAppointmentByPatientId(@Param("patientId") String patientId, Pageable pageable);
+
 	
 	@Query("SELECT a FROM appointment a WHERE a.status = :status ORDER BY a.app_id DESC")
 	public List<Appointment> findLatestCompletedAppointments(@Param("status") Appointmentstatus status, PageRequest pageable);

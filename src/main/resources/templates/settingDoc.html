@@ -26,11 +26,11 @@
                     <form th:action="@{/admin/set/doctor}" method="post" th:object="${appt}">
                         <div class="w-full flex space-x-5 md:space-x-12">
                             <!-- appointment id -->
-                            <input type="text" th:field="*{app_id}"
+                            <input type="text" th:field="*{app_id}" readonly
                                 class="border-2 border-gray-400 rounded-lg w-1/4 md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
 
                             <!-- patient name -->
-                            <input type="text" th:value="${appt.p_id.user_id.name}" readonly
+                            <input type="text" th:field="*{p_id.user_id.name}" readonly
                                 class="border-2 border-gray-400 rounded-lg w-2/4 md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg" />
                         </div>
 

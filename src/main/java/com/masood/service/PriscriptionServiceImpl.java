@@ -52,9 +52,9 @@ public class PriscriptionServiceImpl implements PrescriptionInterface
 		return pr.findByAppointid(id);
 	}
 
-	public priscription getlatestpriscription()
+	public priscription getlatestpriscription(String id)
 	{
-		return pr.findLatestPriscription(PageRequest.of(0, 1))
+		return pr.findLatestPrescriptionByPatientId(id,PageRequest.of(0, 1))
                 .stream().findFirst().orElse(null);
 	}
 

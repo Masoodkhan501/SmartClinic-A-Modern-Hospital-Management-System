@@ -3,6 +3,7 @@ package com.masood.controller;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,7 +178,33 @@ public class DoctorController
 		m.addAttribute("todayAppointments", appointmentbydate);
 		session.setAttribute("DoctorDTO", ddto);
 		List<Message> bySenderId = ms.getBySenderId(d1.getUser_id().getId());
+		if(!bySenderId.isEmpty())
+		{
+			ListIterator<Message> i = bySenderId.listIterator();
+			while(i.hasNext())
+			{
+				Message m1 = i.next();
+				System.out.println(m1.getReceiver());
+			}
+		}
+		else
+		{
+			System.out.println("There are no messages from this doctor");
+		}
 		List<Message> byRecieverId = ms.getByRecieverId(d1.getUser_id().getId());
+		if(!byRecieverId.isEmpty())
+		{
+			ListIterator<Message> i = byRecieverId.listIterator();
+			while(i.hasNext())
+			{
+				Message m1 = i.next();
+				System.out.println(m1.getSender());
+			}
+		}
+		else
+		{
+			System.out.println("There are no messages from this doctor");
+		}
 		DoctorDetailedPage ddp = new DoctorDetailedPage(appointmentbydate, upcommingappt, messagesByStatus, patientByDoctorName,bySenderId,byRecieverId);
 		session.setAttribute("docdetails", ddp);
 		boolean isnew = true;
@@ -236,12 +263,40 @@ public class DoctorController
 		{
 			reason = "doctorsendedMessages";
 			m.addAttribute("dataList", ddp.getAllsendMessage());
+			List<Message> allsendMessage = ddp.getAllsendMessage();
+			if(!allsendMessage.isEmpty())
+			{
+				ListIterator<Message> i = allsendMessage.listIterator();
+				while(i.hasNext())
+				{
+					Message m1=i.next();
+					System.out.println(m1.getReceiver().getName());
+				}
+			}
+			else
+			{
+				System.out.println(" NO Data is present sorry");
+			}
 			m.addAttribute("isadmin",isadmin);
 		}
 		else
 		{
 			reason = "doctorrecievedMessages";
 			m.addAttribute("dataList", ddp.getAllrecieveMessages());
+			List<Message> allrecieveMessages = ddp.getAllrecieveMessages();
+			if(!allrecieveMessages.isEmpty())
+			{
+				ListIterator< Message> i = allrecieveMessages.listIterator();
+				while(i.hasNext())
+				{
+					Message m1=i.next();
+					System.out.println(m1.getSender().getName());
+				}
+			}
+			else
+			{
+				System.out.println(" NO Data is present sorry");
+			}
 			m.addAttribute("isadmin",isadmin);
 		}
 		m.addAttribute("reason", reason);

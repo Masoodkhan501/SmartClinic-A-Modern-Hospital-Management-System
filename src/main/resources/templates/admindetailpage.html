@@ -110,29 +110,33 @@
                                         Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" >
+                            <tbody class="bg-white divide-y divide-gray-200">
                                 <tr class="hover:bg-indigo-50 transition duration-200" th:each="doc : ${dataList}">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                            <a th:text="${doc.doc_id}" th:href="@{/admin/manage/doctor/{id}(id=${doc.doc_id})}"></a></td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                            th:text="${doc.user_id.name}"></td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                            <span th:each="spec : ${doc.specializations}">
-                                                <span th:text="${spec.specialization}"></span>
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                            th:text="${doc.expreince}"></td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a th:href="@{/admin/doctor/delete/{id}(id=${doc.doc_id})}"
-                                                class="text-red-600 hover:text-red-900">Delete</a>
-                                        </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <a th:text="${doc.doc_id}"
+                                            th:href="@{/admin/manage/doctor/{id}(id=${doc.doc_id})}"></a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${doc.user_id.name}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <span th:each="spec : ${doc.specializations}">
+                                            <span th:text="${spec.specialization}"></span>
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:text="${doc.expreince}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a th:href="@{/admin/doctor/delete/{id}(id=${doc.doc_id})}"
+                                            class="text-red-600 hover:text-red-900">Delete</a>
+                                        <a th:href="@{/admin/sendmsg/doctor/{id}(id=${doc.doc_id})}"
+                                            class="text-green-600 hover:text-green-900">Send Msg</a>
+                                    </td>
                                     </a>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>  
+                </div>
             </div>
 
             <!-- Messages -->
@@ -165,14 +169,14 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr class="hover:bg-yellow-50 transition duration-200"  th:each="msg : ${dataList}">
+                                <tr class="hover:bg-yellow-50 transition duration-200" th:each="msg : ${dataList}">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sender.name}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <a th:href="@{/admin/messages/new}"
@@ -214,25 +218,28 @@
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-red-700 uppercase">Action</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200" >
+                        <tbody class="bg-white divide-y divide-gray-200">
                             <tr class="hover:bg-red-50 transition duration-200" th:each="patient : ${dataList}">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:href="@{/admin/manage/patient/{id}(id=${patient.patient_Id})}" th:text="${patient.patient_Id}"></a>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${patient.user_id.name}">
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${patient.date_of_birth}">
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${patient.gender}"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${patient.blood_group}"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a th:href="@{/admin/patient/delete/{id}(id=${patient.patient_Id})}"
-                                            class="text-red-600 hover:text-red-900">Delete</a>
-                                    </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                    <a th:href="@{/admin/manage/patient/{id}(id=${patient.patient_Id})}"
+                                        th:text="${patient.patient_Id}"></a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.user_id.name}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.date_of_birth}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.gender}"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                    th:text="${patient.blood_group}"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a th:href="@{/admin/patient/delete/{id}(id=${patient.patient_Id})}"
+                                        class="text-red-600 hover:text-red-900">Delete</a>
+                                    <a th:href="@{/admin/sendmsg/patient/{id}(id=${patient.patient_Id})}"
+                                        class="text-green-600 hover:text-green-900">Send Msg</a>
+                                </td>
                                 </a>
                             </tr>
                         </tbody>
@@ -240,17 +247,7 @@
                 </div>
             </div>
 
-            <!-- Fallback -->
-            <div th:case="*">
-                <div class="text-center py-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-gray-400" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p class="text-gray-600 mt-4 text-lg">No data available to show.</p>
-                </div>
-            </div>
+            
             <!-- all sended message -->
             <div th:case="'showAllsendmessages'">
                 <!-- Empty State -->
@@ -288,8 +285,8 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <a th:href="@{/admin/messages/edit}"
@@ -339,12 +336,12 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <a th:href="@{/admin/messages/new}"
-                                            class="hover:underline hover:underline-offset-4">reply</a>
+                                            class="hover:underline hover:underline-offset-4 pr-4">reply</a>
                                         <a th:href="@{/admin/messages/edit}"
                                             class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
                                             Msg</a>
@@ -355,23 +352,34 @@
                     </div>
                 </div>
             </div>
+            <!-- Fallback -->
+            <div th:case="*">
+                <div class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No data available to show.</p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="flex justify-center gap-x-16">
         <div class="flex justify-center mt-5">
-            <a href="/doctor/page"
+            <a th:href="@{/admin/page}"
                 class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 &larr; Back to Dashboard
             </a>
         </div>
         <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
-            <a th:href="@{/doctor/allsend/messages}"
+            <a th:href="@{/admin/allsend/messages}"
                 class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 Get All send Messages
             </a>
         </div>
         <div class="flex justify-center" th:if="${reason=='unreadmessages'}">
-            <a th:href="@{/doctor/allrecieve/messages}"
+            <a th:href="@{/admin/allrecieve/messages}"
                 class=" mb-4 mt-5 text-lg px-10 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 Get All recived Messages
             </a>

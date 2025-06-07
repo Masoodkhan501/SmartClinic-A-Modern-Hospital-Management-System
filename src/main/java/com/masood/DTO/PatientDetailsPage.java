@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.masood.model.Appointment;
 import com.masood.model.Message;
+import com.masood.model.priscription;
 
 public class PatientDetailsPage {
 	private List<Appointment> appointments;
@@ -12,19 +13,21 @@ public class PatientDetailsPage {
 	private List<Appointment> unpaidappointments;
 	private List<Message> allrecievedMsg;
 	private List<Message> allsendMsg;
+	private List<priscription> allpriscription;
 
 	public PatientDetailsPage() {
 	}
 
 	public PatientDetailsPage(List<Appointment> appointments, List<Appointment> upcomingappointments,
 			List<Message> unreadMessages, List<Appointment> unpaidappointments, List<Message> allrecievedMsg,
-			List<Message> allsendMsg) {
+			List<Message> allsendMsg, List<priscription> allpriscription) {
 		this.appointments = appointments;
 		this.upcomingappointments = upcomingappointments;
 		this.unreadMessages = unreadMessages;
 		this.unpaidappointments = unpaidappointments;
 		this.allrecievedMsg = allrecievedMsg;
 		this.allsendMsg = allsendMsg;
+		this.allpriscription = allpriscription;
 	}
 
 	public List<Appointment> getAppointments() {
@@ -35,7 +38,13 @@ public class PatientDetailsPage {
 		this.appointments = appointments;
 	}
 	
-	
+	public List<priscription> getAllpriscription() {
+		return allpriscription;
+	}
+
+	public void setAllpriscription(List<priscription> allpriscription) {
+		this.allpriscription = allpriscription;
+	}
 
 	public List<Message> getAllrecievedMsg() {
 		return allrecievedMsg;
@@ -83,7 +92,8 @@ public class PatientDetailsPage {
 				+ (unreadMessages != null ? "unreadMessages=" + unreadMessages + ", " : "")
 				+ (unpaidappointments != null ? "unpaidappointments=" + unpaidappointments + ", " : "")
 				+ (allrecievedMsg != null ? "allrecievedMsg=" + allrecievedMsg + ", " : "")
-				+ (allsendMsg != null ? "allsendMsg=" + allsendMsg : "") + "]";
+				+ (allsendMsg != null ? "allsendMsg=" + allsendMsg + ", " : "")
+				+ (allpriscription != null ? "allpriscription=" + allpriscription : "") + "]";
 	}
 
 }

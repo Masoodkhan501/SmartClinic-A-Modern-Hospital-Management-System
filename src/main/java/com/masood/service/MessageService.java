@@ -11,10 +11,10 @@ import com.masood.model.Message;
 import com.masood.repository.MessageRepo;
 
 import jakarta.transaction.Transactional;
+
 @Service("MessageSerivce")
 @Transactional
-public class MessageService implements MessageInterface
-{
+public class MessageService implements MessageInterface {
 	@Autowired
 	private MessageRepo mr;
 

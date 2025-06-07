@@ -59,9 +59,8 @@
                                         class="hover:underline hover:underline-offset-4">update</a>
 
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                    <a th:href="@{/appointment/delete{app_id}(app_id=*{appt.app_id})}"
-                                        th:if="${isadmin==true}" class="
+                                <td th:if="${isadmin}" class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                    <a th:href="@{/appointment/delete{app_id}(app_id=*{appt.app_id})}" class="
                                         hover:underline text-red-600 hover:underline-offset-4">Delete</a>
                                 </td>
                             </tr>
@@ -95,8 +94,7 @@
                                         Status</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-indigo-700 uppercase">
                                         Symptoms</th>
-                                    <th th:unless="${isadmin==true}"
-                                        class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">update
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">update
                                     </th>
                                     <th th:if="${isadmin==true}"
                                         class="px-6 py-3 text-left text-sm font-semibold text-blue-700 uppercase">Action
@@ -108,7 +106,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${appt.p_id.user_id.name}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${#dates.format(appt.date, 'dd MMM yyyy')}"></td>
+                                        th:text="${#dates.format(appt.dateofAppointment, 'dd MMM yyyy')}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <span th:text="${appt.status}"
                                             th:classappend="${appt.status == 'confirmed'} ? 'text-green-600 font-medium' : 'text-yellow-600 font-medium'">
@@ -117,14 +115,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${appt.notes}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><a
-                                            th:unless="${isadmin==true}"
                                             th:href="@{/appointment/update/{app_id}(app_id=*{appt.app_id})}"
                                             class="hover:underline hover:underline-offset-4">update</a>
-
                                     </td>
-                                    <td>
-                                        <a th:href="@{/appointment/delete/{app_id}(app_id=*{appt.app_id})}"
-                                            th:if="${isadmin==true}" class="
+                                    <td th:if="${isadmin==true}">
+                                        <a th:href="@{/appointment/delete/{app_id}(app_id=*{appt.app_id})}" class="
                                             hover:underline text-red-600 hover:underline-offset-4">Delete</a>
                                     </td>
                                 </tr>
@@ -171,15 +166,50 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold "></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:unless="${isadmin==true}" th:href="@{/patient/messages/new}">Reply</a>
+                                        <a th:unless="${isadmin==true}"
+                                            th:href="@{/patient/send/message/{id}(id=msg.receiver.id)}">Reply</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+
+            <div th:case="'patientprescription'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-indigo-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m2 4H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v7a2 2 0 01-2 2z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No prescription found.</p>
+                </div>
+
+                <!-- Appointment Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}">
+                    <div class="overflow-x-auto shadow-lg rounded-lg mt-6" th:each="pres : ${dataList}">
+                        <div class="border-l-4 border-sky-500 pl-4 py-3 bg-sky-50 rounded-md">
+                            <p class="text-base font-semibold text-sky-700 mb-1"
+                                th:text="${pres.appointid.dateofAppointment}"></p>
+                            <p class="text-sm text-gray-700 mb-2">
+                                <span class="font-medium">Details:</span> <span th:text="${pres.diagnosis}"></span>
+                            </p>
+                            <div class="text-sm text-gray-600 mb-2">
+                                <p class="font-medium text-gray-800">Medicines:</p>
+                                <p class="pl-2" th:text="${pres.medicines}"></p>
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                <p class="font-medium text-gray-800">Advice:</p>
+                                <p class="pl-2" th:text="${pres.advice}"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -225,7 +255,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                     <div>
-                                        <a th:href="@{pay/bill/{apptid}(apptid=${appt.app_id})}">Pay</a>
+                                        <a th:href="@{/pay/bill/{apptid}(apptid=${appt.app_id})}">Pay</a>
                                     </div>
                                 </td>
                             </tr>
@@ -260,7 +290,7 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Subject And Message
                                     </th>
-                                    <th th:if="${isadmin==true}"
+                                    <th th:unless="${isadmin==true}"
                                         class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Action
                                     </th>
@@ -269,16 +299,18 @@
                             <tbody class="bg-white divide-y divide-gray-200" th:each="msg : ${dataList}">
                                 <tr class="hover:bg-yellow-50 transition duration-200">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
-                                        th:text="${msg.sender.name}"></td>
+                                        th:text="${msg.receiver.name}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:if="${isadmin==true}" th:href="@{/patient/messages/edit}"
-                                            class="hover:underline hover:underline-offset-4">Edit Msg</a>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:unless="${isadmin==true}">
+                                        <a th:href="@{/patient/send/message/{id}(id=${msg.receiver.id})}"
+                                            class="hover:underline hover:underline-offset-4">Send new msg</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -310,7 +342,7 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Subject And Message
                                     </th>
-                                    <th th:if="${isadmin==true}"
+                                    <th th:unless="${isadmin==true}"
                                         class="px-6 py-3 text-left text-sm font-semibold text-yellow-700 uppercase">
                                         Action</th>
                                 </tr>
@@ -322,11 +354,13 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <div th:text="${msg.subject}"></div>
-                                        <div th:text="${content}"></div>
+                                        <div th:text="${msg.subject}" class="font-bold "></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:if="${isadmin==true}" th:href="@{/patient/messages/new}"
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                                        th:unless="${isadmin==true}">
+                                        <a th:href="@{/patient/send/message/{id}(id=${msg.receiver.id})}"
                                             class="hover:underline hover:underline-offset-4">reply</a>
                                     </td>
                                 </tr>
@@ -350,7 +384,13 @@
     </div>
     <div class="flex justify-center gap-x-10">
         <div class="flex justify-center mt-5">
-            <a th:href="@{isadmin==true?'/admin/manage/patients':/patient/page}"
+            <a th:if="${isadmin}" th:href="@{/admin/manage/patients}"
+                class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                &larr; Back to Dashboard
+            </a>
+
+            <!-- If isadmin == false -->
+            <a th:unless="${isadmin}" th:href="@{/patient/page}"
                 class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                 &larr; Back to Dashboard
             </a>

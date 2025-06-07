@@ -6,7 +6,6 @@ import com.masood.model.Appointment;
 import com.masood.model.AppointmentHistory;
 import com.masood.model.Doctor;
 import com.masood.model.Message;
-import com.masood.model.MessageHistory;
 import com.masood.model.Patient;
 import com.masood.model.User;
 import com.masood.model.priscription;
@@ -20,7 +19,6 @@ public class AdminDTO {
 	private List<priscription> allprescription;
 	private List<Message> allmsg;
 	private List<AppointmentHistory> allappthis;
-	private List<MessageHistory> allMsgHis;
 	private List<Message> allunreadMsg;
 	private List<Message> allsendMsg;
 	private List<Message> allrecieveMsg;
@@ -30,7 +28,7 @@ public class AdminDTO {
 
 	public AdminDTO(User user, List<Patient> l_p, List<Doctor> l_d, List<Appointment> allAppointment,
 			List<Appointment> pendingAppointments, List<priscription> allprescription, List<Message> allmsg,
-			List<AppointmentHistory> allappthis, List<MessageHistory> allMsgHis, List<Message> allunreadMsg,
+			List<AppointmentHistory> allappthis, List<Message> allunreadMsg,
 			List<Message> allsendMsg, List<Message> allrecieveMsg) {
 		this.user = user;
 		this.l_p = l_p;
@@ -40,7 +38,6 @@ public class AdminDTO {
 		this.allprescription = allprescription;
 		this.allmsg = allmsg;
 		this.allappthis = allappthis;
-		this.allMsgHis = allMsgHis;
 		this.allunreadMsg = allunreadMsg;
 		this.allsendMsg = allsendMsg;
 		this.allrecieveMsg = allrecieveMsg;
@@ -96,14 +93,6 @@ public class AdminDTO {
 		this.allappthis = allappthis;
 	}
 
-	public List<MessageHistory> getAllMsgHis() {
-		return allMsgHis;
-	}
-
-	public void setAllMsgHis(List<MessageHistory> allMsgHis) {
-		this.allMsgHis = allMsgHis;
-	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -156,7 +145,6 @@ public class AdminDTO {
 				+ (allprescription != null ? "allprescription=" + allprescription + ", " : "")
 				+ (allmsg != null ? "allmsg=" + allmsg + ", " : "")
 				+ (allappthis != null ? "allappthis=" + allappthis + ", " : "")
-				+ (allMsgHis != null ? "allMsgHis=" + allMsgHis + ", " : "")
 				+ (allunreadMsg != null ? "allunreadMsg=" + allunreadMsg + ", " : "")
 				+ (allsendMsg != null ? "allsendMsg=" + allsendMsg + ", " : "")
 				+ (allrecieveMsg != null ? "allrecieveMsg=" + allrecieveMsg : "") + "]";
