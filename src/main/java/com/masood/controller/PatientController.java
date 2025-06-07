@@ -267,7 +267,7 @@ public class PatientController
 		appointment.setPaymentStatus(PaymentStatus.PAID);
 		as.saveAppointment(appointment);
 		pdp.getUnpaidappointments().remove(appointment);
-		return "redirect:/patient/pending/bills";
+		return "redirect:/patient/page";
 	}
 	
 	@GetMapping("/pay/bills/all")

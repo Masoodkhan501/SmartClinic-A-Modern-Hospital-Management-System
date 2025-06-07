@@ -130,7 +130,8 @@ public class AdminController
 		"/admin/unread/messages",
 		"/admin/manage/appointments",
 		"/admin/allsend/messages",
-		"/admin/allrecieve/messages"})
+		"/admin/allrecieve/messages",
+		"/admin/prescriptions"})
 	public String admindetailPage(@SessionAttribute("AdminDTO") AdminDTO adto,
 			HttpServletRequest req,Model m)
 	{
@@ -163,6 +164,11 @@ public class AdminController
 		{
 			reason = "showAllsendmessages";
 			m.addAttribute("dataList", adto.getAllsendMsg());
+		}
+		else if(url.contains("/admin/prescriptions"))
+		{
+			reason = "AllPrescription";
+			m.addAttribute("dataList", adto.getAllprescription());
 		}
 		else
 		{

@@ -39,7 +39,7 @@ public class MessageController
 	@Autowired
 	private UserImpl us;
 	
-	@GetMapping("doctor/send/msg/{id}")
+	@GetMapping("/doctor/send/msg/{id}")
 	public String sendMessage(@SessionAttribute("user") User u,
 			@PathVariable String id,
 			Model m)

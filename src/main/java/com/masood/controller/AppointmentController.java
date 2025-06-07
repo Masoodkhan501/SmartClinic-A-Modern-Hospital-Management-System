@@ -118,4 +118,20 @@ public class AppointmentController
 		return "redirect:/patient/total/appointments";
 	}
 
+	@GetMapping("/admin/appointments/update/{id}")
+	public String updateDate(@PathVariable Long id,Model m)
+	{
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(id);
+		Appointment appointment = appointmentbyId.get();
+		m.addAttribute("appt", appointment);
+		return "appointmentChange";
+	}
+	
+	@PostMapping("/admin/update/appointmentDate")
+	public String saveUpdateAppointment(@ModelAttribute Appointment appt)
+	{
+		as.saveAppointment(appt);
+		return "redirect:/admin/manage/appointments";
+	}
+	
 }

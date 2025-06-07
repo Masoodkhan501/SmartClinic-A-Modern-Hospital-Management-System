@@ -66,8 +66,8 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a th:href="@{/admin/appointments/edit/{id}(id=${appointment.app_id})}"
-                                        class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                    <a th:href="@{/admin/appointments/update/{id}(id=${appointment.app_id})}"
+                                        class="text-indigo-600 hover:text-indigo-900 mr-3">Edit Date</a>
                                     <a th:href="@{/admin/appointments/delete/{app_id}(app_id=${appointment.app_id})}"
                                         class="text-red-600 hover:text-red-900">Delete</a>
                                 </td>
@@ -139,6 +139,45 @@
                 </div>
             </div>
 
+            <div th:case="'AllPrescription'">
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(dataList)}" class="text-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-indigo-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m2 4H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v7a2 2 0 01-2 2z" />
+                    </svg>
+                    <p class="text-gray-600 mt-4 text-lg">No prescription found.</p>
+                </div>
+
+                <!-- Appointment Table -->
+                <div th:if="${!#lists.isEmpty(dataList)}">
+                    <div class="overflow-x-auto shadow-lg rounded-lg mt-6" th:each="pres : ${dataList}">
+                        <div class="border-l-4 border-sky-500 pl-4 py-3 bg-sky-50 rounded-md">
+                            <p class="text-base font-semibold text-sky-700 mb-1"
+                                th:text="${pres.appointid.dateofAppointment}"></p>
+                            <p class="text-sm text-gray-700 mb-2">
+                                <span class="font-medium">Details:</span> <span th:text="${pres.diagnosis}"></span>
+                            </p>
+                            <div class="text-sm text-gray-600 mb-2">
+                                <p class="font-medium text-gray-800">Medicines:</p>
+                                <p class="pl-2" th:text="${pres.medicines}"></p>
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                <p class="font-medium text-gray-800">Advice:</p>
+                                <p class="pl-2" th:text="${pres.advice}"></p>
+                            </div>
+                            <div class="mt-3 text-right">
+                                <p th:href="@{/admin/prescriptions/edit/{id}(id=${pres.id})}"
+                                    class="text-indigo-600 hover:text-indigo-900 mr-3 text-sm">Edit</p>
+                                <p th:href="@{/admin/prescriptions/delete/{id}(id=${pres.id})}"
+                                    class="text-red-600 hover:text-red-900 text-sm">Delete</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Messages -->
             <div th:case="'unreadmessages'">
                 <!-- Empty State -->
@@ -176,13 +215,15 @@
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <div th:text="${msg.subject}" class="font-bold"></div>
-                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <a th:href="@{/admin/messages/new}"
                                             class="hover:underline hover:underline-offset-4">Reply</a>
                                         <p th:href="@{/admin/messages/delete/{id}(id=${msg.id})}"
-                                            class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
+                                            class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">
+                                            Delete
                                             Msg</p>
                                     </td>
                                 </tr>
@@ -247,7 +288,7 @@
                 </div>
             </div>
 
-            
+
             <!-- all sended message -->
             <div th:case="'showAllsendmessages'">
                 <!-- Empty State -->
@@ -286,13 +327,15 @@
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <div th:text="${msg.subject}" class="font-bold"></div>
-                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <a th:href="@{/admin/messages/new/{id}(id=${msg.receiver})}"
                                             class="hover:underline hover:underline-offset-4">Send Msg</a>
                                         <p th:href="@{/admin/messages/edit}"
-                                            class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
+                                            class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">
+                                            Delete
                                             Msg</p>
                                     </td>
                                 </tr>
@@ -337,13 +380,15 @@
                                         th:text="${msg.sentAt}"></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <div th:text="${msg.subject}" class="font-bold"></div>
-                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md"></div>
+                                        <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <a th:href="@{/admin/messages/new/{id}(id=${msg.sender})}"
                                             class="hover:underline hover:underline-offset-4 pr-4">reply</a>
                                         <p th:href="@{/admin/messages/edit}"
-                                            class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">Delete
+                                            class="text-red-600 hover:text-red-900 hover:underline hover:underline-offset-4">
+                                            Delete
                                             Msg</p>
                                     </td>
                                 </tr>
