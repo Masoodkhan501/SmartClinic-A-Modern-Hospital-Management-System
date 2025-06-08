@@ -192,7 +192,7 @@ public class AdminController
 		if(uri.contains("/appointments/set"))
 		{
 			List<Appointment> apptwithoutdoc = allappoint.stream()
-					.filter(a->a.getDoctor()==null).collect(Collectors.toList());
+					.filter(a->a.getDoctor()==null || a.getStatus()==Appointmentstatus.PENDING).collect(Collectors.toList());
 			reason="settingDoc";
 			addto.setWithoutDoc(apptwithoutdoc);
 			m.addAttribute("dataList",apptwithoutdoc);
@@ -252,6 +252,7 @@ public class AdminController
 		Appointment exsistingAppointment = appointmentbyId.get();
 		exsistingAppointment.setD_id(appointment.getD_id());
 		exsistingAppointment.setDateofAppointment(appointment.getDateofAppointment());
+		exsistingAppointment.setStatus(Appointmentstatus.CONFIRMED);
 		as.saveAppointment(exsistingAppointment);
 		return "redirect:/admin/appointments/set";
 	}

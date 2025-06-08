@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -167,7 +169,10 @@ public class DoctorController
 		}
 		DoctorDTO ddto = new DoctorDTO(d1, u1);
 		m.addAttribute("DoctorDTO", ddto);
-		List<Appointment> appointmentbydate = as.getByDate(new Date());
+		final Doctor finalDoctor = d1;
+		List<Appointment> appointmentbydate = as.getByDate(new Date()).stream()
+				.filter(a->Objects.equals(a.getD_id().getDoc_id(), finalDoctor.getDoc_id()))
+				.collect(Collectors.toList());
 		m.addAttribute("todayAppointmentsCount",appointmentbydate.size() );
 		List<Appointment> upcommingappt = as.getByDateAfter(new Date());
 		m.addAttribute("upcomingAppointmentsCount", upcommingappt.size());
@@ -178,33 +183,7 @@ public class DoctorController
 		m.addAttribute("todayAppointments", appointmentbydate);
 		session.setAttribute("DoctorDTO", ddto);
 		List<Message> bySenderId = ms.getBySenderId(d1.getUser_id().getId());
-		if(!bySenderId.isEmpty())
-		{
-			ListIterator<Message> i = bySenderId.listIterator();
-			while(i.hasNext())
-			{
-				Message m1 = i.next();
-				System.out.println(m1.getReceiver());
-			}
-		}
-		else
-		{
-			System.out.println("There are no messages from this doctor");
-		}
 		List<Message> byRecieverId = ms.getByRecieverId(d1.getUser_id().getId());
-		if(!byRecieverId.isEmpty())
-		{
-			ListIterator<Message> i = byRecieverId.listIterator();
-			while(i.hasNext())
-			{
-				Message m1 = i.next();
-				System.out.println(m1.getSender());
-			}
-		}
-		else
-		{
-			System.out.println("There are no messages from this doctor");
-		}
 		DoctorDetailedPage ddp = new DoctorDetailedPage(appointmentbydate, upcommingappt, messagesByStatus, patientByDoctorName,bySenderId,byRecieverId);
 		session.setAttribute("docdetails", ddp);
 		boolean isnew = true;

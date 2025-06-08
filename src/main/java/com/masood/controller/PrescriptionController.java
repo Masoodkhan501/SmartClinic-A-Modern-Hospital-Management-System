@@ -69,6 +69,12 @@ public class PrescriptionController
 		Optional<priscription> byid = ps.getByid(id);
 		priscription priscription = byid.get();
 		ps.deletePriscriptionById(priscription.getId());
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(priscription.getAppointid().getApp_id());
+		Appointment appointment = appointmentbyId.get();
+		appointment.setStatus(Appointmentstatus.PENDING);
+		appointment.setDateofAppointment(null);
+		appointment.setD_id(null);
+		as.saveAppointment(appointment);
 		String requestURI = req.getRequestURI();
 		if(requestURI.contains("/patient/prescriptions"))
 			return "redirect:/patient/page";

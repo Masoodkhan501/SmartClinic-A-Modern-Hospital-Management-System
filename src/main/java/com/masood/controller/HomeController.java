@@ -44,6 +44,7 @@ public class HomeController
 		User u = new User();
 		boolean ispassword=true;
 		model.addAttribute("ispaword", ispassword);
+		model.addAttribute("existing","no");
 		model.addAttribute("user", u);
 		return "admin_login";
 	}
@@ -65,7 +66,8 @@ public class HomeController
 			else
 			{
 				boolean ispassword=false;
-				model.addAttribute("ispaword", ispassword);
+				model.addAttribute("ispassword", ispassword);
+				model.addAttribute("existing","yes");
 				return "admin_login";
 			}
 		}

@@ -107,7 +107,7 @@
                             </svg>
                             Recent Appointments
                         </h2>
-                        <a th:href="@{/patient/appointments(isadmin=${isadmin})}"
+                        <a th:href="@{/patient/total/appointments(isadmin=${isadmin})}"
                             class="text-sm font-medium text-sky-600 hover:text-sky-800 hover:underline transition-colors"
                             th:if="${PatientDTO.appoint != null}">View All &rarr;</a>
                     </div>

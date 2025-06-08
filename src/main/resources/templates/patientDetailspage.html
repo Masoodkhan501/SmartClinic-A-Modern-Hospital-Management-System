@@ -169,8 +169,8 @@
                                         <div th:text="${msg.subject}" class="font-bold "></div>
                                         <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
                                         </div>
-                                    </td th:unless="${isadmin==true}">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"  th:unless="${isadmin==true}">
                                         <a 
                                             th:href="@{/patient/send/message/{id}(id=msg.receiver.id)}">Reply</a>
                                     </td>

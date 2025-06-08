@@ -12,32 +12,33 @@
     <div class="container w-screen h-screen bg-contain"
         th:style="|background-image: url('@{/images/backgroundofPage.png}');|">
         <div class="head flex justify-center gap-x-24 pt-10">
-            <div class="logo">
-                <img th:src="@{/images/hospitallogo.png}" alt="Hospital logo"
-                    class="h-32 w-auto pl-28">
+            <div class="logo hidden md:block">
+                <img th:src="@{/images/hospitallogo.png}" alt="Hospital logo" class="h-32 w-auto pl-28">
             </div>
             <div class="heading flex-col">
-                <p class=" text-2xl md:text-8xl">HOSPITAL</p>
+                <p class=" text-2xl md:text-8xl pr-4 text-sky-100">HOSP<span class="text-sky-800">ITAL</span></p>
                 <p class="text-end md:text-3xl md:font-bold text-gray-400">Admin Login</p>
             </div>
         </div>
         <div class="main flex w-2/3 mx-auto mt-10">
-            <div class="left w-1/2 bg-sky-100 p-10" >
+            <div class="left md:w-1/2 w-full bg-sky-200 p-10">
                 <form th:action="@{/check/admin}" method="post" th:object="${user}">
-                    <input type="text" th:field="*{name}" placeholder="name" required class="w-full border-2 m-2 p-2 rounded-xl">
+                    <input type="text" th:field="*{name}" th:unless="${existing=='yes'}" placeholder="name" required
+                        class="w-full border-2 m-2 p-2 rounded-xl">
                     <input type="email" th:field="*{email}" placeholder="example@gmail.com" required
                         class="w-full border-2 m-2 p-2 rounded-xl">
-                    <p th:if="${ispassword==false}" class="text-red-700"> Either email or password is wrong</p>
-                    <input type="password" th:field="*{password}" placeholder="password" required class="w-full border-2 m-2 p-2 rounded-xl">
-                    <input type="password" th:unless="${existing=='yes'}"  placeholder="confirm password" name="confirmPassword" required
+                    <input type="password" th:field="*{password}" placeholder="password" required
                         class="w-full border-2 m-2 p-2 rounded-xl">
+                    <p th:if="${ispassword==false}" class="text-red-700 pl-5 md:pl-3"> Either email or password is wrong</p>
+                    <input type="password" th:unless="${existing=='yes'}" placeholder="confirm password"
+                        name="confirmPassword" required class="w-full border-2 m-2 p-2 rounded-xl">
                     <div class="submitbutton flex justify-center">
                         <input type="submit" value="sign in" class="w-2/3 bg-sky-800 text-white border-2 m-2 p-2 rounded-xl 
                         hover:bg-sky-700">
                     </div>
                 </form>
             </div>
-            <div class="right w-1/2 bg-sky-800 flex items-center justify-center">
+            <div class="right w-1/2 bg-sky-800 md:flex hidden items-center justify-center">
                 <img th:src="@{/images/Secure login-pana.png}" alt="a image of login" class="w-auto h-72 ">
             </div>
         </div>
