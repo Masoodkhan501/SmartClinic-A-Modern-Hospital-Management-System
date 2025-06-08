@@ -19,9 +19,13 @@ import com.masood.model.Appointmentstatus;
 import com.masood.model.Patient;
 import com.masood.model.PaymentStatus;
 import com.masood.model.User;
+import com.masood.model.priscription;
 import com.masood.service.AppointmentHistoryImpl;
 import com.masood.service.AppointmentService;
 import com.masood.service.PatientServiceimpl;
+import com.masood.service.PriscriptionServiceImpl;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller("AppointmentController")
 public class AppointmentController 
@@ -34,6 +38,8 @@ public class AppointmentController
 	private AppointmentHistoryImpl ahi;
 	@Autowired
 	private PatientServiceimpl ps;
+	@Autowired
+	private PriscriptionServiceImpl pres;
 
 
 	@GetMapping("/book/new/appointment")
@@ -135,6 +141,23 @@ public class AppointmentController
 		appointment.setDateofAppointment(appt.getDateofAppointment());
 		as.saveAppointment(appointment);
 		return "redirect:/admin/manage/appointments";
+	}
+	
+	@GetMapping({"/patient/appointment/delete/{app_id}",
+		"/doctor/appointment/delete/{app_id}"})
+	public String deleteAppointment(@PathVariable Long app_id,HttpServletRequest req)
+	{
+		Optional<Appointment> appointmentbyId = as.getAppointmentbyId(app_id);
+		Appointment appointment = appointmentbyId.get();
+		Optional<priscription> byAppointmentId = pres.getByAppointmentId(app_id);
+		priscription priscription = byAppointmentId.get();
+		pres.deletePriscriptionById(priscription.getId());
+		as.deleteAppointmentById(appointment.getApp_id());
+		String requestURI = req.getRequestURI();
+		if(requestURI.contains("/patient/appointment/"))
+			return "redirect:/patient/page";
+		else
+			return "redirect:/doctor/page";
 	}
 	
 }

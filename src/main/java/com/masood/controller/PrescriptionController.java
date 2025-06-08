@@ -21,6 +21,8 @@ import com.masood.model.priscription;
 import com.masood.service.AppointmentService;
 import com.masood.service.PriscriptionServiceImpl;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller("perscriptionController")
 public class PrescriptionController
 {
@@ -58,5 +60,19 @@ public class PrescriptionController
 		List<Appointment> todayAppointments = ddp.getTodayAppointments();
 		todayAppointments.remove(appt);
 		return "redirect:/doctor/appointments/today";
+	}
+	
+	@GetMapping({"/patient/prescriptions/delete/{id}",
+		"/admin/prescriptions/delete/{id}"})
+	public String deletePrescription(@PathVariable Long id,HttpServletRequest req)
+	{
+		Optional<priscription> byid = ps.getByid(id);
+		priscription priscription = byid.get();
+		ps.deletePriscriptionById(priscription.getId());
+		String requestURI = req.getRequestURI();
+		if(requestURI.contains("/patient/prescriptions"))
+			return "redirect:/patient/page";
+		else
+			return "redirect:/admin/page";
 	}
 }

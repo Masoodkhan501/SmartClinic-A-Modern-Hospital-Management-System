@@ -60,7 +60,7 @@
 
                                 </td>
                                 <td th:if="${isadmin}" class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                    <a th:href="@{/appointment/delete{app_id}(app_id=*{appt.app_id})}" class="
+                                    <a th:href="@{/patient/appointment/delete{app_id}(app_id=*{appt.app_id})}" class="
                                         hover:underline text-red-600 hover:underline-offset-4">Delete</a>
                                 </td>
                             </tr>
@@ -119,7 +119,7 @@
                                             class="hover:underline hover:underline-offset-4">update</a>
                                     </td>
                                     <td th:if="${isadmin==true}">
-                                        <a th:href="@{/appointment/delete/{app_id}(app_id=*{appt.app_id})}" class="
+                                        <a th:href="@{/patient/appointment/delete/{app_id}(app_id=*{appt.app_id})}" class="
                                             hover:underline text-red-600 hover:underline-offset-4">Delete</a>
                                     </td>
                                 </tr>
@@ -169,9 +169,9 @@
                                         <div th:text="${msg.subject}" class="font-bold "></div>
                                         <div th:text="${msg.content}" class="break-words whitespace-normal max-w-md">
                                         </div>
-                                    </td>
+                                    </td th:unless="${isadmin==true}">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        <a th:unless="${isadmin==true}"
+                                        <a 
                                             th:href="@{/patient/send/message/{id}(id=msg.receiver.id)}">Reply</a>
                                     </td>
                                 </tr>
@@ -208,6 +208,12 @@
                             <div class="text-sm text-gray-600">
                                 <p class="font-medium text-gray-800">Advice:</p>
                                 <p class="pl-2" th:text="${pres.advice}"></p>
+                            </div>
+                            <div class="mt-3 text-right" th:unless="${isadmin==true}">
+                                <p th:href="@{/admin/prescriptions/edit/{id}(id=${pres.id})}"
+                                    class="text-indigo-600 hover:text-indigo-900 mr-3 text-sm">Edit</p>
+                                <p th:href="@{/patient/prescriptions/delete/{id}(id=${pres.id})}"
+                                    class="text-red-600 hover:text-red-900 text-sm">Delete</p>
                             </div>
                         </div>
                     </div>
