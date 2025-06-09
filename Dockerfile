@@ -1,6 +1,7 @@
 # Stage 1: Build the application
 # Use Eclipse Temurin's OpenJDK 21 image as the base for building
-FROM eclipse-temurin:21-jdk-jammy AS build # jammy is the Ubuntu 22.04 base, a common stable choice
+# jammy is the Ubuntu 22.04 base, a common stable choice
+FROM eclipse-temurin:21-jdk-jammy AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -21,7 +22,8 @@ RUN ./mvnw clean install -DskipTests
 
 # Stage 2: Create the final lightweight image for running the application
 # Use Eclipse Temurin's OpenJDK 21 JRE image (smaller for runtime)
-FROM eclipse-temurin:21-jre-jammy # jammy for consistency and stability
+# jammy for consistency and stability
+FROM eclipse-temurin:21-jre-jammy
 
 # Set the working directory
 WORKDIR /app
