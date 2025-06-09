@@ -70,6 +70,7 @@ public class AppointmentHistory {
 	}
 
 	public String getOldNotes() {
+		System.out.println("say hi");
 		return oldNotes;
 	}
 
