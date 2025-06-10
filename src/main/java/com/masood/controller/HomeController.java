@@ -96,7 +96,7 @@ public class HomeController
 	@GetMapping({"/home","/logout/home"})
 	public String Home()
 	{
-		return "Home";
+		return "home";
 	}
 
 	@GetMapping({"/book/appointment","/login/patient"})
