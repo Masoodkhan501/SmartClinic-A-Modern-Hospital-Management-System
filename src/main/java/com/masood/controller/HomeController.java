@@ -83,7 +83,10 @@ public class HomeController
 			}
 			else
 			{
+				boolean ispassword=true;
 				model.addAttribute("user", u);
+				model.addAttribute("existing","no");
+				model.addAttribute("ispassword",ispassword);
 				return "admin_login";
 			}
 		}
