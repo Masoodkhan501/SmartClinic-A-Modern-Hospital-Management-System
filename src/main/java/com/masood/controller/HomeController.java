@@ -55,9 +55,9 @@ public class HomeController
 			Model model,HttpSession session)
 	{
 		Optional<User> byEmail = us.getByEmail(u.getEmail());
-		User u1 = byEmail.get();
-		if(u1.getEmail().equals(u.getEmail()))
+		if(byEmail.isPresent())
 		{
+			User u1 = byEmail.get();
 			if(u.getPassword().equals(u1.getPassword()))
 			{
 				session.setAttribute("user", u1);
@@ -71,19 +71,23 @@ public class HomeController
 				return "admin_login";
 			}
 		}
-		else if(u.getPassword().equals(confirmPass))
-		{
-			u.setCreatedAt();
-			u.setRole(Role.ADMIN);
-			us.saveUser(u);
-			session.setAttribute("user", u);
-			return "redirect:/admin/page";
-		}
 		else
 		{
-			model.addAttribute("user", u);
-			return "admin_login";
+			if(u.getPassword().equals(confirmPass))
+			{
+				u.setCreatedAt();
+				u.setRole(Role.ADMIN);
+				us.saveUser(u);
+				session.setAttribute("user", u);
+				return "redirect:/admin/page";
+			}
+			else
+			{
+				model.addAttribute("user", u);
+				return "admin_login";
+			}
 		}
+		
 	}
 	
 	@GetMapping("/home")
