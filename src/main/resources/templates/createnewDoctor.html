@@ -35,7 +35,8 @@
                         <!-- Specializations: multiple select -->
                         <label for="specializations" class="block font-semibold mb-1 md:text-lg">Specializations<span class="text-sm text-gray-400">( if u want to select more than one then select pressing ctrl )</span></label>
                         <select th:field="*{doctor.specializations}" multiple
-                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg">
+                            class="border-2 border-gray-400 rounded-lg w-full md:py-2 py-1 md:px-4 px-2 mb-2 md:mb-4 md:text-lg"
+                            size="5">
                             <option th:each="spec : ${specializations}" th:value="${spec.id}" th:text="${spec.specialization}"></option>
                         </select>
 
