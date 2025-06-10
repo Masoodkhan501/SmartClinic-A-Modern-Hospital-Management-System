@@ -1,0 +1,10 @@
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Cardiologist');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Neurologist');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Pediatrician');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Dermatologist');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Orthopedic Surgeon');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Ophthalmologist');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Psychiatrist');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Oncologist');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('General Practitioner');
+INSERT IGNORE INTO specialization (specialization_name) VALUES ('Gastroenterologist');
