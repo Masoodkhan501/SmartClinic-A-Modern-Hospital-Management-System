@@ -5,8 +5,6 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -16,9 +14,8 @@ import jakarta.persistence.Table;
 public class Specialized {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "specialization_id")
-	private Long id;
+	private String id;
 	@Column(name = "specialization_in")
 	private String specialization;
 	@ManyToMany(mappedBy = "specializations")
