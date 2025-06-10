@@ -20,7 +20,7 @@
                 <div class="pb-4 md:pb-0">
                     <h1 class="text-3xl font-bold text-sky-800 flex items-center">
                         <img th:src="@{/images/doctor-svgrepo-com.svg}" alt="doctor svg" class="w-10">
-                        Welcome, Dr.<span th:text="*{user.name}"></span>
+                        <span>Welcome, Dr.<span th:text="*{user.name}"></span></span>
                     </h1>
                     <p class="text-sm text-gray-600 mt-2">
                         Doctor ID: <span th:text="*{doctor.doc_id}" class="font-medium text-gray-700"></span> |
