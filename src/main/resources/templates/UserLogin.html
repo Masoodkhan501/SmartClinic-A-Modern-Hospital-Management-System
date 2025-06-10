@@ -23,7 +23,7 @@
 						<form th:action="@{/check/user}" method="post" th:object="${User}">
 							<div class="py-3">
 								<label for="username" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
-								<input type="text" id="username" placeholder="Enter your email " th:field="*{email}"
+								<input type="email" id="username" placeholder="Enter your email " th:field="*{email}"
 									class="border-2 border-gray-300 w-full py-3 px-4 rounded-lg text-lg focus:border-sky-500 focus:ring-sky-500"
 									required>
 							</div>

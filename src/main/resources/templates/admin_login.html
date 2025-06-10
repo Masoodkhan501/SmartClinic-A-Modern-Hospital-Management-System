@@ -20,7 +20,7 @@
                 <p class="text-end md:text-3xl md:font-bold text-gray-400">Admin Login</p>
             </div>
         </div>
-        <div class="main flex w-2/3 mx-auto mt-10">
+        <div class="main flex md:w-2/3 w-11/12 mx-auto mt-10">
             <div class="left md:w-1/2 w-full bg-sky-200 p-10">
                 <form th:action="@{/check/admin}" method="post" th:object="${user}">
                     <input type="text" th:field="*{name}" th:unless="${existing=='yes'}" placeholder="name" required

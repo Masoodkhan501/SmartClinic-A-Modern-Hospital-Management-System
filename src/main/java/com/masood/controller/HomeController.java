@@ -93,7 +93,7 @@ public class HomeController
 		
 	}
 	
-	@GetMapping({"/home","/logout/home"})
+	@GetMapping({"/home"})
 	public String Home()
 	{
 		return "home";
